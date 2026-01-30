@@ -1,0 +1,65 @@
+# docker-compose.yml
+services:
+  hive:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - AUTH_TYPE=none
+      - MYSQL_DSN=root:hive@tcp(mysql:3306)/hive
+      - POSTGRES_DSN=postgres://postgres:hive@postgres:5432/hive?sslmode=disable
+      - MSSQL_DSN=sqlserver://sa:Hive_Password1@mssql:1433?database=hive
+      - SQLITE_PATH=/app/data/hive.db
+    volumes:
+      - sqlite-data:/app/data
+    depends_on:
+      mysql:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      mssql:
+        condition: service_started
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: hive
+      MYSQL_DATABASE: hive
+    volumes:
+      - ./seed/mysql.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: hive
+      POSTGRES_DB: hive
+    volumes:
+      - ./seed/postgres.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Hive_Password1
+    volumes:
+      - ./seed/mssql.sql:/seed.sql
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mysql-data:
+  postgres-data:
+  mssql-data:
+  sqlite-data:
