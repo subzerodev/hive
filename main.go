@@ -15,10 +15,15 @@ import (
 	"github.com/subzerodev/hive/handlers"
 
 	_ "github.com/subzerodev/hive/vulns/injection/command"
+	_ "github.com/subzerodev/hive/vulns/injection/code"
+	_ "github.com/subzerodev/hive/vulns/injection/hpp"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mssql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mysql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/postgres"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/sqlite"
+	_ "github.com/subzerodev/hive/vulns/injection/ssti"
+	_ "github.com/subzerodev/hive/vulns/injection/xpath"
+	_ "github.com/subzerodev/hive/vulns/injection/xxe"
 	_ "github.com/subzerodev/hive/vulns/xss/blacklist"
 	_ "github.com/subzerodev/hive/vulns/xss/context"
 	_ "github.com/subzerodev/hive/vulns/xss/dom"
@@ -55,8 +60,9 @@ import (
 	_ "github.com/subzerodev/hive/vulns/auth/httpbasic"
 	_ "github.com/subzerodev/hive/vulns/auth/jwt"
 
-	_ "github.com/subzerodev/hive/vulns/ssrf"
+	_ "github.com/subzerodev/hive/vulns/redirect"
 	_ "github.com/subzerodev/hive/vulns/serialization"
+	_ "github.com/subzerodev/hive/vulns/ssrf"
 )
 
 func main() {
