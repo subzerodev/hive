@@ -144,7 +144,11 @@ func session(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, `{"authenticated":true,"user":"%s"}`, payload.Sub)
+	response := map[string]interface{}{
+		"authenticated": true,
+		"user":          payload.Sub,
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
 func protected(w http.ResponseWriter, r *http.Request) {
