@@ -13,6 +13,7 @@ import (
 	"github.com/subzerodev/hive/db"
 	"github.com/subzerodev/hive/handlers"
 
+	_ "github.com/subzerodev/hive/vulns/injection/command"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mssql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mysql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/postgres"
