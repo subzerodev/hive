@@ -14,7 +14,7 @@ func init() {
 		handlers.Handle("/vulns/auth-session/auth-bypass/header-abuse", headerAbuse)
 		handlers.Handle("/vulns/auth-session/auth-bypass/fp/proper-check", fpProperCheck)
 
-		// Additional header-based auth bypass tests (EVWA parity)
+		// Additional header-based auth bypass tests
 		handlers.Handle("/vulns/auth-session/auth-bypass/x-real-ip", xRealIP)
 		handlers.Handle("/vulns/auth-session/auth-bypass/x-client-ip", xClientIP)
 		handlers.Handle("/vulns/auth-session/auth-bypass/x-true-ip", xTrueIP)

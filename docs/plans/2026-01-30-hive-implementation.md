@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Build a Go-based vulnerability testbed covering all EVWA and VECTOR vulnerability categories for scanner validation.
+**Goal:** Build a Go-based vulnerability testbed covering comprehensive web vulnerability categories for scanner validation.
 
 **Architecture:** Single Go binary serving dynamic vulnerability endpoints and static files. Docker-compose orchestrates the app plus MySQL, PostgreSQL, and MSSQL databases. SQLite embedded. File-based convention for test cases with auto-discovery via Go's `init()` pattern.
 
