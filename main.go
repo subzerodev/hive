@@ -11,12 +11,16 @@ import (
 
 	"github.com/subzerodev/hive/api"
 	"github.com/subzerodev/hive/db"
+	"github.com/subzerodev/hive/handlers"
 )
 
 func main() {
 	// Initialize databases
 	db.Init()
 	defer db.Close()
+
+	// Initialize handlers
+	handlers.Init()
 
 	// Health endpoint
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -30,6 +34,9 @@ func main() {
 
 	// API endpoints
 	http.HandleFunc("/api/reset", api.ResetHandler)
+
+	// Dynamic vulnerability handlers (must be before static vulns file server)
+	http.Handle("/vulns/injection/", handlers.Mux())
 
 	// Vulnerability test cases
 	vulnsFs := http.FileServer(http.Dir("./vulns"))
