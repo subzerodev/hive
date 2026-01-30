@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Code Injection - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+        .vuln { color: #c00; }
+        .safe { color: #080; }
+        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/injection/">&larr; Back to Injection</a></div>
+    <h1>Code Injection (eval)</h1>
+    <p>Code injection occurs when user input is passed to functions like eval(), exec(), or other code execution functions.</p>
+
+    <h2 class="vuln">Vulnerable Test Cases</h2>
+    <ul>
+        <li><a href="/vulns/injection/code/eval-js">JavaScript eval()</a> - Server-side JS eval injection
+            <br><code>require('child_process').execSync('id')</code></li>
+        <li><a href="/vulns/injection/code/eval-php">PHP eval()</a> - PHP eval injection
+            <br><code>system('id')</code></li>
+        <li><a href="/vulns/injection/code/eval-python">Python eval()</a> - Python eval/exec injection
+            <br><code>__import__('os').system('id')</code></li>
+        <li><a href="/vulns/injection/code/expression">Expression Evaluator</a> - Math expression evaluation
+            <br><code>Vulnerable to expression injection</code></li>
+    </ul>
+
+    <h2 class="safe">False Positives (Safe)</h2>
+    <ul>
+        <li><a href="/vulns/injection/code/fp/validated">Validated Input</a> - Only allows numbers and math operators</li>
+    </ul>
+</body>
+</html>
