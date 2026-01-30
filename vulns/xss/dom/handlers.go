@@ -111,5 +111,5 @@ func fpSafe(w http.ResponseWriter, r *http.Request) {
 document.getElementById('output').textContent = %q;
 </script>
 <p><small>Input is safely rendered using textContent</small></p>
-</body></html>`, escaped, name)
+</body></html>`, escaped, escaped)
 }
