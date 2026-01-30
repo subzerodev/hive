@@ -11,6 +11,7 @@ import (
 	"syscall"
 
 	"github.com/subzerodev/hive/api"
+	"github.com/subzerodev/hive/auth"
 	"github.com/subzerodev/hive/db"
 	"github.com/subzerodev/hive/handlers"
 
@@ -84,6 +85,13 @@ func main() {
 	db.Init()
 	defer db.Close()
 
+	// Read auth type
+	authType := os.Getenv("AUTH_TYPE")
+	if authType == "" {
+		authType = "none"
+	}
+	log.Printf("AUTH_TYPE: %s", authType)
+
 	// Initialize handlers
 	handlers.Init()
 
@@ -118,7 +126,7 @@ func main() {
 
 	// Combined handler for /vulns/ - serves static files first, then dynamic handlers
 	vulnsFs := http.FileServer(http.Dir("./vulns"))
-	http.HandleFunc("/vulns/", func(w http.ResponseWriter, r *http.Request) {
+	vulnsHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		path := strings.TrimPrefix(r.URL.Path, "/vulns/")
 
 		// Check if this is a static file request (ends with / or has extension)
@@ -138,6 +146,8 @@ func main() {
 		// Try dynamic handler
 		handlers.Mux().ServeHTTP(w, r)
 	})
+
+	http.Handle("/vulns/", auth.Middleware(authType, vulnsHandler))
 
 	// Root redirect to vulns
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
