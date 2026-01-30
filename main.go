@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/subzerodev/hive/api"
 	"github.com/subzerodev/hive/db"
 )
 
@@ -26,6 +27,9 @@ func main() {
 	// Static files with directory listing enabled
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	// API endpoints
+	http.HandleFunc("/api/reset", api.ResetHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
