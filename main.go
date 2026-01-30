@@ -42,6 +42,7 @@ import (
 	_ "github.com/subzerodev/hive/vulns/config/httpmethods"
 	_ "github.com/subzerodev/hive/vulns/config/hostheader"
 	_ "github.com/subzerodev/hive/vulns/config/openredirect"
+	_ "github.com/subzerodev/hive/vulns/config/contenttype"
 )
 
 func main() {
