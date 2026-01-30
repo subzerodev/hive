@@ -31,6 +31,17 @@ import (
 	_ "github.com/subzerodev/hive/vulns/authsession/csrf"
 	_ "github.com/subzerodev/hive/vulns/authsession/passwordexposure"
 	_ "github.com/subzerodev/hive/vulns/authsession/sessioninurl"
+
+	_ "github.com/subzerodev/hive/vulns/infodisclosure/errormessages"
+	_ "github.com/subzerodev/hive/vulns/infodisclosure/pii"
+	_ "github.com/subzerodev/hive/vulns/infodisclosure/versiondisclosure"
+
+	_ "github.com/subzerodev/hive/vulns/config/cors"
+	_ "github.com/subzerodev/hive/vulns/config/csp"
+	_ "github.com/subzerodev/hive/vulns/config/clickjacking"
+	_ "github.com/subzerodev/hive/vulns/config/httpmethods"
+	_ "github.com/subzerodev/hive/vulns/config/hostheader"
+	_ "github.com/subzerodev/hive/vulns/config/openredirect"
 )
 
 func main() {
@@ -59,6 +70,8 @@ func main() {
 	http.Handle("/vulns/xss/", handlers.Mux())
 	http.Handle("/vulns/file/", handlers.Mux())
 	http.Handle("/vulns/auth-session/", handlers.Mux())
+	http.Handle("/vulns/info-disclosure/", handlers.Mux())
+	http.Handle("/vulns/config/", handlers.Mux())
 
 	// Vulnerability test cases
 	vulnsFs := http.FileServer(http.Dir("./vulns"))

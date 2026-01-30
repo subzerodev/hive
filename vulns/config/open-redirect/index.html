@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Open Redirect - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+        .vuln { color: #c00; }
+        .safe { color: #080; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/config/">&larr; Back to Configuration</a></div>
+    <h1>Open Redirect</h1>
+
+    <h2 class="vuln">Vulnerable Test Cases</h2>
+    <ul>
+        <li><a href="/vulns/config/open-redirect/basic">Basic Open Redirect</a></li>
+    </ul>
+
+    <h2 class="safe">False Positives (Safe)</h2>
+    <ul>
+        <li><a href="/vulns/config/open-redirect/fp/validated">Validated Redirect</a></li>
+    </ul>
+</body>
+</html>
