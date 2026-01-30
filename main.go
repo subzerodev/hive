@@ -12,6 +12,9 @@ import (
 	"github.com/subzerodev/hive/api"
 	"github.com/subzerodev/hive/db"
 	"github.com/subzerodev/hive/handlers"
+
+	_ "github.com/subzerodev/hive/vulns/injection/sqli/mssql"
+	_ "github.com/subzerodev/hive/vulns/injection/sqli/mysql"
 )
 
 func main() {
