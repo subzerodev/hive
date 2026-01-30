@@ -13,6 +13,7 @@ func init() {
 		handlers.Handle("/vulns/auth/multi-step/step1", step1)
 		handlers.Handle("/vulns/auth/multi-step/step2", step2)
 		handlers.Handle("/vulns/auth/multi-step/dashboard", dashboard)
+		handlers.Handle("/vulns/auth/multi-step/session", session)
 	})
 }
 
@@ -24,7 +25,7 @@ func step1(w http.ResponseWriter, r *http.Request) {
 			http.SetCookie(w, &http.Cookie{
 				Name:    "multistep_user",
 				Value:   username,
-				Path:    "/vulns/auth/multi-step/",
+				Path:    "/",
 				Expires: time.Now().Add(10 * time.Minute),
 			})
 			http.Redirect(w, r, "/vulns/auth/multi-step/step2", http.StatusFound)
@@ -63,7 +64,7 @@ func step2(w http.ResponseWriter, r *http.Request) {
 			http.SetCookie(w, &http.Cookie{
 				Name:    "multistep_session",
 				Value:   "authenticated",
-				Path:    "/vulns/auth/multi-step/",
+				Path:    "/",
 				Expires: time.Now().Add(24 * time.Hour),
 			})
 			http.Redirect(w, r, "/vulns/auth/multi-step/dashboard", http.StatusFound)
@@ -104,4 +105,15 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 <h1>Dashboard (Multi-Step Auth)</h1>
 <p>Successfully authenticated via multi-step flow.</p>
 </body></html>`)
+}
+
+func session(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	cookie, err := r.Cookie("multistep_session")
+	if err == nil && cookie.Value == "authenticated" {
+		fmt.Fprintf(w, `{"authenticated":true,"user":"admin"}`)
+		return
+	}
+	w.WriteHeader(http.StatusUnauthorized)
+	fmt.Fprintf(w, `{"authenticated":false}`)
 }
