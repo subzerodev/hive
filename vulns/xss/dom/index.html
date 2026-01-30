@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DOM XSS - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+        .vuln { color: #c00; }
+        .safe { color: #080; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/xss/">&larr; Back to XSS</a></div>
+    <h1>DOM-based XSS</h1>
+
+    <h2 class="vuln">Vulnerable Test Cases</h2>
+    <ul>
+        <li><a href="/vulns/xss/dom/innerhtml#test">innerHTML Sink</a></li>
+        <li><a href="/vulns/xss/dom/document-write?name=Guest">document.write Sink</a></li>
+        <li><a href="/vulns/xss/dom/location">Location Sink</a></li>
+    </ul>
+
+    <h2 class="safe">False Positives (Safe)</h2>
+    <ul>
+        <li><a href="/vulns/xss/dom/fp/safe?name=Guest">textContent (Safe)</a></li>
+    </ul>
+</body>
+</html>

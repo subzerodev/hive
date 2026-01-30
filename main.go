@@ -18,6 +18,9 @@ import (
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mysql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/postgres"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/sqlite"
+	_ "github.com/subzerodev/hive/vulns/xss/dom"
+	_ "github.com/subzerodev/hive/vulns/xss/reflected"
+	_ "github.com/subzerodev/hive/vulns/xss/stored"
 )
 
 func main() {
@@ -43,6 +46,7 @@ func main() {
 
 	// Dynamic vulnerability handlers (must be before static vulns file server)
 	http.Handle("/vulns/injection/", handlers.Mux())
+	http.Handle("/vulns/xss/", handlers.Mux())
 
 	// Vulnerability test cases
 	vulnsFs := http.FileServer(http.Dir("./vulns"))
