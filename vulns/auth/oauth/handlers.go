@@ -22,6 +22,7 @@ func init() {
 		handlers.Handle("/vulns/auth/oauth/authorize", authorize)
 		handlers.Handle("/vulns/auth/oauth/callback", callback)
 		handlers.Handle("/vulns/auth/oauth/dashboard", dashboard)
+		handlers.Handle("/vulns/auth/oauth/session", session)
 	})
 }
 
@@ -95,7 +96,7 @@ func callback(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &http.Cookie{
 		Name:    "oauth_session",
 		Value:   "authenticated_oauth",
-		Path:    "/vulns/auth/oauth/",
+		Path:    "/",
 		Expires: time.Now().Add(24 * time.Hour),
 	})
 	http.Redirect(w, r, "/vulns/auth/oauth/dashboard", http.StatusFound)
@@ -116,4 +117,15 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 <h1>Dashboard (OAuth)</h1>
 <p>Successfully authenticated via OAuth flow.</p>
 </body></html>`)
+}
+
+func session(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	cookie, err := r.Cookie("oauth_session")
+	if err == nil && cookie.Value == "authenticated_oauth" {
+		fmt.Fprintf(w, `{"authenticated":true,"user":"admin"}`)
+		return
+	}
+	w.WriteHeader(http.StatusUnauthorized)
+	fmt.Fprintf(w, `{"authenticated":false}`)
 }
