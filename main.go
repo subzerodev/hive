@@ -26,6 +26,7 @@ import (
 	_ "github.com/subzerodev/hive/vulns/file/sourcedisclosure"
 	_ "github.com/subzerodev/hive/vulns/file/upload"
 
+	_ "github.com/subzerodev/hive/vulns/authsession/authbypass"
 	_ "github.com/subzerodev/hive/vulns/authsession/cookieflags"
 	_ "github.com/subzerodev/hive/vulns/authsession/csrf"
 	_ "github.com/subzerodev/hive/vulns/authsession/passwordexposure"

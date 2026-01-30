@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Password Exposure - HIVE</title>
+    <title>Auth Bypass - HIVE</title>
     <style>
         body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
         a { color: #0066cc; }
@@ -13,19 +13,17 @@
 </head>
 <body>
     <div class="back"><a href="/vulns/auth-session/">&larr; Back to Auth/Session</a></div>
-    <h1>Password Exposure</h1>
+    <h1>Authentication Bypass</h1>
 
     <h2 class="vuln">Vulnerable Test Cases</h2>
     <ul>
-        <li><a href="/vulns/auth-session/password-exposure/in-get">Password in GET Request</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/in-response">Password in Response</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/in-cookie">Password in Cookie</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/autocomplete">Autocomplete Enabled</a></li>
+        <li><a href="/vulns/auth-session/auth-bypass/403-bypass">403 Bypass (Path Manipulation)</a></li>
+        <li><a href="/vulns/auth-session/auth-bypass/header-abuse">Header Abuse (X-Forwarded-For)</a></li>
     </ul>
 
     <h2 class="safe">False Positives (Safe)</h2>
     <ul>
-        <li><a href="/vulns/auth-session/password-exposure/fp/hidden">Password Hidden</a></li>
+        <li><a href="/vulns/auth-session/auth-bypass/fp/proper-check">Proper Auth Check</a></li>
     </ul>
 </body>
 </html>

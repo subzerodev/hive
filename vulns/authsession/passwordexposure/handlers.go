@@ -12,6 +12,8 @@ func init() {
 	handlers.Register(func() {
 		handlers.Handle("/vulns/auth-session/password-exposure/in-get", inGet)
 		handlers.Handle("/vulns/auth-session/password-exposure/in-response", inResponse)
+		handlers.Handle("/vulns/auth-session/password-exposure/in-cookie", inCookie)
+		handlers.Handle("/vulns/auth-session/password-exposure/autocomplete", autocomplete)
 		handlers.Handle("/vulns/auth-session/password-exposure/fp/hidden", fpHidden)
 	})
 }
@@ -75,6 +77,47 @@ func inResponse(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>VULNERABLE: Password will be echoed in response</small></p>
+</body></html>`)
+}
+
+func inCookie(w http.ResponseWriter, r *http.Request) {
+	password := r.URL.Query().Get("password")
+	if password == "" {
+		password = "secret123"
+	}
+
+	// VULNERABLE: Password stored in cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:  "user_password",
+		Value: password,
+		Path:  "/",
+	})
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Password in Cookie</title></head>
+<body>
+<h1>Password Stored in Cookie</h1>
+<p>A cookie "user_password" has been set with the password.</p>
+<p><small>VULNERABLE: Password stored in cookie</small></p>
+</body></html>`)
+}
+
+func autocomplete(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	// VULNERABLE: Password field with autocomplete enabled
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Autocomplete Enabled</title></head>
+<body>
+<h1>Login (Autocomplete Enabled)</h1>
+<form method="POST">
+    <input name="username" placeholder="Username" autocomplete="on"><br>
+    <input type="password" name="password" placeholder="Password" autocomplete="on"><br>
+    <button type="submit">Login</button>
+</form>
+<p><small>VULNERABLE: Password field has autocomplete="on"</small></p>
 </body></html>`)
 }
 
