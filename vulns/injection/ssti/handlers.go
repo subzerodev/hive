@@ -167,7 +167,7 @@ func erbStyle(w http.ResponseWriter, r *http.Request) {
 <h2>Output:</h2>
 <div id="output">Hello, %s!</div>
 <h3>Hint:</h3>
-<p><small>Try: &lt;%=7*7%&gt;</small></p>
+<p><small>Try: &lt;%%=7*7%%&gt;</small></p>
 <p><a href="/vulns/injection/ssti/">Back to SSTI Tests</a></p>
 </body></html>`, expr, result)
 }
