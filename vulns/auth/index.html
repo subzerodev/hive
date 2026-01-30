@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Authentication Flows - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
+    <h1>Authentication Flows</h1>
+    <p>Test different authentication mechanisms. Credentials: admin / password</p>
+    <ul>
+        <li><a href="/vulns/auth/form-post/login">Form POST</a> - Traditional form login</li>
+        <li><a href="/vulns/auth/ajax-json/login">AJAX JSON</a> - SPA-style API login</li>
+        <li><a href="/vulns/auth/multi-step/step1">Multi-Step</a> - Username then password</li>
+        <li><a href="/vulns/auth/oauth/start">OAuth</a> - Fake OAuth flow</li>
+        <li><a href="/vulns/auth/http-basic/protected">HTTP Basic</a> - Browser auth dialog</li>
+        <li><a href="/vulns/auth/jwt/login">JWT</a> - Token-based auth</li>
+    </ul>
+</body>
+</html>

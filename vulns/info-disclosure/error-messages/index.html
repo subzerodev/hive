@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Error Messages - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+        .vuln { color: #c00; }
+        .safe { color: #080; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/info-disclosure/">&larr; Back to Info Disclosure</a></div>
+    <h1>Error Message Disclosure</h1>
+
+    <h2 class="vuln">Vulnerable Test Cases</h2>
+    <ul>
+        <li><a href="/vulns/info-disclosure/error-messages/database?id=1">Database Errors</a></li>
+        <li><a href="/vulns/info-disclosure/error-messages/stack-trace?action=error">Stack Traces</a></li>
+    </ul>
+
+    <h2 class="safe">False Positives (Safe)</h2>
+    <ul>
+        <li><a href="/vulns/info-disclosure/error-messages/fp/generic?id=invalid">Generic Errors</a></li>
+    </ul>
+</body>
+</html>

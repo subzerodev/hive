@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"github.com/subzerodev/hive/api"
@@ -76,20 +77,28 @@ func main() {
 	// API endpoints
 	http.HandleFunc("/api/reset", api.ResetHandler)
 
-	// Dynamic vulnerability handlers (must be before static vulns file server)
-	http.Handle("/vulns/injection/", handlers.Mux())
-	http.Handle("/vulns/xss/", handlers.Mux())
-	http.Handle("/vulns/file/", handlers.Mux())
-	http.Handle("/vulns/auth-session/", handlers.Mux())
-	http.Handle("/vulns/info-disclosure/", handlers.Mux())
-	http.Handle("/vulns/config/", handlers.Mux())
-	http.Handle("/vulns/auth/", handlers.Mux())
-	http.Handle("/vulns/ssrf/", handlers.Mux())
-	http.Handle("/vulns/serialization/", handlers.Mux())
-
-	// Vulnerability test cases
+	// Combined handler for /vulns/ - serves static files first, then dynamic handlers
 	vulnsFs := http.FileServer(http.Dir("./vulns"))
-	http.Handle("/vulns/", http.StripPrefix("/vulns/", vulnsFs))
+	http.HandleFunc("/vulns/", func(w http.ResponseWriter, r *http.Request) {
+		path := strings.TrimPrefix(r.URL.Path, "/vulns/")
+
+		// Check if this is a static file request (ends with / or has extension)
+		if path == "" || strings.HasSuffix(path, "/") || strings.HasSuffix(path, ".html") ||
+			strings.HasSuffix(path, ".css") || strings.HasSuffix(path, ".js") {
+			// Check if the file exists
+			filePath := "./vulns/" + path
+			if strings.HasSuffix(path, "/") {
+				filePath += "index.html"
+			}
+			if _, err := os.Stat(filePath); err == nil {
+				http.StripPrefix("/vulns/", vulnsFs).ServeHTTP(w, r)
+				return
+			}
+		}
+
+		// Try dynamic handler
+		handlers.Mux().ServeHTTP(w, r)
+	})
 
 	// Root redirect to vulns
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
