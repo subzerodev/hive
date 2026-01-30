@@ -21,6 +21,10 @@ import (
 	_ "github.com/subzerodev/hive/vulns/xss/dom"
 	_ "github.com/subzerodev/hive/vulns/xss/reflected"
 	_ "github.com/subzerodev/hive/vulns/xss/stored"
+
+	_ "github.com/subzerodev/hive/vulns/file/pathtraversal"
+	_ "github.com/subzerodev/hive/vulns/file/sourcedisclosure"
+	_ "github.com/subzerodev/hive/vulns/file/upload"
 )
 
 func main() {
@@ -47,6 +51,7 @@ func main() {
 	// Dynamic vulnerability handlers (must be before static vulns file server)
 	http.Handle("/vulns/injection/", handlers.Mux())
 	http.Handle("/vulns/xss/", handlers.Mux())
+	http.Handle("/vulns/file/", handlers.Mux())
 
 	// Vulnerability test cases
 	vulnsFs := http.FileServer(http.Dir("./vulns"))

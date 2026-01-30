@@ -1,0 +1,6 @@
+<?php
+// VULNERABLE: Exposed database credentials
+$db_host = "localhost";
+$db_user = "admin";
+$db_pass = "secretpassword123";
+$db_name = "production_db";
