@@ -31,6 +31,19 @@ func main() {
 	// API endpoints
 	http.HandleFunc("/api/reset", api.ResetHandler)
 
+	// Vulnerability test cases
+	vulnsFs := http.FileServer(http.Dir("./vulns"))
+	http.Handle("/vulns/", http.StripPrefix("/vulns/", vulnsFs))
+
+	// Root redirect to vulns
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" {
+			http.Redirect(w, r, "/vulns/", http.StatusFound)
+			return
+		}
+		http.NotFound(w, r)
+	})
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

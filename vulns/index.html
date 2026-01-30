@@ -1,0 +1,59 @@
+<!-- vulns/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HIVE - Hazardous Intentionally Vulnerable Environment</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #c00; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 8px 0; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .section { margin: 30px 0; }
+    </style>
+</head>
+<body>
+    <h1>HIVE</h1>
+    <p><strong>Hazardous Intentionally Vulnerable Environment</strong></p>
+    <p>A vulnerability testbed for validating web vulnerability scanners.</p>
+
+    <div class="section">
+        <h2>Vulnerability Categories</h2>
+        <ul>
+            <li><a href="/vulns/injection/">Injection</a> - SQLi, Command, LDAP, XPath, SSI, SSTI, Code, XML</li>
+            <li><a href="/vulns/xss/">Cross-Site Scripting</a> - Reflected, DOM, Stored, Framework</li>
+            <li><a href="/vulns/file/">File/Path</a> - Traversal, Upload, Source Disclosure</li>
+            <li><a href="/vulns/auth-session/">Auth/Session</a> - CSRF, Cookies, Password Exposure</li>
+            <li><a href="/vulns/info-disclosure/">Info Disclosure</a> - Errors, PII, Keys, Versions</li>
+            <li><a href="/vulns/config/">Configuration</a> - CORS, CSP, Clickjacking, Headers</li>
+            <li><a href="/vulns/serialization/">Serialization</a></li>
+            <li><a href="/vulns/ssrf/">SSRF</a> - HTTP, DNS</li>
+            <li><a href="/vulns/backdoors/">Backdoors</a></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Authentication Testing</h2>
+        <ul>
+            <li><a href="/vulns/auth/">Auth Flows</a> - Form, AJAX, Multi-step, OAuth, HTTP Basic, JWT</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Static Files</h2>
+        <ul>
+            <li><a href="/static/">Directory Listing &amp; File Tests</a></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>API</h2>
+        <ul>
+            <li><code>GET /health</code> - Health check</li>
+            <li><code>POST /api/reset</code> - Reset all databases</li>
+        </ul>
+    </div>
+</body>
+</html>
