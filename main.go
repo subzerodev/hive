@@ -25,6 +25,11 @@ import (
 	_ "github.com/subzerodev/hive/vulns/file/pathtraversal"
 	_ "github.com/subzerodev/hive/vulns/file/sourcedisclosure"
 	_ "github.com/subzerodev/hive/vulns/file/upload"
+
+	_ "github.com/subzerodev/hive/vulns/authsession/cookieflags"
+	_ "github.com/subzerodev/hive/vulns/authsession/csrf"
+	_ "github.com/subzerodev/hive/vulns/authsession/passwordexposure"
+	_ "github.com/subzerodev/hive/vulns/authsession/sessioninurl"
 )
 
 func main() {
@@ -52,6 +57,7 @@ func main() {
 	http.Handle("/vulns/injection/", handlers.Mux())
 	http.Handle("/vulns/xss/", handlers.Mux())
 	http.Handle("/vulns/file/", handlers.Mux())
+	http.Handle("/vulns/auth-session/", handlers.Mux())
 
 	// Vulnerability test cases
 	vulnsFs := http.FileServer(http.Dir("./vulns"))
