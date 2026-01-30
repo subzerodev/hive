@@ -15,6 +15,7 @@ import (
 
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mssql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mysql"
+	_ "github.com/subzerodev/hive/vulns/injection/sqli/sqlite"
 )
 
 func main() {
