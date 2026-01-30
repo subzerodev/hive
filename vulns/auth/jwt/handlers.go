@@ -15,6 +15,7 @@ func init() {
 	handlers.Register(func() {
 		handlers.Handle("/vulns/auth/jwt/login", login)
 		handlers.Handle("/vulns/auth/jwt/protected", protected)
+		handlers.Handle("/vulns/auth/jwt/session", session)
 		// JWT vulnerability test cases
 		handlers.Handle("/vulns/auth/jwt/none-alg", noneAlg)
 		handlers.Handle("/vulns/auth/jwt/weak-secret", weakSecret)
@@ -98,6 +99,52 @@ async function testProtected(token) {
 </script>
 <p><small>Credentials: admin / password</small></p>
 </body></html>`)
+}
+
+func session(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	authHeader := r.Header.Get("Authorization")
+	if !strings.HasPrefix(authHeader, "Bearer ") {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, `{"authenticated":false,"error":"token_required"}`)
+		return
+	}
+
+	token := strings.TrimPrefix(authHeader, "Bearer ")
+	parts := strings.Split(token, ".")
+	if len(parts) != 3 {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, `{"authenticated":false,"error":"invalid_token"}`)
+		return
+	}
+
+	// Decode payload
+	payloadBytes, err := base64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, `{"authenticated":false,"error":"invalid_token"}`)
+		return
+	}
+
+	var payload struct {
+		Sub string `json:"sub"`
+		Exp int64  `json:"exp"`
+	}
+	if err := json.Unmarshal(payloadBytes, &payload); err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, `{"authenticated":false,"error":"invalid_token"}`)
+		return
+	}
+
+	// Check expiration
+	if payload.Exp > 0 && payload.Exp < time.Now().Unix() {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprintf(w, `{"authenticated":false,"error":"token_expired"}`)
+		return
+	}
+
+	fmt.Fprintf(w, `{"authenticated":true,"user":"%s"}`, payload.Sub)
 }
 
 func protected(w http.ResponseWriter, r *http.Request) {
