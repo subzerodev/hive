@@ -7,15 +7,42 @@
         body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
         a { color: #0066cc; }
         .back { margin-bottom: 20px; }
+        .category { margin: 20px 0; }
+        .category h3 { margin-bottom: 10px; color: #333; }
     </style>
 </head>
 <body>
     <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
     <h1>Cross-Site Scripting (XSS)</h1>
-    <ul>
-        <li><a href="/vulns/xss/reflected/">Reflected XSS</a></li>
-        <li><a href="/vulns/xss/dom/">DOM-based XSS</a></li>
-        <li><a href="/vulns/xss/stored/">Stored XSS</a></li>
-    </ul>
+
+    <div class="category">
+        <h3>Basic XSS Types</h3>
+        <ul>
+            <li><a href="/vulns/xss/reflected/">Reflected XSS</a> - Input reflected in response</li>
+            <li><a href="/vulns/xss/dom/">DOM-based XSS</a> - Client-side JavaScript sinks</li>
+            <li><a href="/vulns/xss/stored/">Stored XSS</a> - Persistent XSS in database</li>
+        </ul>
+    </div>
+
+    <div class="category">
+        <h3>Blacklist Filter Bypasses</h3>
+        <ul>
+            <li><a href="/vulns/xss/blacklist/">Blacklist Filters</a> - 7 levels of increasingly strict filters with bypass techniques</li>
+        </ul>
+    </div>
+
+    <div class="category">
+        <h3>Context-Specific XSS</h3>
+        <ul>
+            <li><a href="/vulns/xss/context/">XSS Contexts</a> - SVG, CSS, iframe srcdoc, data attributes, URL attributes, JS contexts</li>
+        </ul>
+    </div>
+
+    <div class="category">
+        <h3>Header-Based XSS</h3>
+        <ul>
+            <li><a href="/vulns/xss/headers/">HTTP Headers</a> - Referer, User-Agent, Cookie, X-Forwarded-For, Accept-Language</li>
+        </ul>
+    </div>
 </body>
 </html>

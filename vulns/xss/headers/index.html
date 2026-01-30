@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>XSS Headers - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+        .vuln { color: #c00; }
+        .safe { color: #080; }
+        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/xss/">&larr; Back to XSS</a></div>
+    <h1>XSS via HTTP Headers</h1>
+    <p>XSS vulnerabilities where input comes from HTTP request headers instead of URL/form parameters.</p>
+
+    <h2 class="vuln">Vulnerable Test Cases</h2>
+    <ul>
+        <li><a href="/vulns/xss/headers/referer">Referer Header</a> - Referer reflected without escaping
+            <br><code>curl -H "Referer: &lt;script&gt;alert(1)&lt;/script&gt;" URL</code></li>
+        <li><a href="/vulns/xss/headers/user-agent">User-Agent Header</a> - User-Agent reflected without escaping
+            <br><code>curl -A "&lt;script&gt;alert(1)&lt;/script&gt;" URL</code></li>
+        <li><a href="/vulns/xss/headers/cookie">Cookie Value</a> - Cookie value reflected without escaping
+            <br><a href="/vulns/xss/headers/cookie/set?value=<script>alert(1)</script>">Set XSS cookie</a></li>
+        <li><a href="/vulns/xss/headers/x-forwarded-for">X-Forwarded-For Header</a> - XFF reflected without escaping
+            <br><code>curl -H "X-Forwarded-For: &lt;script&gt;alert(1)&lt;/script&gt;" URL</code></li>
+        <li><a href="/vulns/xss/headers/accept-language">Accept-Language Header</a> - Accept-Language reflected without escaping
+            <br><code>curl -H "Accept-Language: &lt;script&gt;alert(1)&lt;/script&gt;" URL</code></li>
+    </ul>
+
+    <h2 class="safe">False Positives (Safe)</h2>
+    <ul>
+        <li><a href="/vulns/xss/headers/fp/escaped">Properly Escaped</a> - All headers HTML-escaped</li>
+    </ul>
+</body>
+</html>

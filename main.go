@@ -19,7 +19,10 @@ import (
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/mysql"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/postgres"
 	_ "github.com/subzerodev/hive/vulns/injection/sqli/sqlite"
+	_ "github.com/subzerodev/hive/vulns/xss/blacklist"
+	_ "github.com/subzerodev/hive/vulns/xss/context"
 	_ "github.com/subzerodev/hive/vulns/xss/dom"
+	_ "github.com/subzerodev/hive/vulns/xss/headers"
 	_ "github.com/subzerodev/hive/vulns/xss/reflected"
 	_ "github.com/subzerodev/hive/vulns/xss/stored"
 
