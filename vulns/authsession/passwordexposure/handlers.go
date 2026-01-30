@@ -15,6 +15,11 @@ func init() {
 		handlers.Handle("/vulns/auth-session/password-exposure/in-cookie", inCookie)
 		handlers.Handle("/vulns/auth-session/password-exposure/autocomplete", autocomplete)
 		handlers.Handle("/vulns/auth-session/password-exposure/fp/hidden", fpHidden)
+
+		// Cleartext password submission
+		handlers.Handle("/vulns/auth-session/password-exposure/cleartext", cleartext)
+		handlers.Handle("/vulns/auth-session/password-exposure/insecure-form-post", insecureFormPost)
+		handlers.Handle("/vulns/auth-session/password-exposure/fp/secure-form", fpSecureForm)
 	})
 }
 
@@ -153,5 +158,77 @@ func fpHidden(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>SAFE: Password sent via POST, not reflected in response</small></p>
+</body></html>`)
+}
+
+func cleartext(w http.ResponseWriter, r *http.Request) {
+	// VULNERABLE: Login form on HTTP page (cleartext submission)
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Cleartext Password Submission</title></head>
+<body>
+<h1>Login (Cleartext Submission)</h1>
+<p>This login form submits credentials over unencrypted HTTP.</p>
+
+<form method="POST" action="http://localhost:8080/vulns/auth-session/password-exposure/cleartext">
+    <input name="username" placeholder="Username"><br><br>
+    <input type="password" name="password" placeholder="Password"><br><br>
+    <button type="submit">Login</button>
+</form>
+
+<h2>Issue:</h2>
+<p>Credentials are submitted over HTTP (not HTTPS), allowing interception.</p>
+
+<h3>Vulnerability:</h3>
+<p><small>Cleartext submission of password - credentials can be sniffed</small></p>
+<p><a href="/vulns/auth-session/password-exposure/">Back</a></p>
+</body></html>`)
+}
+
+func insecureFormPost(w http.ResponseWriter, r *http.Request) {
+	// VULNERABLE: HTTPS page with form posting to HTTP
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Insecure Form POST</title></head>
+<body>
+<h1>Login (Insecure Transition)</h1>
+<p>This HTTPS page posts credentials to an HTTP endpoint.</p>
+
+<form method="POST" action="http://insecure.example.com/login">
+    <input name="username" placeholder="Username"><br><br>
+    <input type="password" name="password" placeholder="Password"><br><br>
+    <button type="submit">Login</button>
+</form>
+
+<h2>Issue:</h2>
+<p>Form action uses HTTP instead of HTTPS (insecure transition).</p>
+
+<h3>Vulnerability:</h3>
+<p><small>HTTPS to HTTP form submission - credentials exposed in transit</small></p>
+<p><a href="/vulns/auth-session/password-exposure/">Back</a></p>
+</body></html>`)
+}
+
+func fpSecureForm(w http.ResponseWriter, r *http.Request) {
+	// SAFE: HTTPS form posting to HTTPS
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Secure Form POST</title></head>
+<body>
+<h1>Login (Secure)</h1>
+<p>This form submits credentials securely over HTTPS.</p>
+
+<form method="POST" action="https://secure.example.com/login">
+    <input name="username" placeholder="Username"><br><br>
+    <input type="password" name="password" placeholder="Password"><br><br>
+    <button type="submit">Login</button>
+</form>
+
+<h3>Security:</h3>
+<p><small>SAFE: Credentials submitted over encrypted HTTPS connection</small></p>
+<p><a href="/vulns/auth-session/password-exposure/">Back</a></p>
 </body></html>`)
 }

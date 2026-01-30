@@ -16,6 +16,11 @@ func init() {
 		handlers.Handle("/vulns/ssrf/http", httpSSRF)
 		handlers.Handle("/vulns/ssrf/dns", dnsSSRF)
 		handlers.Handle("/vulns/ssrf/fp/validated", fpValidated)
+
+		// Out-of-band resource load
+		handlers.Handle("/vulns/ssrf/oob-http", oobHTTP)
+		handlers.Handle("/vulns/ssrf/oob-dns", oobDNS)
+		handlers.Handle("/vulns/ssrf/oob-image", oobImage)
 	})
 }
 
@@ -175,4 +180,123 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 <pre>%s</pre>
 <a href="/vulns/ssrf/fp/validated">Back</a>
 </body></html>`, targetURL, resp.Status, string(body))
+}
+
+// Out-of-band resource load - HTTP
+func oobHTTP(w http.ResponseWriter, r *http.Request) {
+	callback := r.URL.Query().Get("callback")
+	if callback == "" {
+		callback = "http://attacker.com/collect"
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Out-of-Band HTTP Load</title></head>
+<body>
+<h1>Out-of-Band Resource Load (HTTP)</h1>
+<p>Server makes HTTP request to user-controlled URL.</p>
+
+<form method="GET">
+    <label>Callback URL:</label><br>
+    <input name="callback" value="%s" style="width:400px"><br><br>
+    <button type="submit">Trigger Request</button>
+</form>
+
+<h2>Server Action:</h2>
+<pre>// Server-side code
+response := http.Get(userCallback)
+log.Printf("Webhook response: %%s", response.Status)</pre>
+
+<h2>Detection:</h2>
+<p>Use Burp Collaborator or similar to detect out-of-band HTTP interaction:</p>
+<pre>?callback=http://YOUR-COLLABORATOR-ID.burpcollaborator.net/</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>Server performs HTTP request to attacker-controlled URL</small></p>
+<p><a href="/vulns/ssrf/">Back to SSRF</a></p>
+</body></html>`, callback)
+
+	// Simulate the out-of-band HTTP request (in real app this would be background)
+	go func() {
+		if strings.HasPrefix(callback, "http") {
+			http.Get(callback) // Fire and forget
+		}
+	}()
+}
+
+// Out-of-band resource load - DNS
+func oobDNS(w http.ResponseWriter, r *http.Request) {
+	domain := r.URL.Query().Get("domain")
+	if domain == "" {
+		domain = "test.attacker.com"
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Out-of-Band DNS Load</title></head>
+<body>
+<h1>Out-of-Band Resource Load (DNS)</h1>
+<p>Server performs DNS lookup on user-controlled domain.</p>
+
+<form method="GET">
+    <label>Domain to lookup:</label><br>
+    <input name="domain" value="%s" style="width:400px"><br><br>
+    <button type="submit">Trigger Lookup</button>
+</form>
+
+<h2>Server Action:</h2>
+<pre>// Server-side code
+ips, _ := net.LookupIP(userDomain)
+// Processing continues...</pre>
+
+<h2>Detection:</h2>
+<p>Use Burp Collaborator for DNS-only detection:</p>
+<pre>?domain=YOUR-COLLABORATOR-ID.burpcollaborator.net</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>Server performs DNS lookup to attacker-controlled domain</small></p>
+<p><a href="/vulns/ssrf/">Back to SSRF</a></p>
+</body></html>`, domain)
+
+	// Simulate the out-of-band DNS lookup
+	go func() {
+		net.LookupIP(domain)
+	}()
+}
+
+// Out-of-band via image/resource loading
+func oobImage(w http.ResponseWriter, r *http.Request) {
+	imgURL := r.URL.Query().Get("img")
+	if imgURL == "" {
+		imgURL = "http://attacker.com/image.png"
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Out-of-Band Image Load</title></head>
+<body>
+<h1>Out-of-Band Resource Load (Image)</h1>
+<p>Page loads image from user-controlled URL.</p>
+
+<form method="GET">
+    <label>Image URL:</label><br>
+    <input name="img" value="%s" style="width:400px"><br><br>
+    <button type="submit">Load Image</button>
+</form>
+
+<h2>Loaded Image:</h2>
+<img src="%s" onerror="this.alt='Failed to load'" style="max-width:300px; border:1px solid #ccc;">
+
+<h2>Server-Side Fetch (if applicable):</h2>
+<pre>// Some apps fetch images server-side for processing
+imageData := http.Get(userImageURL)
+processImage(imageData)</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>External resource loaded from user-controlled URL</small></p>
+<p><a href="/vulns/ssrf/">Back to SSRF</a></p>
+</body></html>`, imgURL, imgURL)
 }

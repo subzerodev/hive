@@ -28,6 +28,12 @@ func init() {
 
 		// False positive
 		handlers.Handle("/vulns/admin/fp/protected", fpProtected)
+
+		// WordPress user enumeration
+		handlers.Handle("/vulns/admin/wp-user-enum", wpUserEnum)
+		handlers.Handle("/vulns/admin/wp-user-enum/author", wpUserEnumAuthor)
+		handlers.Handle("/vulns/admin/wp-user-enum/api", wpUserEnumAPI)
+		handlers.Handle("/vulns/admin/wp-user-enum/fp/blocked", wpUserEnumBlocked)
 	})
 }
 
@@ -299,4 +305,74 @@ func fpProtected(w http.ResponseWriter, r *http.Request) {
 <p><small>SAFE: Admin interface requires authentication</small></p>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
 </body></html>`)
+}
+
+// WordPress User Enumeration
+func wpUserEnum(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>WordPress User Enumeration</title></head>
+<body>
+<h1>WordPress User Enumeration</h1>
+<p>Multiple methods to enumerate WordPress usernames.</p>
+
+<h2>Enumeration Methods:</h2>
+<ul>
+    <li><a href="/vulns/admin/wp-user-enum/author?author=1">Author Parameter</a> - /?author=1</li>
+    <li><a href="/vulns/admin/wp-user-enum/api">REST API</a> - /wp-json/wp/v2/users</li>
+</ul>
+
+<h2>Discovered Users:</h2>
+<table border="1" cellpadding="5">
+    <tr><th>ID</th><th>Username</th><th>Display Name</th></tr>
+    <tr><td>1</td><td>admin</td><td>Administrator</td></tr>
+    <tr><td>2</td><td>editor</td><td>John Editor</td></tr>
+    <tr><td>3</td><td>author1</td><td>Jane Author</td></tr>
+</table>
+
+<h3>Vulnerability:</h3>
+<p><small>WordPress username enumeration enables targeted attacks</small></p>
+<p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</body></html>`)
+}
+
+func wpUserEnumAuthor(w http.ResponseWriter, r *http.Request) {
+	author := r.URL.Query().Get("author")
+	if author == "" {
+		author = "1"
+	}
+
+	username := "admin"
+	switch author {
+	case "1":
+		username = "admin"
+	case "2":
+		username = "editor"
+	case "3":
+		username = "author1"
+	default:
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "Author not found")
+		return
+	}
+
+	w.Header().Set("Location", "/author/"+username+"/")
+	w.WriteHeader(http.StatusMovedPermanently)
+	fmt.Fprintf(w, `Redirecting to /author/%s/ (username: %s)`, username, username)
+}
+
+func wpUserEnumAPI(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprintf(w, `[
+  {"id": 1, "name": "Administrator", "slug": "admin", "link": "http://localhost:8080/author/admin/"},
+  {"id": 2, "name": "John Editor", "slug": "editor", "link": "http://localhost:8080/author/editor/"},
+  {"id": 3, "name": "Jane Author", "slug": "author1", "link": "http://localhost:8080/author/author1/"}
+]`)
+}
+
+func wpUserEnumBlocked(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusForbidden)
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprintf(w, `{"code": "rest_user_cannot_view", "message": "Sorry, you are not allowed to list users."}`)
 }

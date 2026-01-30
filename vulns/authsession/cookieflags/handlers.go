@@ -13,6 +13,10 @@ func init() {
 		handlers.Handle("/vulns/auth-session/cookie-flags/missing-secure", missingSecure)
 		handlers.Handle("/vulns/auth-session/cookie-flags/missing-samesite", missingSameSite)
 		handlers.Handle("/vulns/auth-session/cookie-flags/fp/all-flags", fpAllFlags)
+
+		// Cookie loosely scoped
+		handlers.Handle("/vulns/auth-session/cookie-flags/loosely-scoped", looselyScoped)
+		handlers.Handle("/vulns/auth-session/cookie-flags/fp/properly-scoped", fpProperlyScoped)
 	})
 }
 
@@ -102,5 +106,67 @@ func fpAllFlags(w http.ResponseWriter, r *http.Request) {
     <li>SameSite: Strict</li>
 </ul>
 <p><small>SAFE: All cookie security flags enabled</small></p>
+</body></html>`)
+}
+
+func looselyScoped(w http.ResponseWriter, r *http.Request) {
+	// VULNERABLE: Cookie scoped to parent domain
+	http.SetCookie(w, &http.Cookie{
+		Name:   "session_loose",
+		Value:  "abc123",
+		Domain: ".example.com", // Scoped to parent domain
+		Path:   "/",
+	})
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Cookie - Loosely Scoped</title></head>
+<body>
+<h1>Cookie Loosely Scoped to Parent Domain</h1>
+<p>Cookie "session_loose" is scoped to parent domain.</p>
+
+<h2>Cookie Set:</h2>
+<pre>Set-Cookie: session_loose=abc123; Domain=.example.com; Path=/</pre>
+
+<h2>Issue:</h2>
+<p>This cookie will be sent to ALL subdomains of example.com:</p>
+<ul>
+    <li>app.example.com</li>
+    <li>api.example.com</li>
+    <li>untrusted.example.com</li>
+</ul>
+
+<h3>Vulnerability:</h3>
+<p><small>Cookie can be accessed by other subdomains, risking session hijacking</small></p>
+<p><a href="/vulns/auth-session/cookie-flags/">Back</a></p>
+</body></html>`)
+}
+
+func fpProperlyScoped(w http.ResponseWriter, r *http.Request) {
+	// SAFE: Cookie properly scoped to specific subdomain
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_scoped",
+		Value:    "abc123",
+		Domain:   "app.example.com", // Specific subdomain only
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   true,
+	})
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Cookie - Properly Scoped</title></head>
+<body>
+<h1>Cookie Properly Scoped</h1>
+<p>Cookie "session_scoped" is scoped to specific subdomain only.</p>
+
+<h2>Cookie Set:</h2>
+<pre>Set-Cookie: session_scoped=abc123; Domain=app.example.com; Path=/; HttpOnly; Secure</pre>
+
+<h3>Security:</h3>
+<p><small>SAFE: Cookie only sent to specific subdomain</small></p>
+<p><a href="/vulns/auth-session/cookie-flags/">Back</a></p>
 </body></html>`)
 }

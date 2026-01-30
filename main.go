@@ -66,7 +66,10 @@ import (
 
 	_ "github.com/subzerodev/hive/vulns/injection/ldap"
 	_ "github.com/subzerodev/hive/vulns/injection/ssi"
+	_ "github.com/subzerodev/hive/vulns/injection/ssjs"
 	_ "github.com/subzerodev/hive/vulns/injection/css"
+
+	_ "github.com/subzerodev/hive/vulns/config/headers"
 	_ "github.com/subzerodev/hive/vulns/formhijack"
 	_ "github.com/subzerodev/hive/vulns/disclosure"
 	_ "github.com/subzerodev/hive/vulns/files"
@@ -87,6 +90,14 @@ func main() {
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"status":"healthy"}`))
+	})
+
+	// Robots.txt and sitemap.xml
+	http.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "robots.txt")
+	})
+	http.HandleFunc("/sitemap.xml", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "sitemap.xml")
 	})
 
 	// Static files with directory listing enabled
