@@ -13,6 +13,7 @@ func init() {
 	handlers.Register(func() {
 		handlers.Handle("/vulns/auth/ajax-json/login", login)
 		handlers.Handle("/vulns/auth/ajax-json/api/user", apiUser)
+		handlers.Handle("/vulns/auth/ajax-json/session", session)
 	})
 }
 
@@ -36,7 +37,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 			http.SetCookie(w, &http.Cookie{
 				Name:     "session_ajax",
 				Value:    "authenticated_admin",
-				Path:     "/vulns/auth/ajax-json/",
+				Path:     "/",
 				Expires:  time.Now().Add(24 * time.Hour),
 				HttpOnly: true,
 			})
@@ -91,4 +92,15 @@ func apiUser(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, `{"user": "admin", "role": "administrator", "authenticated": true}`)
+}
+
+func session(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	cookie, err := r.Cookie("session_ajax")
+	if err == nil && cookie.Value == "authenticated_admin" {
+		fmt.Fprintf(w, `{"authenticated":true,"user":"admin"}`)
+		return
+	}
+	w.WriteHeader(http.StatusUnauthorized)
+	fmt.Fprintf(w, `{"authenticated":false}`)
 }
