@@ -1,0 +1,33 @@
+# robots.txt for HIVE vulnerability testbed
+# This file intentionally exposes sensitive paths for scanner testing
+
+User-agent: *
+Disallow: /admin/
+Disallow: /backup/
+Disallow: /config/
+Disallow: /database/
+Disallow: /logs/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /uploads/private/
+
+# Exposed admin paths
+Disallow: /wp-admin/
+Disallow: /administrator/
+Disallow: /phpmyadmin/
+Disallow: /cpanel/
+
+# API endpoints
+Disallow: /api/internal/
+Disallow: /api/admin/
+Disallow: /api/debug/
+
+# Development paths
+Disallow: /.git/
+Disallow: /.svn/
+Disallow: /.env
+Disallow: /composer.json
+Disallow: /package.json
+
+# Sitemap (also informational)
+Sitemap: http://localhost:8080/sitemap.xml

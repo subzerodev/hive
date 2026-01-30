@@ -37,6 +37,10 @@ func init() {
 
 		// Vulnerable JS library
 		handlers.Handle("/vulns/misc/vulnerable-js", vulnerableJS)
+
+		// Input reflected in response
+		handlers.Handle("/vulns/misc/input-reflected", inputReflected)
+		handlers.Handle("/vulns/misc/input-reflected-header", inputReflectedHeader)
 	})
 }
 
@@ -318,6 +322,47 @@ func crossDomainScript(w http.ResponseWriter, r *http.Request) {
 </ul>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
 </body></html>`)
+}
+
+// Input reflected in response (non-XSS detection)
+func inputReflected(w http.ResponseWriter, r *http.Request) {
+	input := r.URL.Query().Get("q")
+	if input == "" {
+		input = "test_value"
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Input Reflected</title></head>
+<body>
+<h1>Input Returned in Response</h1>
+<p>User input is reflected back in the response.</p>
+
+<form method="GET">
+    <input name="q" value="%s" style="width:300px">
+    <button type="submit">Search</button>
+</form>
+
+<h2>Search Results for: %s</h2>
+<p>No results found for "%s"</p>
+
+<h3>Note:</h3>
+<p><small>Input reflection may indicate potential for injection attacks</small></p>
+<p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</body></html>`, input, input, input)
+}
+
+func inputReflectedHeader(w http.ResponseWriter, r *http.Request) {
+	input := r.URL.Query().Get("callback")
+	if input == "" {
+		input = "jsonpCallback"
+	}
+
+	// Reflect input in custom header
+	w.Header().Set("X-Callback", input)
+	w.Header().Set("Content-Type", "application/javascript")
+	fmt.Fprintf(w, `%s({"status":"ok","data":"test"});`, input)
 }
 
 func vulnerableJS(w http.ResponseWriter, r *http.Request) {
