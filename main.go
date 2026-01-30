@@ -63,6 +63,16 @@ import (
 	_ "github.com/subzerodev/hive/vulns/redirect"
 	_ "github.com/subzerodev/hive/vulns/serialization"
 	_ "github.com/subzerodev/hive/vulns/ssrf"
+
+	_ "github.com/subzerodev/hive/vulns/injection/ldap"
+	_ "github.com/subzerodev/hive/vulns/injection/ssi"
+	_ "github.com/subzerodev/hive/vulns/injection/css"
+	_ "github.com/subzerodev/hive/vulns/formhijack"
+	_ "github.com/subzerodev/hive/vulns/disclosure"
+	_ "github.com/subzerodev/hive/vulns/files"
+	_ "github.com/subzerodev/hive/vulns/admin"
+	_ "github.com/subzerodev/hive/vulns/methods"
+	_ "github.com/subzerodev/hive/vulns/misc"
 )
 
 func main() {
