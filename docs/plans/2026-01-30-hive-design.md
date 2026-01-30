@@ -4,7 +4,7 @@ A Go-based vulnerability testbed for validating web vulnerability scanners.
 
 ## Overview
 
-HIVE provides comprehensive test cases covering all vulnerability types from EVWA and VECTOR, organized for easy navigation and extensibility. It replaces the PHP/Apache stack with a single Go binary for simpler deployment and full control over HTTP behavior.
+HIVE provides comprehensive test cases covering all common web vulnerability types, organized for easy navigation and extensibility. It uses a single Go binary for simpler deployment and full control over HTTP behavior.
 
 ### Core Principles
 
@@ -512,4 +512,4 @@ Comparison tooling to be built when needed.
 | Auth | 6 types, toggleable via `AUTH_TYPE` env var |
 | Navigation | Hand-crafted index pages at each level |
 | CI | Reset API, designed for expected.yaml later |
-| Vuln coverage | Full EVWA + VECTOR list (~100 categories) |
+| Vuln coverage | Comprehensive coverage (~100 categories) |
