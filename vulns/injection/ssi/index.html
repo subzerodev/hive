@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SSI Injection - HIVE</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #0066cc; }
+        .back { margin-bottom: 20px; }
+        .vuln { color: #c00; }
+        .safe { color: #080; }
+        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/vulns/injection/">&larr; Back to Injection</a></div>
+    <h1>Server-Side Includes (SSI) Injection</h1>
+    <p>SSI injection occurs when user input is processed by the SSI engine, allowing execution of SSI directives.</p>
+
+    <h2 class="vuln">Vulnerable Test Cases</h2>
+    <ul>
+        <li><a href="/vulns/injection/ssi/basic">Basic SSI</a> - Echo directive
+            <br><code>&lt;!--#echo var="DATE_LOCAL" --&gt;</code></li>
+        <li><a href="/vulns/injection/ssi/exec">Command Exec</a> - Exec directive
+            <br><code>&lt;!--#exec cmd="id" --&gt;</code></li>
+        <li><a href="/vulns/injection/ssi/include">File Include</a> - Include directive
+            <br><code>&lt;!--#include virtual="/etc/passwd" --&gt;</code></li>
+    </ul>
+
+    <h2 class="safe">False Positives (Safe)</h2>
+    <ul>
+        <li><a href="/vulns/injection/ssi/fp/disabled">SSI Disabled</a> - Directives are escaped</li>
+    </ul>
+</body>
+</html>
