@@ -19,7 +19,7 @@ services:
       postgres:
         condition: service_healthy
       mssql:
-        condition: service_started
+        condition: service_healthy
 
   mysql:
     image: mysql:8
@@ -56,7 +56,14 @@ services:
       SA_PASSWORD: Hive_Password1
     volumes:
       - ./seed/mssql.sql:/seed.sql
+      - ./seed/mssql-entrypoint.sh:/entrypoint.sh
       - mssql-data:/var/opt/mssql
+    entrypoint: /entrypoint.sh
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Hive_Password1", "-C", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
 volumes:
   mysql-data:
