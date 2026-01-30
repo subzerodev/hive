@@ -3,6 +3,7 @@ package ssrf
 import (
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -13,6 +14,7 @@ import (
 func init() {
 	handlers.Register(func() {
 		handlers.Handle("/vulns/ssrf/http", httpSSRF)
+		handlers.Handle("/vulns/ssrf/dns", dnsSSRF)
 		handlers.Handle("/vulns/ssrf/fp/validated", fpValidated)
 	})
 }
@@ -63,6 +65,54 @@ func httpSSRF(w http.ResponseWriter, r *http.Request) {
 <pre>%s</pre>
 <a href="/vulns/ssrf/http">Back</a>
 </body></html>`, targetURL, resp.Status, string(body))
+}
+
+func dnsSSRF(w http.ResponseWriter, r *http.Request) {
+	hostname := r.URL.Query().Get("host")
+	if hostname == "" {
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>SSRF - DNS</title></head>
+<body>
+<h1>DNS Lookup</h1>
+<form method="GET">
+    <input name="host" placeholder="Hostname to lookup" value="example.com" style="width:300px">
+    <button type="submit">Lookup</button>
+</form>
+<h2>Try:</h2>
+<ul>
+    <li><a href="?host=localhost">localhost</a></li>
+    <li><a href="?host=internal.company.local">internal.company.local</a></li>
+    <li><a href="?host=169.254.169.254">AWS metadata (169.254.169.254)</a></li>
+</ul>
+<p><small>VULNERABLE: No hostname validation - can resolve internal DNS</small></p>
+</body></html>`)
+		return
+	}
+
+	// VULNERABLE: No validation - resolves any hostname
+	ips, err := net.LookupIP(hostname)
+	if err != nil {
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprintf(w, `<html><body><h1>DNS Error</h1><pre>%v</pre><a href="/vulns/ssrf/dns">Back</a></body></html>`, err)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>SSRF - DNS Result</title></head>
+<body>
+<h1>DNS Lookup: %s</h1>
+<h2>Resolved IPs:</h2>
+<ul>`, hostname)
+	for _, ip := range ips {
+		fmt.Fprintf(w, `<li>%s</li>`, ip.String())
+	}
+	fmt.Fprintf(w, `</ul>
+<a href="/vulns/ssrf/dns">Back</a>
+</body></html>`)
 }
 
 func fpValidated(w http.ResponseWriter, r *http.Request) {
