@@ -23,6 +23,11 @@ func init() {
 		// Multiple Content-Types
 		handlers.Handle("/vulns/config/headers/multiple-content-types", multipleContentTypes)
 		handlers.Handle("/vulns/config/headers/fp/single-content-type", fpSingleContentType)
+
+		// Request URL Override
+		handlers.Handle("/vulns/config/headers/url-override", urlOverride)
+		handlers.Handle("/vulns/config/headers/url-override-legacy", urlOverrideLegacy)
+		handlers.Handle("/vulns/config/headers/fp/url-override-ignored", fpUrlOverrideIgnored)
 	})
 }
 
@@ -257,4 +262,118 @@ func fpSingleContentType(w http.ResponseWriter, r *http.Request) {
 <p><small>SAFE: Unambiguous content type</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
 </body></html>`)
+}
+
+// Request URL Override tests (X-Original-URL, X-Rewrite-URL, X-Forwarded-Path)
+func urlOverride(w http.ResponseWriter, r *http.Request) {
+	// VULNERABLE: Process X-Original-URL and X-Rewrite-URL headers
+	originalURL := r.Header.Get("X-Original-URL")
+	rewriteURL := r.Header.Get("X-Rewrite-URL")
+	forwardedPath := r.Header.Get("X-Forwarded-Path")
+
+	effectiveURL := r.URL.Path
+	if originalURL != "" {
+		effectiveURL = originalURL
+	} else if rewriteURL != "" {
+		effectiveURL = rewriteURL
+	} else if forwardedPath != "" {
+		effectiveURL = forwardedPath
+	}
+
+	// Simulate access control based on effective URL
+	isAdmin := effectiveURL == "/admin" || effectiveURL == "/admin/"
+	isRestricted := effectiveURL == "/restricted" || effectiveURL == "/internal"
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Request URL Override</title></head>
+<body>
+<h1>Request URL Override Vulnerability</h1>
+<p>Server processes URL override headers for routing.</p>
+
+<h2>Request Analysis:</h2>
+<table border="1" cellpadding="5">
+    <tr><td>Actual URL</td><td>%s</td></tr>
+    <tr><td>X-Original-URL</td><td>%s</td></tr>
+    <tr><td>X-Rewrite-URL</td><td>%s</td></tr>
+    <tr><td>X-Forwarded-Path</td><td>%s</td></tr>
+    <tr><td><strong>Effective URL</strong></td><td><strong>%s</strong></td></tr>
+</table>
+
+<h2>Access Control Result:</h2>
+<pre>
+Admin Access: %v
+Restricted Access: %v
+</pre>
+
+<h3>Test:</h3>
+<pre>
+curl -H "X-Original-URL: /admin" URL
+curl -H "X-Rewrite-URL: /restricted" URL
+</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>URL override headers can bypass access controls</small></p>
+<p><a href="/vulns/config/headers/">Back</a></p>
+</body></html>`, r.URL.Path, originalURL, rewriteURL, forwardedPath, effectiveURL, isAdmin, isRestricted)
+}
+
+func urlOverrideLegacy(w http.ResponseWriter, r *http.Request) {
+	// VULNERABLE: Legacy URL override headers
+	redirect := r.Header.Get("Redirect")
+	xHost := r.Header.Get("X-Host")
+	xForwardedServer := r.Header.Get("X-Forwarded-Server")
+	xHTTPDestinationURL := r.Header.Get("X-HTTP-DestinationURL")
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Legacy URL Override Headers</title></head>
+<body>
+<h1>Legacy Request URL Override</h1>
+<p>Server processes legacy URL/host override headers.</p>
+
+<h2>Headers Detected:</h2>
+<table border="1" cellpadding="5">
+    <tr><td>Redirect</td><td>%s</td></tr>
+    <tr><td>X-Host</td><td>%s</td></tr>
+    <tr><td>X-Forwarded-Server</td><td>%s</td></tr>
+    <tr><td>X-HTTP-DestinationURL</td><td>%s</td></tr>
+</table>
+
+<h3>Test:</h3>
+<pre>
+curl -H "Redirect: /admin" URL
+curl -H "X-Host: admin.internal" URL
+curl -H "X-HTTP-DestinationURL: http://admin/" URL
+</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>Legacy headers can manipulate request routing</small></p>
+<p><a href="/vulns/config/headers/">Back</a></p>
+</body></html>`, redirect, xHost, xForwardedServer, xHTTPDestinationURL)
+}
+
+func fpUrlOverrideIgnored(w http.ResponseWriter, r *http.Request) {
+	// SAFE: Ignore all URL override headers
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>URL Override Headers Ignored</title></head>
+<body>
+<h1>URL Override Headers Ignored</h1>
+<p>Server ignores all URL override headers and uses actual request URL.</p>
+
+<h2>Request Analysis:</h2>
+<table border="1" cellpadding="5">
+    <tr><td>Actual URL</td><td>%s</td></tr>
+    <tr><td>X-Original-URL</td><td>%s (ignored)</td></tr>
+    <tr><td>X-Rewrite-URL</td><td>%s (ignored)</td></tr>
+</table>
+
+<h3>Security:</h3>
+<p><small>SAFE: URL override headers are not processed</small></p>
+<p><a href="/vulns/config/headers/">Back</a></p>
+</body></html>`, r.URL.Path, r.Header.Get("X-Original-URL"), r.Header.Get("X-Rewrite-URL"))
 }

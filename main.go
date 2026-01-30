@@ -76,6 +76,7 @@ import (
 	_ "github.com/subzerodev/hive/vulns/admin"
 	_ "github.com/subzerodev/hive/vulns/methods"
 	_ "github.com/subzerodev/hive/vulns/misc"
+	_ "github.com/subzerodev/hive/vulns/legacy"
 )
 
 func main() {
@@ -98,6 +99,14 @@ func main() {
 	})
 	http.HandleFunc("/sitemap.xml", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "sitemap.xml")
+	})
+
+	// Flash and Silverlight cross-domain policies (legacy but still scanned)
+	http.HandleFunc("/crossdomain.xml", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "crossdomain.xml")
+	})
+	http.HandleFunc("/clientaccesspolicy.xml", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "clientaccesspolicy.xml")
 	})
 
 	// Static files with directory listing enabled

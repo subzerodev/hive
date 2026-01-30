@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VULNERABLE: Overly permissive Silverlight cross-domain policy -->
+<access-policy>
+    <cross-domain-access>
+        <policy>
+            <!-- Allow access from any domain -->
+            <allow-from http-request-headers="*">
+                <domain uri="*"/>
+            </allow-from>
+            <grant-to>
+                <resource path="/" include-subpaths="true"/>
+            </grant-to>
+        </policy>
+    </cross-domain-access>
+</access-policy>

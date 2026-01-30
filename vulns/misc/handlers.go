@@ -2,8 +2,11 @@
 package misc
 
 import (
+	"encoding/base64"
 	"fmt"
 	"net/http"
+	"regexp"
+	"strings"
 
 	"github.com/subzerodev/hive/handlers"
 )
@@ -27,6 +30,7 @@ func init() {
 
 		// User-agent dependent response
 		handlers.Handle("/vulns/misc/useragent-dependent", useragentDependent)
+		handlers.Handle("/vulns/misc/useragent-reflected", useragentReflected)
 
 		// Cacheable sensitive response
 		handlers.Handle("/vulns/misc/cacheable-https", cacheableHTTPS)
@@ -41,6 +45,16 @@ func init() {
 		// Input reflected in response
 		handlers.Handle("/vulns/misc/input-reflected", inputReflected)
 		handlers.Handle("/vulns/misc/input-reflected-header", inputReflectedHeader)
+
+		// Base64 encoded data in parameter
+		handlers.Handle("/vulns/misc/base64-param", base64Param)
+		handlers.Handle("/vulns/misc/base64-param-post", base64ParamPost)
+
+		// Suspicious input transformation
+		handlers.Handle("/vulns/misc/input-transformation", inputTransformation)
+
+		// Big redirect (large redirect response)
+		handlers.Handle("/vulns/misc/big-redirect", bigRedirect)
 	})
 }
 
@@ -391,4 +405,180 @@ func vulnerableJS(w http.ResponseWriter, r *http.Request) {
 <p><small>Update to latest versions of all JavaScript libraries</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
 </body></html>`)
+}
+
+func useragentReflected(w http.ResponseWriter, r *http.Request) {
+	ua := r.Header.Get("User-Agent")
+	w.Header().Set("Content-Type", "text/html")
+	// Reflect user-agent directly (vulnerability: could be XSS if not escaped elsewhere)
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>User-Agent Reflected</title></head>
+<body>
+<h1>User-Agent Dependent Response</h1>
+<p>Your User-Agent is reflected in the response:</p>
+<pre>%s</pre>
+<p><small>VULNERABLE: User-Agent header reflected in response</small></p>
+</body></html>`, ua)
+}
+
+func base64Param(w http.ResponseWriter, r *http.Request) {
+	// Default base64 encoded sensitive data
+	defaultData := base64.StdEncoding.EncodeToString([]byte(`{"user":"jamesmullen","admin":"1","countryCode":"IE","vuln":"true"}`))
+	encoded := r.URL.Query().Get("data")
+	if encoded == "" {
+		encoded = defaultData
+	}
+
+	var decoded string
+	decodedBytes, err := base64.StdEncoding.DecodeString(encoded)
+	if err != nil {
+		decoded = "(invalid base64)"
+	} else {
+		decoded = string(decodedBytes)
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Base64 Encoded Parameter</title></head>
+<body>
+<h1>Base64 Encoded Data in Parameter</h1>
+<form method="GET">
+    <button type="submit" name="data" value="%s">Submit</button>
+</form>
+
+<h2>Encoded:</h2>
+<pre>%s</pre>
+
+<h2>Decoded:</h2>
+<pre>%s</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>Base64 encoded data may contain sensitive information</small></p>
+<p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</body></html>`, defaultData, encoded, decoded)
+}
+
+func base64ParamPost(w http.ResponseWriter, r *http.Request) {
+	defaultData := base64.StdEncoding.EncodeToString([]byte(`{"session":"admin_session","token":"secret_token_123"}`))
+
+	if r.Method == "POST" {
+		r.ParseForm()
+		encoded := r.FormValue("data")
+		decodedBytes, _ := base64.StdEncoding.DecodeString(encoded)
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Base64 POST Result</title></head>
+<body>
+<h1>Base64 Encoded Data (POST)</h1>
+<h2>Received:</h2>
+<pre>%s</pre>
+<h2>Decoded:</h2>
+<pre>%s</pre>
+<p><a href="/vulns/misc/base64-param-post">Back</a></p>
+</body></html>`, encoded, string(decodedBytes))
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Base64 Encoded Parameter (POST)</title></head>
+<body>
+<h1>Base64 Encoded Data in POST Parameter</h1>
+<form method="POST">
+    <input type="hidden" name="data" value="%s">
+    <button type="submit">Submit</button>
+</form>
+<h3>Vulnerability:</h3>
+<p><small>Base64 encoded data in POST may contain sensitive information</small></p>
+<p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</body></html>`, defaultData)
+}
+
+func inputTransformation(w http.ResponseWriter, r *http.Request) {
+	input := r.URL.Query().Get("input")
+	if input == "" {
+		input = "%3Cscript%3Ealert(1)%3C/script%3E"
+	}
+
+	// VULNERABLE: Apply transformation that could enable attacks
+	// Remove non-alphanumeric except %
+	re := regexp.MustCompile(`[^a-zA-Z0-9%]`)
+	transformed := re.ReplaceAllString(input, "")
+
+	// URL decode the result
+	decoded := transformed
+	if d, err := urlDecode(transformed); err == nil {
+		decoded = d
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Suspicious Input Transformation</title></head>
+<body>
+<h1>Suspicious Input Transformation</h1>
+<form method="GET">
+    <textarea name="input" style="width:300px;height:50px">%s</textarea><br>
+    <button type="submit">Transform</button>
+</form>
+
+<h2>Input:</h2>
+<pre>%s</pre>
+
+<h2>After removing non-alphanumeric (except %%):</h2>
+<pre>%s</pre>
+
+<h2>After URL decoding:</h2>
+<pre>%s</pre>
+
+<h3>Vulnerability:</h3>
+<p><small>Input transformations can enable filter bypasses</small></p>
+<p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</body></html>`, input, input, transformed, decoded)
+}
+
+func urlDecode(s string) (string, error) {
+	result := strings.Builder{}
+	i := 0
+	for i < len(s) {
+		if s[i] == '%' && i+2 < len(s) {
+			var val byte
+			_, err := fmt.Sscanf(s[i:i+3], "%%%02x", &val)
+			if err == nil {
+				result.WriteByte(val)
+				i += 3
+				continue
+			}
+		}
+		result.WriteByte(s[i])
+		i++
+	}
+	return result.String(), nil
+}
+
+func bigRedirect(w http.ResponseWriter, r *http.Request) {
+	target := r.URL.Query().Get("url")
+	if target == "" {
+		target = "http://example.com/"
+	}
+
+	// Generate large response body before redirect
+	w.Header().Set("Location", target)
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusFound)
+
+	// Large body in redirect response (unusual, potential for cache poisoning)
+	body := strings.Repeat("A", 10000)
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<h1>Redirecting to %s</h1>
+<p>Please wait...</p>
+<div style="display:none">%s</div>
+</body></html>`, target, body)
 }
