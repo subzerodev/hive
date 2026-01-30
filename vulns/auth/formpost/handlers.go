@@ -13,6 +13,7 @@ func init() {
 		handlers.Handle("/vulns/auth/form-post/login", login)
 		handlers.Handle("/vulns/auth/form-post/dashboard", dashboard)
 		handlers.Handle("/vulns/auth/form-post/logout", logout)
+		handlers.Handle("/vulns/auth/form-post/session", session)
 	})
 }
 
@@ -26,7 +27,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 			http.SetCookie(w, &http.Cookie{
 				Name:     "session_formpost",
 				Value:    "authenticated_admin",
-				Path:     "/vulns/auth/form-post/",
+				Path:     "/",
 				Expires:  time.Now().Add(24 * time.Hour),
 				HttpOnly: true,
 			})
@@ -83,8 +84,19 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &http.Cookie{
 		Name:    "session_formpost",
 		Value:   "",
-		Path:    "/vulns/auth/form-post/",
+		Path:    "/",
 		Expires: time.Unix(0, 0),
 	})
 	http.Redirect(w, r, "/vulns/auth/form-post/login", http.StatusFound)
+}
+
+func session(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	cookie, err := r.Cookie("session_formpost")
+	if err == nil && cookie.Value == "authenticated_admin" {
+		fmt.Fprintf(w, `{"authenticated":true,"user":"admin"}`)
+		return
+	}
+	w.WriteHeader(http.StatusUnauthorized)
+	fmt.Fprintf(w, `{"authenticated":false}`)
 }
