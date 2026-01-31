@@ -37,6 +37,7 @@ func protected(w http.ResponseWriter, r *http.Request) {
 <p>Successfully authenticated via HTTP Basic auth.</p>
 <p>Welcome, %s!</p>
 </div>
+<script src="/static/js/navbar.js"></script>
 </body></html>`, username)
 }
 
