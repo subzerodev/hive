@@ -124,6 +124,17 @@ func main() {
 	// API endpoints
 	http.HandleFunc("/api/reset", api.ResetHandler)
 
+	// Auth info endpoint for navbar
+	http.HandleFunc("/api/auth-info", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		if authType == "none" {
+			w.Write([]byte(`{"auth_type":"none"}`))
+			return
+		}
+		fmt.Fprintf(w, `{"auth_type":"%s","session_endpoint":"/vulns/auth/%s/session","dashboard_url":"/vulns/auth/%s/dashboard","logout_url":"/vulns/auth/%s/logout"}`,
+			authType, authType, authType, authType)
+	})
+
 	// Combined handler for /vulns/ - serves static files first, then dynamic handlers
 	vulnsFs := http.FileServer(http.Dir("./vulns"))
 	vulnsHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
