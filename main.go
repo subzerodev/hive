@@ -10,6 +10,7 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/subzerodev/hive/analysis"
 	"github.com/subzerodev/hive/api"
 	"github.com/subzerodev/hive/auth"
 	"github.com/subzerodev/hive/db"
@@ -85,6 +86,16 @@ func main() {
 	// Initialize databases
 	db.Init()
 	defer db.Close()
+
+	// Initialize analysis database
+	analysisDBPath := os.Getenv("ANALYSIS_DB")
+	if analysisDBPath == "" {
+		analysisDBPath = "analysis.db"
+	}
+	if err := analysis.InitDB(analysisDBPath); err != nil {
+		log.Fatalf("Failed to initialize analysis DB: %v", err)
+	}
+	defer analysis.CloseDB()
 
 	// Initialize templates
 	templates.Init()
@@ -162,7 +173,8 @@ func main() {
 		handlers.Mux().ServeHTTP(w, r)
 	})
 
-	http.Handle("/vulns/", auth.Middleware(authType, vulnsHandler))
+	vulnsHandlerWithAnalysis := analysis.Middleware(vulnsHandler)
+	http.Handle("/vulns/", auth.Middleware(authType, vulnsHandlerWithAnalysis))
 
 	// Root redirect to vulns
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -186,6 +198,18 @@ func main() {
 		log.Println("Shutting down...")
 		db.Close()
 		os.Exit(0)
+	}()
+
+	// Start analysis UI server on separate port
+	analysisPort := os.Getenv("ANALYSIS_PORT")
+	if analysisPort == "" {
+		analysisPort = "8081"
+	}
+	go func() {
+		templatesDir := "analysis/templates"
+		if err := analysis.StartServer(":"+analysisPort, templatesDir); err != nil {
+			log.Printf("Analysis server error: %v", err)
+		}
 	}()
 
 	log.Printf("HIVE starting on port %s", port)
