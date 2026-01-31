@@ -1,7 +1,6 @@
 package reflected
 
 import (
-	"fmt"
 	"html"
 	"html/template"
 	"net/http"
@@ -30,7 +29,7 @@ func htmlBody(w http.ResponseWriter, r *http.Request) {
 		Title:     "Reflected XSS - HTML Body",
 		Heading:   "Reflected XSS - HTML Body",
 		FormValue: html.EscapeString(name),
-		OutputRaw: template.HTML(name), // VULNERABLE: unescaped
+		OutputRaw: template.HTML(name),
 	})
 }
 
@@ -41,23 +40,12 @@ func attribute(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html")
-	// VULNERABLE: Unescaped in attribute context
-	fmt.Fprintf(w, `<!DOCTYPE html>
-<html>
-<head>
-<title>Reflected XSS - Attribute</title>
-<link rel="stylesheet" href="/static/css/hive.css">
-</head>
-<body>
-<div class="container">
-<h1 style="color: %s">Colored Text</h1>
-<form method="GET">
-    <input name="color" value="%s" placeholder="Color">
-    <button type="submit">Change Color</button>
-</form>
-<p><small>Try: red" onmouseover="alert(1)</small></p>
-</div>
-</body></html>`, color, html.EscapeString(color))
+	templates.Render(w, "xss/reflected/attribute", templates.Page{
+		Title:     "Reflected XSS - Attribute",
+		Heading:   "Reflected XSS - Attribute",
+		FormValue: html.EscapeString(color),
+		OutputRaw: template.HTML(color),
+	})
 }
 
 func javascript(w http.ResponseWriter, r *http.Request) {
@@ -67,27 +55,12 @@ func javascript(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html")
-	// VULNERABLE: Unescaped in JavaScript context
-	fmt.Fprintf(w, `<!DOCTYPE html>
-<html>
-<head>
-<title>Reflected XSS - JavaScript</title>
-<link rel="stylesheet" href="/static/css/hive.css">
-</head>
-<body>
-<div class="container">
-<h1>Message Display</h1>
-<form method="GET">
-    <input name="msg" value="%s" placeholder="Message">
-    <button type="submit">Show Message</button>
-</form>
-<script>
-var message = "%s";
-document.write("<p>" + message + "</p>");
-</script>
-<p><small>Try: ";alert(1);//</small></p>
-</div>
-</body></html>`, html.EscapeString(msg), msg)
+	templates.Render(w, "xss/reflected/javascript", templates.Page{
+		Title:     "Reflected XSS - JavaScript",
+		Heading:   "Reflected XSS - JavaScript",
+		FormValue: html.EscapeString(msg),
+		OutputRaw: template.HTML(msg),
+	})
 }
 
 func fpEscaped(w http.ResponseWriter, r *http.Request) {
@@ -96,23 +69,12 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 		name = "Guest"
 	}
 
-	w.Header().Set("Content-Type", "text/html")
-	// SAFE: Properly escaped
 	escaped := html.EscapeString(name)
-	fmt.Fprintf(w, `<!DOCTYPE html>
-<html>
-<head>
-<title>Reflected XSS - Safe</title>
-<link rel="stylesheet" href="/static/css/hive.css">
-</head>
-<body>
-<div class="container">
-<h1>Welcome, %s!</h1>
-<form method="GET">
-    <input name="name" value="%s" placeholder="Your name">
-    <button type="submit">Submit</button>
-</form>
-<p><small>Input is properly escaped</small></p>
-</div>
-</body></html>`, escaped, escaped)
+	w.Header().Set("Content-Type", "text/html")
+	templates.Render(w, "xss/reflected/fp/escaped", templates.Page{
+		Title:     "Reflected XSS - Safe",
+		Heading:   "Reflected XSS - Safe (Escaped)",
+		FormValue: escaped,
+		Output:    escaped,
+	})
 }
