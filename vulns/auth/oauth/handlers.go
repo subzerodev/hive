@@ -131,6 +131,7 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 <h1>Dashboard (OAuth)</h1>
 <p>Successfully authenticated via OAuth flow.</p>
 </div>
+<script src="/static/js/navbar.js"></script>
 </body></html>`)
 }
 
