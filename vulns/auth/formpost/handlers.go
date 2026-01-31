@@ -90,8 +90,8 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 <div class="container">
 <h1>Dashboard (Form POST Auth)</h1>
 <p>Welcome, admin! You are authenticated via form POST.</p>
-<p><a href="/vulns/auth/form-post/logout">Logout</a></p>
 </div>
+<script src="/static/js/navbar.js"></script>
 </body></html>`)
 }
 
