@@ -17,6 +17,7 @@ WORKDIR /app
 COPY --from=builder /app/hive .
 COPY static/ ./static/
 COPY vulns/ ./vulns/
+COPY templates/ ./templates/
 COPY robots.txt sitemap.xml crossdomain.xml clientaccesspolicy.xml ./
 
 EXPOSE 8080
