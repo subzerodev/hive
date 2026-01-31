@@ -12,7 +12,9 @@ import (
 func init() {
 	handlers.Register(func() {
 		handlers.Handle("/vulns/auth/ajax-json/login", login)
+		handlers.Handle("/vulns/auth/ajax-json/dashboard", dashboard)
 		handlers.Handle("/vulns/auth/ajax-json/api/user", apiUser)
+		handlers.Handle("/vulns/auth/ajax-json/logout", logout)
 		handlers.Handle("/vulns/auth/ajax-json/session", session)
 	})
 }
@@ -77,7 +79,7 @@ async function login() {
     const data = await resp.json();
     document.getElementById('result').textContent = JSON.stringify(data);
     if (data.success) {
-        window.location = '/vulns/auth/ajax-json/api/user';
+        window.location = '/vulns/auth/ajax-json/dashboard';
     }
 }
 </script>
@@ -97,6 +99,39 @@ func apiUser(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, `{"user": "admin", "role": "administrator", "authenticated": true}`)
+}
+
+func dashboard(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_ajax")
+	if err != nil || cookie.Value != "authenticated_admin" {
+		http.Redirect(w, r, "/vulns/auth/ajax-json/login", http.StatusFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprintf(w, `<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
+<body>
+<div class="container">
+<h1>Dashboard (AJAX JSON Auth)</h1>
+<p>Welcome, admin! You are authenticated via AJAX JSON.</p>
+</div>
+<script src="/static/js/navbar.js"></script>
+</body></html>`)
+}
+
+func logout(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session_ajax",
+		Value:   "",
+		Path:    "/",
+		Expires: time.Unix(0, 0),
+	})
+	http.Redirect(w, r, "/vulns/auth/ajax-json/login", http.StatusFound)
 }
 
 func session(w http.ResponseWriter, r *http.Request) {
