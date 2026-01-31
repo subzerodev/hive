@@ -103,6 +103,7 @@ async function testProtected(token) {
 </script>
 <p><small>Credentials: admin / password</small></p>
 </div>
+<script src="/static/js/navbar.js"></script>
 </body></html>`)
 }
 
