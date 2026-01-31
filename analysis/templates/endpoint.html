@@ -1,0 +1,33 @@
+{{define "content"}}
+<div class="back"><a href="/sessions/{{.Session.ID}}/{{.Category}}">← Back to {{.Category}}</a></div>
+
+<h1>{{.Path}}</h1>
+<p class="subtitle">
+    Baseline: {{if .Baseline}}{{.Baseline.Param}}={{.Baseline.Value}}{{else}}No baseline set{{end}}
+</p>
+
+<h2>Payloads Received ({{.TotalPayloads}})</h2>
+
+{{if .Payloads}}
+{{range .Payloads}}
+<div class="payload-box">
+    <code>{{.NormalizedValue}}</code>
+    <span class="count-badge">×{{.Count}}</span>
+    {{if gt (len .Examples) 0}}
+    <details style="margin-top:10px;">
+        <summary style="cursor:pointer; color:#888;">Show examples</summary>
+        <ul style="margin-top:5px;">
+            {{range .Examples}}
+            <li style="word-break:break-all; font-size:12px;">{{.}}</li>
+            {{end}}
+        </ul>
+    </details>
+    {{end}}
+</div>
+{{end}}
+{{else}}
+<div class="card">
+    <p>No payloads detected for this endpoint. Scanner may have only crawled without testing.</p>
+</div>
+{{end}}
+{{end}}

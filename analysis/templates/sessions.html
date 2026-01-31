@@ -1,0 +1,64 @@
+{{define "content"}}
+<div class="header-row">
+    <div>
+        <h1>HIVE Scanner Analysis</h1>
+        <p class="subtitle">Payload visibility for security scanner testing</p>
+    </div>
+    <div>
+        {{if .Recording}}
+            <span class="recording">● Recording: {{.CurrentSession}}</span>
+            <form method="POST" action="/sessions/stop" style="display:inline; margin-left:10px;">
+                <button type="submit" class="btn btn-danger">Stop Recording</button>
+            </form>
+        {{else}}
+            <form method="POST" action="/sessions/start" style="display:inline;">
+                <input type="text" name="name" placeholder="Session name (e.g., Burp Full Scan)" required>
+                <button type="submit" class="btn">Start Recording</button>
+            </form>
+        {{end}}
+    </div>
+</div>
+
+{{if .Sessions}}
+<table>
+    <thead>
+        <tr>
+            <th>Session</th>
+            <th>Scanner</th>
+            <th>Requests</th>
+            <th>Payloads</th>
+            <th>Coverage</th>
+            <th>Duration</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Sessions}}
+        <tr>
+            <td>
+                <strong>{{.Name}}</strong><br>
+                <small style="color:#888">{{.StartedAt.Format "2006-01-02 15:04"}}</small>
+            </td>
+            <td>{{if .UserAgent}}{{.UserAgent}}{{else}}-{{end}}</td>
+            <td>{{.RequestCount}}</td>
+            <td>{{.PayloadCount}}</td>
+            <td>-</td>
+            <td>{{if .EndedAt}}{{duration .StartedAt .EndedAt}}{{else}}ongoing{{end}}</td>
+            <td>
+                <a href="/sessions/{{.ID}}">View →</a>
+                {{if .EndedAt}}
+                <form method="POST" action="/sessions/{{.ID}}/delete" style="display:inline; margin-left:10px;">
+                    <button type="submit" class="btn btn-danger" style="padding:5px 10px; font-size:12px;" onclick="return confirm('Delete this session?')">Delete</button>
+                </form>
+                {{end}}
+            </td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{else}}
+<div class="card">
+    <p>No scan sessions yet. Start recording and run a scanner against HIVE on port 8080.</p>
+</div>
+{{end}}
+{{end}}

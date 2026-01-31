@@ -1,0 +1,48 @@
+{{define "content"}}
+<div class="back"><a href="/">← Back to Sessions</a></div>
+
+<h1>{{.Session.Name}}</h1>
+<p class="subtitle">
+    {{.Session.StartedAt.Format "2006-01-02 15:04"}} |
+    {{.Session.RequestCount}} requests |
+    {{.Session.PayloadCount}} payloads |
+    Scanner: {{if .Session.UserAgent}}{{.Session.UserAgent}}{{else}}Unknown{{end}}
+</p>
+
+<h2>Coverage Matrix</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Endpoints</th>
+            <th>Crawled</th>
+            <th>Payloads</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Coverage}}
+        <tr>
+            <td><a href="/sessions/{{$.Session.ID}}/{{.Category}}">{{.Category}}</a></td>
+            <td>{{.TotalEndpoints}}</td>
+            <td>{{.CrawledEndpoints}}</td>
+            <td>{{.PayloadCount}}</td>
+            <td class="status-{{.Status}}">
+                {{if eq .Status "full"}}✓ Full{{end}}
+                {{if eq .Status "partial"}}⚠ Partial{{end}}
+                {{if eq .Status "missed"}}✗ Missed{{end}}
+                {{if eq .Status "none"}}- None{{end}}
+            </td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+
+<div class="card">
+    <h3>Summary</h3>
+    <p>
+        <strong>Total Endpoints Crawled:</strong> {{.TotalCrawled}} / {{.TotalKnown}}<br>
+        <strong>Coverage:</strong> {{printf "%.0f" .CoveragePercent}}%
+    </p>
+</div>
+{{end}}

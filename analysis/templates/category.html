@@ -1,0 +1,27 @@
+{{define "content"}}
+<div class="back"><a href="/sessions/{{.Session.ID}}">← Back to Coverage</a></div>
+
+<h1>{{.Category}}</h1>
+<p class="subtitle">{{len .Endpoints}} endpoints crawled</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Endpoint</th>
+            <th>Baseline</th>
+            <th>Payloads</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Endpoints}}
+        <tr>
+            <td><code>{{.Path}}</code></td>
+            <td>{{if .BaselineParam}}{{.BaselineParam}}={{.BaselineValue}}{{else}}-{{end}}</td>
+            <td>{{.PayloadCount}}</td>
+            <td><a href="/sessions/{{$.Session.ID}}/endpoint?path={{.Path}}">View →</a></td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{end}}
