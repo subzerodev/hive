@@ -14,6 +14,7 @@ import (
 	"github.com/subzerodev/hive/auth"
 	"github.com/subzerodev/hive/db"
 	"github.com/subzerodev/hive/handlers"
+	"github.com/subzerodev/hive/templates"
 
 	_ "github.com/subzerodev/hive/vulns/injection/command"
 	_ "github.com/subzerodev/hive/vulns/injection/code"
@@ -84,6 +85,9 @@ func main() {
 	// Initialize databases
 	db.Init()
 	defer db.Close()
+
+	// Initialize templates
+	templates.Init()
 
 	// Read auth type
 	authType := os.Getenv("AUTH_TYPE")
