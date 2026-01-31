@@ -119,6 +119,7 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 <h1>Dashboard (Multi-Step Auth)</h1>
 <p>Successfully authenticated via multi-step flow.</p>
 </div>
+<script src="/static/js/navbar.js"></script>
 </body></html>`)
 }
 
