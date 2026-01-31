@@ -1,0 +1,8 @@
+{{define "content"}}
+<form method="GET">
+    <input name="name" value="{{.FormValue}}" placeholder="Your name">
+    <button type="submit">Submit</button>
+</form>
+<p>Welcome, {{.OutputRaw}}!</p>
+<p><small>Try: &lt;script&gt;alert(1)&lt;/script&gt;</small></p>
+{{end}}
