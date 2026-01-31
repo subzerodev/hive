@@ -130,13 +130,45 @@ vulns/
 │   └── subcategory/
 │       ├── index.html      # Subcategory landing page
 │       └── handlers.go     # Go handler implementations
+
+templates/
+├── base.html               # Base layout (head, CSS, container)
+├── templates.go            # Render helper and Page struct
+└── vulns/
+    └── category/
+        └── subcategory/
+            ├── vulnerable.html
+            └── fp/safe.html
 ```
 
 ### Creating a New Vulnerability Handler
 
-1. **Create the package directory:**
-   ```bash
-   mkdir -p vulns/category/subcategory
+HIVE uses Go's `html/template` package with a base layout for cleaner handler code.
+
+1. **Create the template files:**
+
+   Create `templates/vulns/category/subcategory/vulnerable.html`:
+   ```html
+   {{define "content"}}
+   <form method="GET">
+       <input name="input" value="{{.FormValue}}" placeholder="Input">
+       <button type="submit">Submit</button>
+   </form>
+   <div class="result">Result: {{.OutputRaw}}</div>
+   <p><small>Try: &lt;script&gt;alert(1)&lt;/script&gt;</small></p>
+   {{end}}
+   ```
+
+   Create `templates/vulns/category/subcategory/fp/safe.html`:
+   ```html
+   {{define "content"}}
+   <form method="GET">
+       <input name="input" value="{{.FormValue}}" placeholder="Input">
+       <button type="submit">Submit</button>
+   </form>
+   <div class="result">Result: {{.Output}}</div>
+   <p><small>Input is properly escaped</small></p>
+   {{end}}
    ```
 
 2. **Create `handlers.go`:**
@@ -144,17 +176,17 @@ vulns/
    package subcategory
 
    import (
-       "fmt"
+       "html"
+       "html/template"
        "net/http"
-       "hive/handlers"
+
+       "github.com/subzerodev/hive/handlers"
+       "github.com/subzerodev/hive/templates"
    )
 
    func init() {
        handlers.Register(func() {
-           // Vulnerable endpoint
            handlers.Handle("/vulns/category/subcategory/vulnerable", vulnerable)
-
-           // False positive (safe) endpoint
            handlers.Handle("/vulns/category/subcategory/fp/safe", fpSafe)
        })
    }
@@ -163,48 +195,25 @@ vulns/
        input := r.URL.Query().Get("input")
 
        w.Header().Set("Content-Type", "text/html")
-       fmt.Fprintf(w, `<!DOCTYPE html>
-   <html>
-   <head>
-       <title>Vulnerable Endpoint - HIVE</title>
-       <link rel="stylesheet" href="/static/css/hive.css">
-   </head>
-   <body>
-       <div class="container">
-           <div class="back"><a href="..">&larr; Back</a></div>
-           <h1>Vulnerable Endpoint</h1>
-           <form>
-               <input type="text" name="input" value="%s">
-               <button type="submit">Submit</button>
-           </form>
-           <div class="result">Result: %s</div>
-       </div>
-   </body>
-   </html>`, input, input) // Vulnerable: unescaped output
+       templates.Render(w, "category/subcategory/vulnerable", templates.Page{
+           Title:     "Vulnerable Endpoint",
+           Heading:   "Vulnerable Endpoint",
+           FormValue: html.EscapeString(input),
+           OutputRaw: template.HTML(input), // VULNERABLE: unescaped
+       })
    }
 
    func fpSafe(w http.ResponseWriter, r *http.Request) {
        input := r.URL.Query().Get("input")
+       escaped := html.EscapeString(input)
 
        w.Header().Set("Content-Type", "text/html")
-       fmt.Fprintf(w, `<!DOCTYPE html>
-   <html>
-   <head>
-       <title>Safe Endpoint - HIVE</title>
-       <link rel="stylesheet" href="/static/css/hive.css">
-   </head>
-   <body>
-       <div class="container">
-           <div class="back"><a href="..">&larr; Back</a></div>
-           <h1>Safe Endpoint (False Positive)</h1>
-           <form>
-               <input type="text" name="input">
-               <button type="submit">Submit</button>
-           </form>
-           <div class="result">Result: %s</div>
-       </div>
-   </body>
-   </html>`, html.EscapeString(input)) // Safe: escaped output
+       templates.Render(w, "category/subcategory/fp/safe", templates.Page{
+           Title:     "Safe Endpoint",
+           Heading:   "Safe Endpoint (False Positive)",
+           FormValue: escaped,
+           Output:    escaped, // SAFE: escaped
+       })
    }
    ```
 
@@ -258,11 +267,15 @@ db.Query("SELECT * FROM users WHERE id = ?", id)
 
 **XSS:**
 ```go
-// Vulnerable - direct output
-fmt.Fprintf(w, "<div>%s</div>", userInput)
+// Vulnerable - use OutputRaw (template.HTML bypasses escaping)
+templates.Render(w, "path/to/template", templates.Page{
+    OutputRaw: template.HTML(userInput),
+})
 
-// Safe - escaped output
-fmt.Fprintf(w, "<div>%s</div>", html.EscapeString(userInput))
+// Safe - use Output (auto-escaped by template engine)
+templates.Render(w, "path/to/template", templates.Page{
+    Output: userInput,
+})
 ```
 
 **Command Injection:**
@@ -308,6 +321,10 @@ hive/
 ├── main.go              # Entry point, routing, static files
 ├── handlers/
 │   └── handlers.go      # Handler registration system
+├── templates/
+│   ├── base.html        # Base layout template
+│   ├── templates.go     # Render() helper and Page struct
+│   └── vulns/           # Content templates for handlers
 ├── auth/
 │   ├── middleware.go    # Auth middleware dispatcher
 │   └── validators.go    # Auth type validators
