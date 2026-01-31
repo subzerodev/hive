@@ -30,8 +30,11 @@ func httpSSRF(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSRF - HTTP</title></head>
+<head><title>SSRF - HTTP</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>URL Fetcher</h1>
 <form method="GET">
     <input name="url" placeholder="URL to fetch" value="http://example.com" style="width:300px">
@@ -44,6 +47,7 @@ func httpSSRF(w http.ResponseWriter, r *http.Request) {
     <li><a href="?url=file:///etc/passwd">File: /etc/passwd</a></li>
 </ul>
 <p><small>VULNERABLE: No URL validation - can access internal services</small></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -52,7 +56,7 @@ func httpSSRF(w http.ResponseWriter, r *http.Request) {
 	resp, err := http.Get(targetURL)
 	if err != nil {
 		w.Header().Set("Content-Type", "text/html")
-		fmt.Fprintf(w, `<html><body><h1>Error</h1><pre>%v</pre><a href="/vulns/ssrf/http">Back</a></body></html>`, err)
+		fmt.Fprintf(w, `<html><head><link rel="stylesheet" href="/static/css/hive.css"></head><body><div class="container"><h1>Error</h1><pre>%v</pre><a href="/vulns/ssrf/http">Back</a></div></body></html>`, err)
 		return
 	}
 	defer resp.Body.Close()
@@ -62,13 +66,17 @@ func httpSSRF(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSRF - Result</title></head>
+<head><title>SSRF - Result</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Fetched: %s</h1>
 <p>Status: %s</p>
 <h2>Content:</h2>
 <pre>%s</pre>
 <a href="/vulns/ssrf/http">Back</a>
+</div>
 </body></html>`, targetURL, resp.Status, string(body))
 }
 
@@ -78,8 +86,11 @@ func dnsSSRF(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSRF - DNS</title></head>
+<head><title>SSRF - DNS</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>DNS Lookup</h1>
 <form method="GET">
     <input name="host" placeholder="Hostname to lookup" value="example.com" style="width:300px">
@@ -92,6 +103,7 @@ func dnsSSRF(w http.ResponseWriter, r *http.Request) {
     <li><a href="?host=169.254.169.254">AWS metadata (169.254.169.254)</a></li>
 </ul>
 <p><small>VULNERABLE: No hostname validation - can resolve internal DNS</small></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -100,15 +112,18 @@ func dnsSSRF(w http.ResponseWriter, r *http.Request) {
 	ips, err := net.LookupIP(hostname)
 	if err != nil {
 		w.Header().Set("Content-Type", "text/html")
-		fmt.Fprintf(w, `<html><body><h1>DNS Error</h1><pre>%v</pre><a href="/vulns/ssrf/dns">Back</a></body></html>`, err)
+		fmt.Fprintf(w, `<html><head><link rel="stylesheet" href="/static/css/hive.css"></head><body><div class="container"><h1>DNS Error</h1><pre>%v</pre><a href="/vulns/ssrf/dns">Back</a></div></body></html>`, err)
 		return
 	}
 
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSRF - DNS Result</title></head>
+<head><title>SSRF - DNS Result</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>DNS Lookup: %s</h1>
 <h2>Resolved IPs:</h2>
 <ul>`, hostname)
@@ -117,6 +132,7 @@ func dnsSSRF(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, `</ul>
 <a href="/vulns/ssrf/dns">Back</a>
+</div>
 </body></html>`)
 }
 
@@ -126,14 +142,18 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSRF - Safe</title></head>
+<head><title>SSRF - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>URL Fetcher (Safe)</h1>
 <form method="GET">
     <input name="url" placeholder="URL to fetch" value="http://example.com" style="width:300px">
     <button type="submit">Fetch</button>
 </form>
 <p><small>SAFE: Only external HTTPS URLs allowed</small></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -173,12 +193,16 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSRF - Result</title></head>
+<head><title>SSRF - Result</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Fetched (Safe): %s</h1>
 <p>Status: %s</p>
 <pre>%s</pre>
 <a href="/vulns/ssrf/fp/validated">Back</a>
+</div>
 </body></html>`, targetURL, resp.Status, string(body))
 }
 
@@ -192,8 +216,11 @@ func oobHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Out-of-Band HTTP Load</title></head>
+<head><title>Out-of-Band HTTP Load</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Out-of-Band Resource Load (HTTP)</h1>
 <p>Server makes HTTP request to user-controlled URL.</p>
 
@@ -215,6 +242,7 @@ log.Printf("Webhook response: %%s", response.Status)</pre>
 <h3>Vulnerability:</h3>
 <p><small>Server performs HTTP request to attacker-controlled URL</small></p>
 <p><a href="/vulns/ssrf/">Back to SSRF</a></p>
+</div>
 </body></html>`, callback)
 
 	// Simulate the out-of-band HTTP request (in real app this would be background)
@@ -235,8 +263,11 @@ func oobDNS(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Out-of-Band DNS Load</title></head>
+<head><title>Out-of-Band DNS Load</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Out-of-Band Resource Load (DNS)</h1>
 <p>Server performs DNS lookup on user-controlled domain.</p>
 
@@ -258,6 +289,7 @@ ips, _ := net.LookupIP(userDomain)
 <h3>Vulnerability:</h3>
 <p><small>Server performs DNS lookup to attacker-controlled domain</small></p>
 <p><a href="/vulns/ssrf/">Back to SSRF</a></p>
+</div>
 </body></html>`, domain)
 
 	// Simulate the out-of-band DNS lookup
@@ -276,8 +308,11 @@ func oobImage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Out-of-Band Image Load</title></head>
+<head><title>Out-of-Band Image Load</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Out-of-Band Resource Load (Image)</h1>
 <p>Page loads image from user-controlled URL.</p>
 
@@ -298,5 +333,6 @@ processImage(imageData)</pre>
 <h3>Vulnerability:</h3>
 <p><small>External resource loaded from user-controlled URL</small></p>
 <p><a href="/vulns/ssrf/">Back to SSRF</a></p>
+</div>
 </body></html>`, imgURL, imgURL)
 }

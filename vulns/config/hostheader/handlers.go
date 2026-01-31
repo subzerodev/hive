@@ -21,13 +21,17 @@ func injection(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Host Header Injection</title></head>
+<head><title>Host Header Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Password Reset</h1>
 <p>Reset link would be sent to:</p>
 <pre>https://%s/reset?token=abc123</pre>
 <p>Try: curl -H "Host: evil.com" this-url</p>
 <p><small>VULNERABLE: Host header reflected in password reset URL</small></p>
+</div>
 </body></html>`, host)
 }
 
@@ -48,11 +52,15 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Host Header - Validated</title></head>
+<head><title>Host Header - Validated</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Password Reset (Protected)</h1>
 <p>Reset link uses validated host:</p>
 <pre>https://%s/reset?token=abc123</pre>
 <p><small>SAFE: Host header validated against whitelist</small></p>
+</div>
 </body></html>`, host)
 }

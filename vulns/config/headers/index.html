@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Security Headers - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/config/">&larr; Back to Configuration</a></div>
-    <h1>Security Headers</h1>
-    <p>HTTP security header misconfigurations.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Security Headers</h1>
+        <p>HTTP security header misconfigurations.</p>
 
-    <h2 class="vuln">X-XSS-Protection</h2>
-    <ul>
-        <li><a href="/vulns/config/headers/xss-filter-disabled">XSS Filter Disabled</a> - X-XSS-Protection: 0</li>
-        <li><a href="/vulns/config/headers/xss-filter-enabled">XSS Filter (No Block)</a> - Missing mode=block</li>
-        <li><a href="/vulns/config/headers/fp/xss-filter-block">XSS Filter Block</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">X-XSS-Protection</h2>
+        <ul>
+            <li><a href="/vulns/config/headers/xss-filter-disabled">XSS Filter Disabled</a> - X-XSS-Protection: 0</li>
+            <li><a href="/vulns/config/headers/xss-filter-enabled">XSS Filter (No Block)</a> - Missing mode=block</li>
+            <li><a href="/vulns/config/headers/fp/xss-filter-block">XSS Filter Block</a> - SAFE</li>
+        </ul>
 
-    <h2 class="vuln">IP Spoofing Headers</h2>
-    <ul>
-        <li><a href="/vulns/config/headers/xff-bypass">X-Forwarded-For Bypass</a> - IP-based auth bypass</li>
-        <li><a href="/vulns/config/headers/client-ip-bypass">Client IP Spoofing</a> - Multiple headers trusted</li>
-        <li><a href="/vulns/config/headers/fp/xff-validated">XFF Validated</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">IP Spoofing Headers</h2>
+        <ul>
+            <li><a href="/vulns/config/headers/xff-bypass">X-Forwarded-For Bypass</a> - IP-based auth bypass</li>
+            <li><a href="/vulns/config/headers/client-ip-bypass">Client IP Spoofing</a> - Multiple headers trusted</li>
+            <li><a href="/vulns/config/headers/fp/xff-validated">XFF Validated</a> - SAFE</li>
+        </ul>
 
-    <h2 class="vuln">Content-Type Issues</h2>
-    <ul>
-        <li><a href="/vulns/config/headers/multiple-content-types">Multiple Content-Types</a> - Ambiguous</li>
-        <li><a href="/vulns/config/headers/fp/single-content-type">Single Content-Type</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">Content-Type Issues</h2>
+        <ul>
+            <li><a href="/vulns/config/headers/multiple-content-types">Multiple Content-Types</a> - Ambiguous</li>
+            <li><a href="/vulns/config/headers/fp/single-content-type">Single Content-Type</a> - SAFE</li>
+        </ul>
+    </div>
 </body>
 </html>

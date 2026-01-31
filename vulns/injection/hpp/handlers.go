@@ -37,8 +37,12 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Parameter Pollution - Basic</title></head>
+<head>
+<title>HTTP Parameter Pollution - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>HTTP Parameter Pollution - Basic</h1>
 <p>Different backends handle duplicate parameters differently</p>
 
@@ -66,6 +70,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: ?id=1&id=2 to see how duplicates are handled</small></p>
 <p><small>Bypass: ?id=valid&id=malicious may bypass validation on first value</small></p>
 <p><a href="/vulns/injection/hpp/">Back to HPP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -79,8 +84,12 @@ func form(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Parameter Pollution - Form</title></head>
+<head>
+<title>HTTP Parameter Pollution - Form</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>HTTP Parameter Pollution - Form (Transfer)</h1>
 <h2>Transfer Details:</h2>
 <pre id="output">`)
@@ -105,14 +114,19 @@ func form(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `</pre>
 <p><a href="/vulns/injection/hpp/form">Try again</a></p>
 <p><a href="/vulns/injection/hpp/">Back to HPP Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Parameter Pollution - Form</title></head>
+<head>
+<title>HTTP Parameter Pollution - Form</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>HTTP Parameter Pollution - Form (Transfer)</h1>
 <p>Hidden fields can be overridden with duplicate parameters</p>
 <form method="POST">
@@ -125,6 +139,7 @@ func form(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>The hidden fields set safe values, but your input can override them</small></p>
 <p><a href="/vulns/injection/hpp/">Back to HPP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -146,14 +161,18 @@ func wafBypass(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Parameter Pollution - WAF Bypass</title></head>
+<head>
+<title>HTTP Parameter Pollution - WAF Bypass</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>HTTP Parameter Pollution - WAF Bypass</h1>
 <p>WAF only inspects the first parameter value</p>
 
 <h2>Test:</h2>
 <form method="GET">
-    <input name="q" value="" placeholder="Search query" style="width:300px">
+    <input name="q" value="" placeholder="Search query">
     <button type="submit">Search</button>
 </form>
 
@@ -179,6 +198,7 @@ func wafBypass(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: ?q=safe&q=SELECT * FROM users</small></p>
 <p><small>WAF checks first value (safe), app uses last value (malicious)</small></p>
 <p><a href="/vulns/injection/hpp/">Back to HPP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -195,8 +215,12 @@ func fpHandled(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Parameter Pollution - Safe</title></head>
+<head>
+<title>HTTP Parameter Pollution - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>HTTP Parameter Pollution - Safe</h1>
 
 <h2>Test URLs:</h2>
@@ -220,5 +244,6 @@ func fpHandled(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Rejects requests with duplicate parameters</small></p>
 <p><a href="/vulns/injection/hpp/">Back to HPP Tests</a></p>
+</div>
 </body></html>`)
 }

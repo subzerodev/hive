@@ -3,57 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Information Disclosure - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
-    <h1>Information Disclosure</h1>
-    <p>Vulnerabilities where sensitive information is exposed to unauthorized users.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Information Disclosure</h1>
+        <p>Vulnerabilities where sensitive information is exposed to unauthorized users.</p>
 
-    <h2 class="vuln">Private IP Address</h2>
-    <ul>
-        <li><a href="/vulns/disclosure/private-ip">In Page Content</a> - Internal IPs in HTML</li>
-        <li><a href="/vulns/disclosure/private-ip/header">In Headers</a> - Internal IPs in HTTP headers</li>
-    </ul>
+        <h2 class="vuln">Private IP Address</h2>
+        <ul>
+            <li><a href="/vulns/disclosure/private-ip">In Page Content</a> - Internal IPs in HTML</li>
+            <li><a href="/vulns/disclosure/private-ip/header">In Headers</a> - Internal IPs in HTTP headers</li>
+        </ul>
 
-    <h2 class="vuln">Private Key Disclosure</h2>
-    <ul>
-        <li><a href="/vulns/disclosure/private-key/rsa">RSA Private Key</a></li>
-        <li><a href="/vulns/disclosure/private-key/ssh">SSH Private Key</a></li>
-        <li><a href="/vulns/disclosure/private-key/pem">PEM Private Key</a></li>
-        <li><a href="/vulns/disclosure/jwt-key">JWT Signing Key</a></li>
-    </ul>
+        <h2 class="vuln">Private Key Disclosure</h2>
+        <ul>
+            <li><a href="/vulns/disclosure/private-key/rsa">RSA Private Key</a></li>
+            <li><a href="/vulns/disclosure/private-key/ssh">SSH Private Key</a></li>
+            <li><a href="/vulns/disclosure/private-key/pem">PEM Private Key</a></li>
+            <li><a href="/vulns/disclosure/jwt-key">JWT Signing Key</a></li>
+        </ul>
 
-    <h2 class="vuln">PII Disclosure</h2>
-    <ul>
-        <li><a href="/vulns/disclosure/ssn">Social Security Numbers</a></li>
-        <li><a href="/vulns/disclosure/credit-card">Credit Card Numbers</a></li>
-        <li><a href="/vulns/disclosure/email">Internal Email Addresses</a></li>
-    </ul>
+        <h2 class="vuln">PII Disclosure</h2>
+        <ul>
+            <li><a href="/vulns/disclosure/ssn">Social Security Numbers</a></li>
+            <li><a href="/vulns/disclosure/credit-card">Credit Card Numbers</a></li>
+            <li><a href="/vulns/disclosure/email">Internal Email Addresses</a></li>
+        </ul>
 
-    <h2 class="vuln">Database Credentials</h2>
-    <ul>
-        <li><a href="/vulns/disclosure/db-connection">Connection Strings</a></li>
-        <li><a href="/vulns/disclosure/db-connection/env">Environment Variables</a></li>
-    </ul>
+        <h2 class="vuln">Database Credentials</h2>
+        <ul>
+            <li><a href="/vulns/disclosure/db-connection">Connection Strings</a></li>
+            <li><a href="/vulns/disclosure/db-connection/env">Environment Variables</a></li>
+        </ul>
 
-    <h2 class="vuln">Directory Listing</h2>
-    <ul>
-        <li><a href="/vulns/disclosure/directory-listing">Generic Listing</a></li>
-        <li><a href="/vulns/disclosure/directory-listing/apache">Apache Style</a></li>
-        <li><a href="/vulns/disclosure/directory-listing/nginx">Nginx Style</a></li>
-    </ul>
+        <h2 class="vuln">Directory Listing</h2>
+        <ul>
+            <li><a href="/vulns/disclosure/directory-listing">Generic Listing</a></li>
+            <li><a href="/vulns/disclosure/directory-listing/apache">Apache Style</a></li>
+            <li><a href="/vulns/disclosure/directory-listing/nginx">Nginx Style</a></li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/disclosure/fp/redacted">Properly Redacted</a> - Sensitive data masked</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/disclosure/fp/redacted">Properly Redacted</a> - Sensitive data masked</li>
+        </ul>
+    </div>
 </body>
 </html>

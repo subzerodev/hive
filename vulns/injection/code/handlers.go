@@ -46,12 +46,16 @@ func evalJS(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Code Injection - JavaScript eval()</title></head>
+<head>
+<title>Code Injection - JavaScript eval()</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Code Injection - JavaScript eval()</h1>
 <p>Simulates server-side JavaScript eval() vulnerability</p>
 <form method="GET">
-    <input name="code" value="%s" placeholder="JavaScript code" style="width:300px">
+    <input name="code" value="%s" placeholder="JavaScript code">
     <button type="submit">Execute</button>
 </form>
 <h2>Result:</h2>
@@ -59,6 +63,7 @@ func evalJS(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: require('child_process').execSync('id') or process.env</small></p>
 <p><a href="/vulns/injection/code/">Back to Code Injection Tests</a></p>
+</div>
 </body></html>`, code, code, result)
 }
 
@@ -82,12 +87,16 @@ func evalPHP(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Code Injection - PHP eval()</title></head>
+<head>
+<title>Code Injection - PHP eval()</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Code Injection - PHP eval()</h1>
 <p>Simulates PHP eval() vulnerability</p>
 <form method="GET">
-    <input name="code" value="%s" placeholder="PHP code" style="width:300px">
+    <input name="code" value="%s" placeholder="PHP code">
     <button type="submit">Execute</button>
 </form>
 <h2>Result:</h2>
@@ -95,6 +104,7 @@ func evalPHP(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: system('id') or file_get_contents('/etc/passwd')</small></p>
 <p><a href="/vulns/injection/code/">Back to Code Injection Tests</a></p>
+</div>
 </body></html>`, code, code, result)
 }
 
@@ -118,12 +128,16 @@ func evalPython(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Code Injection - Python eval()</title></head>
+<head>
+<title>Code Injection - Python eval()</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Code Injection - Python eval()</h1>
 <p>Simulates Python eval()/exec() vulnerability</p>
 <form method="GET">
-    <input name="code" value="%s" placeholder="Python code" style="width:300px">
+    <input name="code" value="%s" placeholder="Python code">
     <button type="submit">Execute</button>
 </form>
 <h2>Result:</h2>
@@ -131,6 +145,7 @@ func evalPython(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: __import__('os').system('id') or open('/etc/passwd').read()</small></p>
 <p><a href="/vulns/injection/code/">Back to Code Injection Tests</a></p>
+</div>
 </body></html>`, code, code, result)
 }
 
@@ -148,12 +163,16 @@ func expression(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Code Injection - Expression</title></head>
+<head>
+<title>Code Injection - Expression</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Code Injection - Expression Evaluator</h1>
 <p>Evaluates mathematical expressions (vulnerable to code injection)</p>
 <form method="GET">
-    <input name="expr" value="%s" placeholder="Expression" style="width:300px">
+    <input name="expr" value="%s" placeholder="Expression">
     <button type="submit">Calculate</button>
 </form>
 <h2>Result:</h2>
@@ -161,6 +180,7 @@ func expression(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: 7*7 or expressions with special characters</small></p>
 <p><a href="/vulns/injection/code/">Back to Code Injection Tests</a></p>
+</div>
 </body></html>`, expr, expr, result)
 }
 
@@ -205,13 +225,18 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 	if !re.MatchString(code) {
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Code Injection - Safe</title></head>
+<head>
+<title>Code Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Code Injection - Safe (Validated)</h1>
 <h2>Error:</h2>
 <pre>Invalid characters detected. Only numbers and basic math operators allowed.</pre>
 <p><a href="/vulns/injection/code/fp/validated">Try again</a></p>
 <p><a href="/vulns/injection/code/">Back to Code Injection Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -220,12 +245,16 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Code Injection - Safe</title></head>
+<head>
+<title>Code Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Code Injection - Safe (Validated)</h1>
 <p>Only allows numbers and basic math operators</p>
 <form method="GET">
-    <input name="code" value="%s" placeholder="Math expression" style="width:300px">
+    <input name="code" value="%s" placeholder="Math expression">
     <button type="submit">Calculate</button>
 </form>
 <h2>Result:</h2>
@@ -233,5 +262,6 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: Only digits and math operators (+, -, *, /) allowed</small></p>
 <p><a href="/vulns/injection/code/">Back to Code Injection Tests</a></p>
+</div>
 </body></html>`, code, code, result)
 }

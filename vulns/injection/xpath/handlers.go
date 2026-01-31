@@ -78,11 +78,15 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XPath Injection - Basic</title></head>
+<head>
+<title>XPath Injection - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XPath Injection - Basic</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:300px">
+    <input name="username" value="%s" placeholder="Username">
     <button type="submit">Search</button>
 </form>
 <h2>XPath Query:</h2>
@@ -100,6 +104,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: ' or '1'='1 or ' or ''='</small></p>
 <p><a href="/vulns/injection/xpath/">Back to XPath Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -122,12 +127,16 @@ func auth(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XPath Injection - Authentication</title></head>
+<head>
+<title>XPath Injection - Authentication</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XPath Injection - Authentication Bypass</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:200px">
-    <input name="password" value="%s" placeholder="Password" style="width:200px">
+    <input name="username" value="%s" placeholder="Username">
+    <input name="password" value="%s" placeholder="Password">
     <button type="submit">Login</button>
 </form>
 <h2>XPath Query:</h2>
@@ -146,6 +155,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: username=' or '1'='1 and password=anything</small></p>
 <p><small>Or: username=admin' or '1'='1 and password=anything</small></p>
 <p><a href="/vulns/injection/xpath/">Back to XPath Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -163,11 +173,15 @@ func blind(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XPath Injection - Blind</title></head>
+<head>
+<title>XPath Injection - Blind</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XPath Injection - Blind</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:300px">
+    <input name="username" value="%s" placeholder="Username">
     <button type="submit">Check</button>
 </form>
 <h2>Result:</h2>
@@ -184,6 +198,7 @@ func blind(w http.ResponseWriter, r *http.Request) {
 <p><small>Blind injection: extract data character by character using substring()</small></p>
 <p><small>Try: admin' and substring(password,1,1)='a' and '1'='1</small></p>
 <p><a href="/vulns/injection/xpath/">Back to XPath Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -200,13 +215,18 @@ func fpParameterized(w http.ResponseWriter, r *http.Request) {
 	if !re.MatchString(username) {
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XPath Injection - Safe</title></head>
+<head>
+<title>XPath Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XPath Injection - Safe (Validated)</h1>
 <h2>Error:</h2>
 <p>Invalid username. Only alphanumeric characters allowed.</p>
 <p><a href="/vulns/injection/xpath/fp/parameterized">Try again</a></p>
 <p><a href="/vulns/injection/xpath/">Back to XPath Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -216,11 +236,15 @@ func fpParameterized(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XPath Injection - Safe</title></head>
+<head>
+<title>XPath Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XPath Injection - Safe (Validated)</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:300px">
+    <input name="username" value="%s" placeholder="Username">
     <button type="submit">Search</button>
 </form>
 <h2>XPath Query:</h2>
@@ -238,5 +262,6 @@ func fpParameterized(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: Only alphanumeric characters allowed in username</small></p>
 <p><a href="/vulns/injection/xpath/">Back to XPath Tests</a></p>
+</div>
 </body></html>`)
 }

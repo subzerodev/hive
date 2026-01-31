@@ -53,8 +53,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>AJAX JSON Login</title></head>
+<head>
+<title>AJAX JSON Login</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>AJAX JSON Login</h1>
 <input id="username" placeholder="Username"><br>
 <input type="password" id="password" placeholder="Password"><br>
@@ -78,6 +82,7 @@ async function login() {
 }
 </script>
 <p><small>Credentials: admin / password</small></p>
+</div>
 </body></html>`)
 }
 

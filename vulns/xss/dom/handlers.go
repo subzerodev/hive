@@ -22,8 +22,12 @@ func innerHTML(w http.ResponseWriter, r *http.Request) {
 	// DOM XSS - innerHTML sink
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>DOM XSS - innerHTML</title></head>
+<head>
+<title>DOM XSS - innerHTML</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>DOM XSS - innerHTML</h1>
 <div id="output"></div>
 <form onsubmit="return false;">
@@ -37,6 +41,7 @@ if (location.hash) {
     document.getElementById('output').innerHTML = decodeURIComponent(location.hash.substring(1));
 }
 </script>
+</div>
 </body></html>`)
 }
 
@@ -45,8 +50,12 @@ func documentWrite(w http.ResponseWriter, r *http.Request) {
 	// DOM XSS - document.write sink
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>DOM XSS - document.write</title></head>
+<head>
+<title>DOM XSS - document.write</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>DOM XSS - document.write</h1>
 <script>
 // VULNERABLE: document.write with URL parameter
@@ -59,6 +68,7 @@ document.write('<p>Hello, ' + name + '!</p>');
     <button type="submit">Submit</button>
 </form>
 <p><small>Try: &lt;script&gt;alert(1)&lt;/script&gt;</small></p>
+</div>
 </body></html>`)
 }
 
@@ -67,8 +77,12 @@ func location(w http.ResponseWriter, r *http.Request) {
 	// DOM XSS - location sink
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>DOM XSS - location</title></head>
+<head>
+<title>DOM XSS - location</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>DOM XSS - Redirect</h1>
 <form method="GET">
     <input name="url" placeholder="URL to redirect">
@@ -84,6 +98,7 @@ if (url) {
 }
 </script>
 <p><small>Try: javascript:alert(1)</small></p>
+</div>
 </body></html>`)
 }
 
@@ -98,8 +113,12 @@ func fpSafe(w http.ResponseWriter, r *http.Request) {
 	// SAFE: Using textContent instead of innerHTML
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>DOM XSS - Safe</title></head>
+<head>
+<title>DOM XSS - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>DOM XSS - Safe</h1>
 <div id="output"></div>
 <form method="GET">
@@ -111,5 +130,6 @@ func fpSafe(w http.ResponseWriter, r *http.Request) {
 document.getElementById('output').textContent = %q;
 </script>
 <p><small>Input is safely rendered using textContent</small></p>
+</div>
 </body></html>`, escaped, escaped)
 }

@@ -28,8 +28,12 @@ func errorBased(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>MSSQL Error-Based SQLi</title></head>
+<head>
+<title>MSSQL Error-Based SQLi</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Lookup</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="User ID">
@@ -56,7 +60,9 @@ func errorBased(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Fprintf(w, `</pre></body></html>`)
+	fmt.Fprintf(w, `</pre>
+</div>
+</body></html>`)
 }
 
 func unionBased(w http.ResponseWriter, r *http.Request) {
@@ -68,8 +74,12 @@ func unionBased(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>MSSQL Union-Based SQLi</title></head>
+<head>
+<title>MSSQL Union-Based SQLi</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Product Lookup</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="Product ID">
@@ -96,7 +106,9 @@ func unionBased(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Fprintf(w, `</pre></body></html>`)
+	fmt.Fprintf(w, `</pre>
+</div>
+</body></html>`)
 }
 
 func blindBoolean(w http.ResponseWriter, r *http.Request) {
@@ -117,8 +129,12 @@ func blindBoolean(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>MSSQL Blind Boolean SQLi</title></head>
+<head>
+<title>MSSQL Blind Boolean SQLi</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Exists Check</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="User ID">
@@ -132,7 +148,8 @@ func blindBoolean(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<p>User not found.</p>`)
 	}
 
-	fmt.Fprintf(w, `</body></html>`)
+	fmt.Fprintf(w, `</div>
+</body></html>`)
 }
 
 func blindTime(w http.ResponseWriter, r *http.Request) {
@@ -151,8 +168,12 @@ func blindTime(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>MSSQL Blind Time SQLi</title></head>
+<head>
+<title>MSSQL Blind Time SQLi</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Lookup (Time-based)</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="User ID">
@@ -161,6 +182,7 @@ func blindTime(w http.ResponseWriter, r *http.Request) {
 <h2>Result:</h2>
 <p>Query completed.</p>
 <p><small>Try: 1; WAITFOR DELAY '0:0:5'--</small></p>
+</div>
 </body></html>`, id)
 }
 
@@ -173,8 +195,12 @@ func fpParameterized(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>MSSQL Parameterized (Safe)</title></head>
+<head>
+<title>MSSQL Parameterized (Safe)</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Lookup (Safe)</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="User ID">
@@ -201,5 +227,7 @@ func fpParameterized(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Fprintf(w, `</pre></body></html>`)
+	fmt.Fprintf(w, `</pre>
+</div>
+</body></html>`)
 }

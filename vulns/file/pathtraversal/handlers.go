@@ -27,8 +27,11 @@ func getTraversal(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Path Traversal - GET</title></head>
+<head><title>Path Traversal - GET</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>File Viewer</h1>
 <form method="GET">
     <input name="file" value="%s" placeholder="Filename">
@@ -47,6 +50,7 @@ func getTraversal(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `</pre>
 <p><small>Try: ../../../etc/passwd</small></p>
+</div>
 </body></html>`)
 }
 
@@ -55,14 +59,18 @@ func postTraversal(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Path Traversal - POST</title></head>
+<head><title>Path Traversal - POST</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>File Viewer (POST)</h1>
 <form method="POST">
     <input name="file" value="readme.txt" placeholder="Filename">
     <button type="submit">Read File</button>
 </form>
 <p><small>Try: ../../../etc/passwd</small></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -76,8 +84,11 @@ func postTraversal(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Path Traversal - POST</title></head>
+<head><title>Path Traversal - POST</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>File Viewer (POST)</h1>
 <form method="POST">
     <input name="file" value="%s" placeholder="Filename">
@@ -94,7 +105,9 @@ func postTraversal(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%s", content)
 	}
 
-	fmt.Fprintf(w, `</pre></body></html>`)
+	fmt.Fprintf(w, `</pre>
+</div>
+</body></html>`)
 }
 
 func fpSanitized(w http.ResponseWriter, r *http.Request) {
@@ -106,8 +119,11 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Path Traversal - Safe</title></head>
+<head><title>Path Traversal - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>File Viewer (Safe)</h1>
 <form method="GET">
     <input name="file" value="%s" placeholder="Filename">
@@ -131,5 +147,6 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `</pre>
 <p><small>Path traversal is blocked - only files in safe directory allowed</small></p>
+</div>
 </body></html>`)
 }

@@ -25,8 +25,12 @@ func serverHeaders(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Version Disclosure - Headers</title></head>
+<head>
+<title>Version Disclosure - Headers</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server Information</h1>
 <p>Check the response headers (use browser DevTools or curl -v)</p>
 <h2>Headers Being Sent:</h2>
@@ -37,6 +41,7 @@ func serverHeaders(w http.ResponseWriter, r *http.Request) {
     <li>X-AspNetMvc-Version: 5.2.7</li>
 </ul>
 <p><small>VULNERABLE: Server version info in response headers</small></p>
+</div>
 </body></html>`)
 }
 
@@ -50,15 +55,18 @@ func comments(w http.ResponseWriter, r *http.Request) {
 <!-- jQuery v3.5.1 loaded -->
 <head>
     <title>Version Disclosure - Comments</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <!-- Debug: PHP 7.4.3, MySQL 8.0.26 -->
 </head>
 <body>
+<div class="container">
 <h1>Website Content</h1>
 <p>View page source to see version info in HTML comments.</p>
 <!-- TODO: Remove debug comments before production -->
 <!-- API Version: 2.3.1 -->
 <!-- Last modified: 2024-01-15 by admin -->
 <p><small>VULNERABLE: Version info exposed in HTML comments</small></p>
+</div>
 </body></html>`)
 }
 
@@ -70,10 +78,15 @@ func fpHidden(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Version Hidden</title></head>
+<head>
+<title>Version Hidden</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Secure Server</h1>
 <p>No version information is exposed in headers or content.</p>
 <p><small>SAFE: Version information properly hidden</small></p>
+</div>
 </body></html>`)
 }

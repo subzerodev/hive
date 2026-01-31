@@ -119,8 +119,11 @@ func viewstateWithoutMAC(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>ASP.NET ViewState Without MAC</title></head>
+<head><title>ASP.NET ViewState Without MAC</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>ASP.NET ViewState Without MAC Enabled</h1>
 <p>ViewState lacks Message Authentication Code (MAC) validation.</p>
 
@@ -140,6 +143,7 @@ Decoded: %s
 <p><small>ViewState can be tampered with without MAC validation</small></p>
 <p><small>Attacker could modify Role=user to Role=admin</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, encodedViewState, encodedViewState, serialized)
 }
 
@@ -152,8 +156,11 @@ func viewstateWithMAC(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>ASP.NET ViewState With MAC</title></head>
+<head><title>ASP.NET ViewState With MAC</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>ASP.NET ViewState With MAC</h1>
 <p>ViewState has MAC validation but may still be vulnerable to other attacks.</p>
 
@@ -167,6 +174,7 @@ func viewstateWithMAC(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>MAC provides integrity checking but not confidentiality</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, encodedViewState)
 }
 
@@ -175,8 +183,11 @@ func viewstateEncrypted(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>ASP.NET ViewState Encrypted</title></head>
+<head><title>ASP.NET ViewState Encrypted</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>ASP.NET ViewState Encrypted</h1>
 <p>ViewState is both encrypted and signed.</p>
 
@@ -190,6 +201,7 @@ func viewstateEncrypted(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: ViewStateEncryptionMode=Always provides confidentiality and integrity</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -203,8 +215,11 @@ func perlEval(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Perl eval() Injection</title></head>
+<head><title>Perl eval() Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Perl Code Injection - eval()</h1>
 <p>Simulated Perl eval() injection vulnerability.</p>
 
@@ -222,6 +237,7 @@ func perlEval(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>User input passed to Perl eval() allows arbitrary code execution</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, code, code, code)
 }
 
@@ -234,8 +250,11 @@ func perlOpen(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Perl open() Injection</title></head>
+<head><title>Perl open() Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Perl Code Injection - open()</h1>
 <p>Simulated Perl open() command injection.</p>
 
@@ -254,6 +273,7 @@ func perlOpen(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Perl two-argument open() allows command injection via pipe</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, file, file)
 }
 
@@ -267,8 +287,11 @@ func rubyEval(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Ruby eval() Injection</title></head>
+<head><title>Ruby eval() Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Ruby Code Injection - eval()</h1>
 <p>Simulated Ruby eval() injection vulnerability.</p>
 
@@ -289,6 +312,7 @@ code=` + "`" + `id` + "`" + `
 <h3>Vulnerability:</h3>
 <p><small>User input passed to Ruby eval() allows arbitrary code execution</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, code, code)
 }
 
@@ -301,8 +325,11 @@ func rubyERB(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Ruby ERB Injection</title></head>
+<head><title>Ruby ERB Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Ruby ERB Template Injection</h1>
 <p>Simulated ERB template injection vulnerability.</p>
 
@@ -323,6 +350,7 @@ template=&lt;%%= File.read('/etc/passwd') %%&gt;
 <h3>Vulnerability:</h3>
 <p><small>User input in ERB templates allows code execution</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, template, template)
 }
 
@@ -336,8 +364,11 @@ func pythonEval(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Python eval() Injection</title></head>
+<head><title>Python eval() Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Python Code Injection - eval()</h1>
 <p>Simulated Python eval() injection vulnerability.</p>
 
@@ -358,6 +389,7 @@ code=open('/etc/passwd').read()
 <h3>Vulnerability:</h3>
 <p><small>User input passed to Python eval() allows arbitrary code execution</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, code, code)
 }
 
@@ -370,8 +402,11 @@ func pythonExec(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Python exec() Injection</title></head>
+<head><title>Python exec() Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Python Code Injection - exec()</h1>
 <p>Simulated Python exec() injection vulnerability.</p>
 
@@ -392,6 +427,7 @@ code=import subprocess; subprocess.call(['cat', '/etc/passwd'])
 <h3>Vulnerability:</h3>
 <p><small>User input passed to Python exec() allows arbitrary code execution</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, code, code)
 }
 
@@ -405,8 +441,11 @@ func unidentifiedCodeInjection(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Unidentified Code Injection</title></head>
+<head><title>Unidentified Code Injection</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Unidentified Code Injection</h1>
 <p>Generic code injection where the language/interpreter is unknown.</p>
 
@@ -429,5 +468,6 @@ func unidentifiedCodeInjection(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>User input executed as code in an unidentified interpreter</small></p>
 <p><a href="/vulns/legacy/">Back</a></p>
+</div>
 </body></html>`, code, code)
 }

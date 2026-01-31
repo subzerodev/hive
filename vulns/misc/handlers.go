@@ -62,8 +62,11 @@ func passwordAutocomplete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Password Autocomplete Enabled</title></head>
+<head><title>Password Autocomplete Enabled</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Password Field with Autocomplete Enabled</h1>
 <p>Password field allows browser autocomplete (security risk).</p>
 
@@ -78,6 +81,7 @@ func passwordAutocomplete(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>autocomplete="current-password" allows browsers to store credentials</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -85,8 +89,11 @@ func passwordAutocompleteFP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Password Autocomplete Disabled</title></head>
+<head><title>Password Autocomplete Disabled</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Password Field with Autocomplete Disabled</h1>
 <p>Password field has autocomplete disabled.</p>
 
@@ -101,6 +108,7 @@ func passwordAutocompleteFP(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: autocomplete="off" prevents browser credential storage</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -114,8 +122,11 @@ func duplicateCookies(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Duplicate Cookies</title></head>
+<head><title>Duplicate Cookies</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Duplicate Cookies Set</h1>
 <p>Multiple cookies with same name but different paths.</p>
 
@@ -130,6 +141,7 @@ Set-Cookie: auth=token2; Path=/vulns/misc/
 <h3>Vulnerability:</h3>
 <p><small>Duplicate cookies can cause session fixation or confusion</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -139,8 +151,11 @@ func duplicateCookiesFP(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Single Cookie</title></head>
+<head><title>Single Cookie</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Single Cookie Set</h1>
 <p>Only one session cookie with proper flags.</p>
 
@@ -150,6 +165,7 @@ func duplicateCookiesFP(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Single cookie with HttpOnly and Secure flags</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -159,9 +175,11 @@ func pathRelativeCSS(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
     <title>Path-Relative CSS</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="container">
 <h1>Path-Relative Stylesheet Import</h1>
 <p>Uses relative path for stylesheet which can be hijacked.</p>
 
@@ -172,6 +190,7 @@ func pathRelativeCSS(w http.ResponseWriter, r *http.Request) {
 <p><small>Relative CSS paths can be hijacked via path confusion attacks</small></p>
 <p><small>Example: /page/../../evil/style.css</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -181,9 +200,11 @@ func pathRelativeCSSFP(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
     <title>Absolute CSS Path</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+<div class="container">
 <h1>Absolute Stylesheet Path</h1>
 <p>Uses absolute path for stylesheet.</p>
 
@@ -193,6 +214,7 @@ func pathRelativeCSSFP(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Absolute paths prevent path confusion attacks</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -207,8 +229,11 @@ func refererDependent(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Referer-Dependent Response</title></head>
+<head><title>Referer-Dependent Response</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Referer-Dependent Response</h1>
 <p>Content changes based on Referer header.</p>
 
@@ -222,6 +247,7 @@ func refererDependent(w http.ResponseWriter, r *http.Request) {
 <p><small>Different content for internal referers may leak sensitive data</small></p>
 <p><small>Try: curl -H "Referer: http://admin.local/" URL</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`, referer, content)
 }
 
@@ -236,8 +262,11 @@ func useragentDependent(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>User-Agent Dependent Response</title></head>
+<head><title>User-Agent Dependent Response</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User-Agent Dependent Response</h1>
 <p>Content changes based on User-Agent header.</p>
 
@@ -251,6 +280,7 @@ func useragentDependent(w http.ResponseWriter, r *http.Request) {
 <p><small>Different content for specific user agents may leak data</small></p>
 <p><small>Try: curl -A "InternalBot/1.0" URL</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`, ua, content)
 }
 
@@ -261,8 +291,11 @@ func cacheableHTTPS(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cacheable Sensitive Response</title></head>
+<head><title>Cacheable Sensitive Response</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cacheable Sensitive Response</h1>
 <p>This sensitive page can be cached by proxies.</p>
 
@@ -279,6 +312,7 @@ Account Balance: $10,000
 <h3>Vulnerability:</h3>
 <p><small>Sensitive responses should not be publicly cacheable</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -291,8 +325,11 @@ func cacheableHTTPSFP(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Non-Cacheable Response</title></head>
+<head><title>Non-Cacheable Response</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Non-Cacheable Sensitive Response</h1>
 <p>This sensitive page cannot be cached.</p>
 
@@ -306,6 +343,7 @@ Expires: 0
 <h3>Security:</h3>
 <p><small>SAFE: Proper cache headers prevent sensitive data caching</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -315,10 +353,12 @@ func crossDomainScript(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
     <title>Cross-Domain Script Include</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <script src="http://cdn.example.com/jquery-1.6.1.min.js"></script>
     <script src="https://untrusted-cdn.com/analytics.js"></script>
 </head>
 <body>
+<div class="container">
 <h1>Cross-Domain Script Include</h1>
 <p>JavaScript loaded from external/untrusted domains.</p>
 
@@ -335,6 +375,7 @@ func crossDomainScript(w http.ResponseWriter, r *http.Request) {
     <li>No SRI (Subresource Integrity) hashes</li>
 </ul>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -348,8 +389,11 @@ func inputReflected(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Input Reflected</title></head>
+<head><title>Input Reflected</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Input Returned in Response</h1>
 <p>User input is reflected back in the response.</p>
 
@@ -364,6 +408,7 @@ func inputReflected(w http.ResponseWriter, r *http.Request) {
 <h3>Note:</h3>
 <p><small>Input reflection may indicate potential for injection attacks</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`, input, input, input)
 }
 
@@ -385,11 +430,13 @@ func vulnerableJS(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
     <title>Vulnerable JavaScript Libraries</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <script src="/static/js/jquery-1.6.1.min.js"></script>
     <script src="/static/js/angular-1.4.0.js"></script>
     <script src="/static/js/lodash-3.10.0.js"></script>
 </head>
 <body>
+<div class="container">
 <h1>Vulnerable JavaScript Libraries Detected</h1>
 <p>This page includes known vulnerable JavaScript libraries.</p>
 
@@ -404,6 +451,7 @@ func vulnerableJS(w http.ResponseWriter, r *http.Request) {
 <h3>Recommendation:</h3>
 <p><small>Update to latest versions of all JavaScript libraries</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -413,12 +461,16 @@ func useragentReflected(w http.ResponseWriter, r *http.Request) {
 	// Reflect user-agent directly (vulnerability: could be XSS if not escaped elsewhere)
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>User-Agent Reflected</title></head>
+<head><title>User-Agent Reflected</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User-Agent Dependent Response</h1>
 <p>Your User-Agent is reflected in the response:</p>
 <pre>%s</pre>
 <p><small>VULNERABLE: User-Agent header reflected in response</small></p>
+</div>
 </body></html>`, ua)
 }
 
@@ -441,8 +493,11 @@ func base64Param(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Base64 Encoded Parameter</title></head>
+<head><title>Base64 Encoded Parameter</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Base64 Encoded Data in Parameter</h1>
 <form method="GET">
     <button type="submit" name="data" value="%s">Submit</button>
@@ -457,6 +512,7 @@ func base64Param(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Base64 encoded data may contain sensitive information</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`, defaultData, encoded, decoded)
 }
 
@@ -470,14 +526,18 @@ func base64ParamPost(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Base64 POST Result</title></head>
+<head><title>Base64 POST Result</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Base64 Encoded Data (POST)</h1>
 <h2>Received:</h2>
 <pre>%s</pre>
 <h2>Decoded:</h2>
 <pre>%s</pre>
 <p><a href="/vulns/misc/base64-param-post">Back</a></p>
+</div>
 </body></html>`, encoded, string(decodedBytes))
 		return
 	}
@@ -485,8 +545,11 @@ func base64ParamPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Base64 Encoded Parameter (POST)</title></head>
+<head><title>Base64 Encoded Parameter (POST)</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Base64 Encoded Data in POST Parameter</h1>
 <form method="POST">
     <input type="hidden" name="data" value="%s">
@@ -495,6 +558,7 @@ func base64ParamPost(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Base64 encoded data in POST may contain sensitive information</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`, defaultData)
 }
 
@@ -518,8 +582,11 @@ func inputTransformation(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Suspicious Input Transformation</title></head>
+<head><title>Suspicious Input Transformation</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Suspicious Input Transformation</h1>
 <form method="GET">
     <textarea name="input" style="width:300px;height:50px">%s</textarea><br>
@@ -538,6 +605,7 @@ func inputTransformation(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Input transformations can enable filter bypasses</small></p>
 <p><a href="/vulns/misc/">Back to Misc Tests</a></p>
+</div>
 </body></html>`, input, input, transformed, decoded)
 }
 
@@ -575,10 +643,14 @@ func bigRedirect(w http.ResponseWriter, r *http.Request) {
 	body := strings.Repeat("A", 10000)
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Redirecting...</title></head>
+<head><title>Redirecting...</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Redirecting to %s</h1>
 <p>Please wait...</p>
 <div style="display:none">%s</div>
+</div>
 </body></html>`, target, body)
 }

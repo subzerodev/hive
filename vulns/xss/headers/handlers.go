@@ -35,14 +35,19 @@ func refererXSS(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Referer header reflected without escaping
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Headers - Referer</title></head>
+<head>
+<title>XSS Headers - Referer</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in Referer Header</h1>
 <h2>You came from:</h2>
 <div>%s</div>
 <p><small>VULNERABLE: Referer header reflected without escaping</small></p>
 <p><small>Test with: curl -H "Referer: &lt;script&gt;alert(1)&lt;/script&gt;" URL</small></p>
 <p><a href="/vulns/xss/headers/">Back to Header Tests</a></p>
+</div>
 </body></html>`, referer)
 }
 
@@ -57,14 +62,19 @@ func userAgentXSS(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: User-Agent header reflected without escaping
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Headers - User-Agent</title></head>
+<head>
+<title>XSS Headers - User-Agent</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in User-Agent Header</h1>
 <h2>Your browser:</h2>
 <div>%s</div>
 <p><small>VULNERABLE: User-Agent header reflected without escaping</small></p>
 <p><small>Test with: curl -A "&lt;script&gt;alert(1)&lt;/script&gt;" URL</small></p>
 <p><a href="/vulns/xss/headers/">Back to Header Tests</a></p>
+</div>
 </body></html>`, userAgent)
 }
 
@@ -80,8 +90,12 @@ func cookieXSS(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Cookie value reflected without escaping
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Headers - Cookie</title></head>
+<head>
+<title>XSS Headers - Cookie</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in Cookie Value</h1>
 <h2>Your cookie value:</h2>
 <div>%s</div>
@@ -89,6 +103,7 @@ func cookieXSS(w http.ResponseWriter, r *http.Request) {
 <p><small>VULNERABLE: Cookie value reflected without escaping</small></p>
 <p><small>Test: Set cookie to &lt;script&gt;alert(1)&lt;/script&gt;</small></p>
 <p><a href="/vulns/xss/headers/">Back to Header Tests</a></p>
+</div>
 </body></html>`, cookieValue)
 }
 
@@ -120,14 +135,19 @@ func xForwardedForXSS(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: X-Forwarded-For header reflected without escaping
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Headers - X-Forwarded-For</title></head>
+<head>
+<title>XSS Headers - X-Forwarded-For</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in X-Forwarded-For Header</h1>
 <h2>Your IP address:</h2>
 <div>%s</div>
 <p><small>VULNERABLE: X-Forwarded-For header reflected without escaping</small></p>
 <p><small>Test with: curl -H "X-Forwarded-For: &lt;script&gt;alert(1)&lt;/script&gt;" URL</small></p>
 <p><a href="/vulns/xss/headers/">Back to Header Tests</a></p>
+</div>
 </body></html>`, xff)
 }
 
@@ -142,14 +162,19 @@ func acceptLanguageXSS(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Accept-Language header reflected without escaping
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Headers - Accept-Language</title></head>
+<head>
+<title>XSS Headers - Accept-Language</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in Accept-Language Header</h1>
 <h2>Your language preference:</h2>
 <div>%s</div>
 <p><small>VULNERABLE: Accept-Language header reflected without escaping</small></p>
 <p><small>Test with: curl -H "Accept-Language: &lt;script&gt;alert(1)&lt;/script&gt;" URL</small></p>
 <p><a href="/vulns/xss/headers/">Back to Header Tests</a></p>
+</div>
 </body></html>`, acceptLang)
 }
 
@@ -169,8 +194,12 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Headers - Safe</title></head>
+<head>
+<title>XSS Headers - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS Headers - Safe (Properly Escaped)</h1>
 <h2>Request headers:</h2>
 <ul>
@@ -180,5 +209,6 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 </ul>
 <p><small>SAFE: All headers are HTML-escaped before output</small></p>
 <p><a href="/vulns/xss/headers/">Back to Header Tests</a></p>
+</div>
 </body></html>`, referer, userAgent, xff)
 }

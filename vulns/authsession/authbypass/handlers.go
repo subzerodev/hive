@@ -38,8 +38,11 @@ func bypass403(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>403 Bypass Test</title></head>
+<head><title>403 Bypass Test</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>403 Bypass Testing</h1>
 <form method="GET">
     <input name="path" value="%s" placeholder="Path to test">
@@ -55,6 +58,7 @@ func bypass403(w http.ResponseWriter, r *http.Request) {
 </ul>
 <p>Requested: %s</p>
 <p><small>VULNERABLE: No consistent path normalization</small></p>
+</div>
 </body></html>`, path, path)
 }
 
@@ -73,8 +77,11 @@ func headerAbuse(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Header-Based Auth</title></head>
+<head><title>Header-Based Auth</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Admin Panel (Header-Based Auth)</h1>
 <p>X-Forwarded-For: %s</p>
 <p>X-Original-URL: %s</p>
@@ -87,6 +94,7 @@ curl -H "X-Original-URL: /admin" [url]
 curl -H "X-Rewrite-URL: /admin" [url]
 </pre>
 <p><small>VULNERABLE: Trusts X-Forwarded-For header</small></p>
+</div>
 </body></html>`, xForwardedFor, xOriginalUrl, xRewriteUrl, map[bool]string{true: "GRANTED", false: "DENIED"}[accessGranted])
 }
 
@@ -101,22 +109,30 @@ func fpProperCheck(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Access Denied</title></head>
+<head><title>Access Denied</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Access Denied</h1>
 <p>Valid authentication required.</p>
 <p><small>SAFE: Proper authentication check, headers ignored</small></p>
+</div>
 </body></html>`)
 		return
 	}
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Admin Panel</title></head>
+<head><title>Admin Panel</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Admin Panel (Authenticated)</h1>
 <p>Welcome, authenticated user!</p>
 <p><small>SAFE: Access granted via valid token only</small></p>
+</div>
 </body></html>`)
 }
 
@@ -140,8 +156,11 @@ func renderBypassResult(w http.ResponseWriter, headerName, headerValue string, g
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Auth Bypass - %s</title></head>
+<head><title>Auth Bypass - %s</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Admin Access Check</h1>
 <p>Header: <code>%s</code></p>
 <p>Value: <code>%s</code></p>
@@ -149,6 +168,7 @@ func renderBypassResult(w http.ResponseWriter, headerName, headerValue string, g
 <h2>Test:</h2>
 <pre>curl -H "%s: 127.0.0.1" [url]</pre>
 <p><small>VULNERABLE: Trusts %s header for authentication</small></p>
+</div>
 </body></html>`, headerName, headerName, headerValue, status, headerName, headerName)
 }
 
@@ -215,8 +235,11 @@ func forwarded(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Auth Bypass - Forwarded</title></head>
+<head><title>Auth Bypass - Forwarded</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Admin Access Check</h1>
 <p>Header: <code>Forwarded</code></p>
 <p>Raw: <code>%s</code></p>
@@ -225,6 +248,7 @@ func forwarded(w http.ResponseWriter, r *http.Request) {
 <h2>Test:</h2>
 <pre>curl -H "Forwarded: for=127.0.0.1" [url]</pre>
 <p><small>VULNERABLE: Trusts Forwarded header for authentication</small></p>
+</div>
 </body></html>`, raw, forIP, map[bool]string{true: "GRANTED", false: "DENIED"}[granted])
 }
 
@@ -237,8 +261,11 @@ func refererBypass(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Auth Bypass - Referer</title></head>
+<head><title>Auth Bypass - Referer</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Admin Access Check</h1>
 <p>Header: <code>Referer</code></p>
 <p>Value: <code>%s</code></p>
@@ -246,6 +273,7 @@ func refererBypass(w http.ResponseWriter, r *http.Request) {
 <h2>Test:</h2>
 <pre>curl -H "Referer: http://localhost/" [url]</pre>
 <p><small>VULNERABLE: Trusts Referer header for authentication</small></p>
+</div>
 </body></html>`, referer, map[bool]string{true: "GRANTED", false: "DENIED"}[granted])
 }
 
@@ -257,13 +285,17 @@ func fpValidatedHeaders(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Auth Check - Validated</title></head>
+<head><title>Auth Check - Validated</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Admin Access Check (Secure)</h1>
 <p>Remote Address: <code>%s</code></p>
 <p>X-Forwarded-For: <code>%s</code> (ignored)</p>
 <p>X-Real-IP: <code>%s</code> (ignored)</p>
 <p><strong>Access: Based on actual connection only</strong></p>
 <p><small>SAFE: Does not trust client-provided headers</small></p>
+</div>
 </body></html>`, remoteAddr, r.Header.Get("X-Forwarded-For"), r.Header.Get("X-Real-IP"))
 }

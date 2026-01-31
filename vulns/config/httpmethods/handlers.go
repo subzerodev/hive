@@ -31,12 +31,16 @@ func trace(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Methods - TRACE</title></head>
+<head><title>HTTP Methods - TRACE</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>TRACE Method Enabled</h1>
 <p>Send a TRACE request to see reflected headers:</p>
 <pre>curl -X TRACE %s</pre>
 <p><small>VULNERABLE: TRACE method can expose cookies via XST</small></p>
+</div>
 </body></html>`, r.URL.Path)
 }
 
@@ -51,12 +55,16 @@ func put(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Methods - PUT</title></head>
+<head><title>HTTP Methods - PUT</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>PUT Method Enabled</h1>
 <p>Send a PUT request to upload/modify files:</p>
 <pre>curl -X PUT -d "content" %s</pre>
 <p><small>VULNERABLE: PUT method may allow unauthorized file modification</small></p>
+</div>
 </body></html>`, r.URL.Path)
 }
 
@@ -71,11 +79,15 @@ func fpRestricted(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Methods - Restricted</title></head>
+<head><title>HTTP Methods - Restricted</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Restricted HTTP Methods</h1>
 <p>Only GET and POST are allowed.</p>
 <p>TRACE and PUT will receive 405 Method Not Allowed.</p>
 <p><small>SAFE: Dangerous methods disabled</small></p>
+</div>
 </body></html>`)
 }

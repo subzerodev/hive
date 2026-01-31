@@ -31,14 +31,18 @@ func missingHttpOnly(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cookie - Missing HttpOnly</title></head>
+<head><title>Cookie - Missing HttpOnly</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cookie Set (Missing HttpOnly)</h1>
 <p>Cookie "session_no_httponly" has been set without HttpOnly flag.</p>
 <p>JavaScript can access this cookie:</p>
 <pre id="cookie"></pre>
 <script>document.getElementById('cookie').textContent = document.cookie;</script>
 <p><small>VULNERABLE: Cookie accessible via document.cookie</small></p>
+</div>
 </body></html>`)
 }
 
@@ -54,11 +58,15 @@ func missingSecure(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cookie - Missing Secure</title></head>
+<head><title>Cookie - Missing Secure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cookie Set (Missing Secure)</h1>
 <p>Cookie "session_no_secure" has been set without Secure flag.</p>
 <p><small>VULNERABLE: Cookie can be transmitted over HTTP</small></p>
+</div>
 </body></html>`)
 }
 
@@ -74,11 +82,15 @@ func missingSameSite(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cookie - Missing SameSite</title></head>
+<head><title>Cookie - Missing SameSite</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cookie Set (Missing SameSite)</h1>
 <p>Cookie "session_no_samesite" has been set without SameSite flag.</p>
 <p><small>VULNERABLE: Cookie sent on cross-site requests</small></p>
+</div>
 </body></html>`)
 }
 
@@ -96,8 +108,11 @@ func fpAllFlags(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cookie - All Flags</title></head>
+<head><title>Cookie - All Flags</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cookie Set (All Flags)</h1>
 <p>Cookie "session_secure" has been set with all security flags:</p>
 <ul>
@@ -106,6 +121,7 @@ func fpAllFlags(w http.ResponseWriter, r *http.Request) {
     <li>SameSite: Strict</li>
 </ul>
 <p><small>SAFE: All cookie security flags enabled</small></p>
+</div>
 </body></html>`)
 }
 
@@ -121,8 +137,11 @@ func looselyScoped(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cookie - Loosely Scoped</title></head>
+<head><title>Cookie - Loosely Scoped</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cookie Loosely Scoped to Parent Domain</h1>
 <p>Cookie "session_loose" is scoped to parent domain.</p>
 
@@ -140,6 +159,7 @@ func looselyScoped(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Cookie can be accessed by other subdomains, risking session hijacking</small></p>
 <p><a href="/vulns/auth-session/cookie-flags/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -157,8 +177,11 @@ func fpProperlyScoped(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cookie - Properly Scoped</title></head>
+<head><title>Cookie - Properly Scoped</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Cookie Properly Scoped</h1>
 <p>Cookie "session_scoped" is scoped to specific subdomain only.</p>
 
@@ -168,5 +191,6 @@ func fpProperlyScoped(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Cookie only sent to specific subdomain</small></p>
 <p><a href="/vulns/auth-session/cookie-flags/">Back</a></p>
+</div>
 </body></html>`)
 }

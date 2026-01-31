@@ -3,53 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Interface Exposed - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
-    <h1>Administrative Interface Exposed</h1>
-    <p>Admin interfaces accessible without proper authentication or exposed to the internet.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Administrative Interface Exposed</h1>
+        <p>Admin interfaces accessible without proper authentication or exposed to the internet.</p>
 
-    <h2 class="vuln">Generic Admin Interfaces</h2>
-    <ul>
-        <li><a href="/vulns/admin/login">Admin Login</a> - Generic login page</li>
-        <li><a href="/vulns/admin/dashboard">Admin Dashboard</a> - Unprotected dashboard</li>
-        <li><a href="/vulns/admin/console">Admin Console</a> - Command/SQL console</li>
-    </ul>
+        <h2 class="vuln">Generic Admin Interfaces</h2>
+        <ul>
+            <li><a href="/vulns/admin/login">Admin Login</a> - Generic login page</li>
+            <li><a href="/vulns/admin/dashboard">Admin Dashboard</a> - Unprotected dashboard</li>
+            <li><a href="/vulns/admin/console">Admin Console</a> - Command/SQL console</li>
+        </ul>
 
-    <h2 class="vuln">CMS Admin Pages</h2>
-    <ul>
-        <li><a href="/vulns/admin/wp-admin">WordPress Admin</a> - /wp-admin/</li>
-        <li><a href="/vulns/admin/wp-login">WordPress Login</a> - /wp-login.php</li>
-        <li><a href="/vulns/admin/phpmyadmin">phpMyAdmin</a> - Database admin</li>
-    </ul>
+        <h2 class="vuln">CMS Admin Pages</h2>
+        <ul>
+            <li><a href="/vulns/admin/wp-admin">WordPress Admin</a> - /wp-admin/</li>
+            <li><a href="/vulns/admin/wp-login">WordPress Login</a> - /wp-login.php</li>
+            <li><a href="/vulns/admin/phpmyadmin">phpMyAdmin</a> - Database admin</li>
+        </ul>
 
-    <h2 class="vuln">WordPress User Enumeration</h2>
-    <ul>
-        <li><a href="/vulns/admin/wp-user-enum">User Enumeration</a> - Multiple methods</li>
-        <li><a href="/vulns/admin/wp-user-enum/author?author=1">Author Parameter</a> - /?author=1</li>
-        <li><a href="/vulns/admin/wp-user-enum/api">REST API</a> - /wp-json/wp/v2/users</li>
-        <li><a href="/vulns/admin/wp-user-enum/fp/blocked">Blocked API</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">WordPress User Enumeration</h2>
+        <ul>
+            <li><a href="/vulns/admin/wp-user-enum">User Enumeration</a> - Multiple methods</li>
+            <li><a href="/vulns/admin/wp-user-enum/author?author=1">Author Parameter</a> - /?author=1</li>
+            <li><a href="/vulns/admin/wp-user-enum/api">REST API</a> - /wp-json/wp/v2/users</li>
+            <li><a href="/vulns/admin/wp-user-enum/fp/blocked">Blocked API</a> - SAFE</li>
+        </ul>
 
-    <h2 class="vuln">Framework Debug/Admin</h2>
-    <ul>
-        <li><a href="/vulns/admin/actuator">Spring Boot Actuator</a> - /actuator</li>
-        <li><a href="/vulns/admin/actuator/env">Actuator Env</a> - Environment variables</li>
-        <li><a href="/vulns/admin/actuator/health">Actuator Health</a> - Health check</li>
-        <li><a href="/vulns/admin/laravel-debugbar">Laravel Debugbar</a> - Debug info</li>
-    </ul>
+        <h2 class="vuln">Framework Debug/Admin</h2>
+        <ul>
+            <li><a href="/vulns/admin/actuator">Spring Boot Actuator</a> - /actuator</li>
+            <li><a href="/vulns/admin/actuator/env">Actuator Env</a> - Environment variables</li>
+            <li><a href="/vulns/admin/actuator/health">Actuator Health</a> - Health check</li>
+            <li><a href="/vulns/admin/laravel-debugbar">Laravel Debugbar</a> - Debug info</li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/admin/fp/protected">Protected Admin</a> - Requires authentication</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/admin/fp/protected">Protected Admin</a> - Requires authentication</li>
+        </ul>
+    </div>
 </body>
 </html>

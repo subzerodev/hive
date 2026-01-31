@@ -4,23 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>HIVE - Hazardous Intentionally Vulnerable Environment</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        h1 { color: #c00; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 8px 0; }
-        a { color: #0066cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .section { margin: 30px 0; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <h1>HIVE</h1>
-    <p><strong>Hazardous Intentionally Vulnerable Environment</strong></p>
-    <p>A vulnerability testbed for validating web vulnerability scanners.</p>
+    <div class="container">
+        <div class="header">
+            <h1>HIVE</h1>
+            <p class="tagline">Hazardous Intentionally Vulnerable Environment</p>
+        </div>
 
-    <div class="section">
-        <h2>Vulnerability Categories</h2>
+        <div class="card">
+            <h2>Vulnerability Categories</h2>
         <ul>
             <li><a href="/vulns/injection/">Injection</a> - SQLi, Command, XPath, SSTI, Code, XXE, HPP, LDAP, SSI, CSS</li>
             <li><a href="/vulns/xss/">Cross-Site Scripting</a> - Reflected, DOM, Stored, Blacklist, Context, Headers</li>
@@ -39,37 +33,38 @@
             <li><a href="/vulns/misc/">Miscellaneous</a> - Cookies, Autocomplete, Caching, Cross-Domain, Base64</li>
             <li><a href="/vulns/legacy/">Legacy Technologies</a> - Flash, Silverlight, ASP.NET ViewState, Perl, Ruby, Python</li>
             <li><a href="/static/backdoors/">Backdoors</a></li>
-        </ul>
-    </div>
+            </ul>
+        </div>
 
-    <div class="section">
-        <h2>Legacy Cross-Domain Policies</h2>
-        <ul>
-            <li><a href="/crossdomain.xml">Flash crossdomain.xml</a> - Permissive Flash policy</li>
-            <li><a href="/clientaccesspolicy.xml">Silverlight clientaccesspolicy.xml</a> - Permissive Silverlight policy</li>
-        </ul>
-    </div>
+        <div class="card">
+            <h2>Legacy Cross-Domain Policies</h2>
+            <ul>
+                <li><a href="/crossdomain.xml">Flash crossdomain.xml</a> - Permissive Flash policy</li>
+                <li><a href="/clientaccesspolicy.xml">Silverlight clientaccesspolicy.xml</a> - Permissive Silverlight policy</li>
+            </ul>
+        </div>
 
-    <div class="section">
-        <h2>Authentication Testing</h2>
-        <ul>
-            <li><a href="/vulns/auth/">Auth Flows</a> - Form, AJAX, Multi-step, OAuth, HTTP Basic, JWT</li>
-        </ul>
-    </div>
+        <div class="card">
+            <h2>Authentication Testing</h2>
+            <ul>
+                <li><a href="/vulns/auth/">Auth Flows</a> - Form, AJAX, Multi-step, OAuth, HTTP Basic, JWT</li>
+            </ul>
+        </div>
 
-    <div class="section">
-        <h2>Static Files</h2>
-        <ul>
-            <li><a href="/static/">Directory Listing &amp; File Tests</a></li>
-        </ul>
-    </div>
+        <div class="card">
+            <h2>Static Files</h2>
+            <ul>
+                <li><a href="/static/">Directory Listing &amp; File Tests</a></li>
+            </ul>
+        </div>
 
-    <div class="section">
-        <h2>API</h2>
-        <ul>
-            <li><code>GET /health</code> - Health check</li>
-            <li><code>POST /api/reset</code> - Reset all databases</li>
-        </ul>
+        <div class="card">
+            <h2>API</h2>
+            <ul>
+                <li><code>GET /health</code> - Health check</li>
+                <li><code>POST /api/reset</code> - Reset all databases</li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

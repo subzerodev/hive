@@ -62,8 +62,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT Login</title></head>
+<head>
+<title>JWT Login</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT Login</h1>
 <input id="username" placeholder="Username"><br>
 <input type="password" id="password" placeholder="Password"><br>
@@ -98,6 +102,7 @@ async function testProtected(token) {
 }
 </script>
 <p><small>Credentials: admin / password</small></p>
+</div>
 </body></html>`)
 }
 
@@ -195,8 +200,12 @@ func noneAlg(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT - None Algorithm</title></head>
+<head>
+<title>JWT - None Algorithm</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT Vulnerability - None Algorithm</h1>
 <form method="GET">
     <textarea name="token" rows="3" cols="60">%s</textarea><br>
@@ -235,6 +244,7 @@ func noneAlg(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Create a token with alg:"none" and empty signature</small></p>
 <p><a href="/vulns/auth/jwt/">Back to JWT Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -252,8 +262,12 @@ func weakSecret(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT - Weak Secret</title></head>
+<head>
+<title>JWT - Weak Secret</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT Vulnerability - Weak Secret Key</h1>
 <p>Secret key: <code>secret</code> (easily brute-forced)</p>
 <form method="GET">
@@ -280,6 +294,7 @@ func weakSecret(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Brute-force common secrets: secret, password, 123456</small></p>
 <p><a href="/vulns/auth/jwt/">Back to JWT Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -297,8 +312,12 @@ func noExpiry(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT - No Expiry Check</title></head>
+<head>
+<title>JWT - No Expiry Check</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT Vulnerability - Expired Tokens Accepted</h1>
 <form method="GET">
     <textarea name="token" rows="3" cols="60">%s</textarea><br>
@@ -326,6 +345,7 @@ func noExpiry(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Expired tokens still accepted - no exp claim validation</small></p>
 <p><a href="/vulns/auth/jwt/">Back to JWT Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -337,12 +357,16 @@ func urlParam(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT - URL Parameter</title></head>
+<head>
+<title>JWT - URL Parameter</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT Vulnerability - Token in URL</h1>
 <p>JWT in URL leaks via referrer header, browser history, server logs</p>
 <form method="GET">
-    <input name="jwt" value="%s" placeholder="JWT token" style="width:400px">
+    <input name="jwt" value="%s" placeholder="JWT token">
     <button type="submit">Access</button>
 </form>
 <h2>Result:</h2>
@@ -367,6 +391,7 @@ func urlParam(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>JWTs in URLs leak via Referer header, browser history, server logs</small></p>
 <p><a href="/vulns/auth/jwt/">Back to JWT Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -378,8 +403,12 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT - Safe</title></head>
+<head>
+<title>JWT - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT - Safe (Properly Validated)</h1>
 <form method="GET">
     <textarea name="token" rows="3" cols="60">%s</textarea><br>
@@ -427,5 +456,6 @@ func fpValidated(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Algorithm whitelist, expiration check, signature verification</small></p>
 <p><a href="/vulns/auth/jwt/">Back to JWT Tests</a></p>
+</div>
 </body></html>`)
 }

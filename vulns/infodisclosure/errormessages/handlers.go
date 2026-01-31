@@ -25,8 +25,12 @@ func database(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Database Error Disclosure</title></head>
+<head>
+<title>Database Error Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Lookup</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="User ID">
@@ -54,6 +58,7 @@ func database(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, `</pre>
 <p><small>VULNERABLE: Database error messages exposed</small></p>
 <p><small>Try: ' OR 1=1--</small></p>
+</div>
 </body></html>`)
 }
 
@@ -63,8 +68,12 @@ func stackTrace(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Stack Trace Disclosure</title></head>
+<head>
+<title>Stack Trace Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Action Handler</h1>
 <form method="GET">
     <select name="action">
@@ -99,6 +108,7 @@ Framework: Spring Boot 2.5.4`)
 
 	fmt.Fprintf(w, `</pre>
 <p><small>VULNERABLE: Stack trace and version info in errors</small></p>
+</div>
 </body></html>`)
 }
 
@@ -111,8 +121,12 @@ func fpGeneric(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Generic Error Page</title></head>
+<head>
+<title>Generic Error Page</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Lookup</h1>
 <form method="GET">
     <input name="id" value="%s" placeholder="User ID">
@@ -130,5 +144,6 @@ func fpGeneric(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `</pre>
 <p><small>SAFE: Generic error messages, no technical details</small></p>
+</div>
 </body></html>`)
 }

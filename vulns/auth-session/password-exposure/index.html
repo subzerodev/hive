@@ -3,32 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Password Exposure - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/auth-session/">&larr; Back to Auth/Session</a></div>
-    <h1>Password Exposure</h1>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Password Exposure</h1>
 
-    <h2 class="vuln">Vulnerable Test Cases</h2>
-    <ul>
-        <li><a href="/vulns/auth-session/password-exposure/in-get">Password in GET Request</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/in-response">Password in Response</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/in-cookie">Password in Cookie</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/autocomplete">Autocomplete Enabled</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/cleartext">Cleartext Submission</a> - HTTP form</li>
-        <li><a href="/vulns/auth-session/password-exposure/insecure-form-post">Insecure Form POST</a> - HTTPS to HTTP</li>
-    </ul>
+        <h2 class="vuln">Vulnerable Test Cases</h2>
+        <ul>
+            <li><a href="/vulns/auth-session/password-exposure/in-get">Password in GET Request</a></li>
+            <li><a href="/vulns/auth-session/password-exposure/in-response">Password in Response</a></li>
+            <li><a href="/vulns/auth-session/password-exposure/in-cookie">Password in Cookie</a></li>
+            <li><a href="/vulns/auth-session/password-exposure/autocomplete">Autocomplete Enabled</a></li>
+            <li><a href="/vulns/auth-session/password-exposure/cleartext">Cleartext Submission</a> - HTTP form</li>
+            <li><a href="/vulns/auth-session/password-exposure/insecure-form-post">Insecure Form POST</a> - HTTPS to HTTP</li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/auth-session/password-exposure/fp/hidden">Password Hidden</a></li>
-        <li><a href="/vulns/auth-session/password-exposure/fp/secure-form">Secure Form POST</a> - HTTPS only</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/auth-session/password-exposure/fp/hidden">Password Hidden</a></li>
+            <li><a href="/vulns/auth-session/password-exposure/fp/secure-form">Secure Form POST</a> - HTTPS only</li>
+        </ul>
+    </div>
 </body>
 </html>

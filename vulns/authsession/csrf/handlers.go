@@ -30,11 +30,15 @@ func vulnerable(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSRF - Action Completed</title></head>
+<head><title>CSRF - Action Completed</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Email Updated!</h1>
 <p>Email changed to: %s</p>
 <p><a href="/vulns/auth-session/csrf/vulnerable">Back</a></p>
+</div>
 </body></html>`, email)
 		return
 	}
@@ -43,14 +47,18 @@ func vulnerable(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: No CSRF token in form
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSRF - Vulnerable</title></head>
+<head><title>CSRF - Vulnerable</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Change Email (Vulnerable)</h1>
 <form method="POST">
     <input name="email" placeholder="New email">
     <button type="submit">Update</button>
 </form>
 <p><small>VULNERABLE: No CSRF protection</small></p>
+</div>
 </body></html>`)
 }
 
@@ -69,11 +77,15 @@ func fpWithToken(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSRF - Rejected</title></head>
+<head><title>CSRF - Rejected</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Request Rejected</h1>
 <p>Invalid CSRF token</p>
 <p><a href="/vulns/auth-session/csrf/fp/with-token">Back</a></p>
+</div>
 </body></html>`)
 			return
 		}
@@ -86,11 +98,15 @@ func fpWithToken(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSRF - Action Completed</title></head>
+<head><title>CSRF - Action Completed</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Email Updated!</h1>
 <p>Email changed to: %s</p>
 <p><a href="/vulns/auth-session/csrf/fp/with-token">Back</a></p>
+</div>
 </body></html>`, email)
 		return
 	}
@@ -108,8 +124,11 @@ func fpWithToken(w http.ResponseWriter, r *http.Request) {
 	// SAFE: CSRF token included
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSRF - Protected</title></head>
+<head><title>CSRF - Protected</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Change Email (Protected)</h1>
 <form method="POST">
     <input type="hidden" name="csrf_token" value="%s">
@@ -117,5 +136,6 @@ func fpWithToken(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Update</button>
 </form>
 <p><small>SAFE: CSRF token protection enabled</small></p>
+</div>
 </body></html>`, token)
 }

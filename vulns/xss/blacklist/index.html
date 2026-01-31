@@ -3,69 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>XSS Blacklist Filters - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #f5f5f5; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/xss/">&larr; Back to XSS</a></div>
-    <h1>XSS Blacklist Filter Bypasses</h1>
-    <p>Test cases for bypassing common XSS blacklist filters. Each level adds more restrictions.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>XSS Blacklist Filter Bypasses</h1>
+        <p>Test cases for bypassing common XSS blacklist filters. Each level adds more restrictions.</p>
 
-    <h2 class="vuln">Vulnerable (Bypassable Filters)</h2>
-    <table>
-        <tr>
-            <th>Level</th>
-            <th>Filter</th>
-            <th>Bypass</th>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level1">Level 1</a></td>
-            <td>Blocks &lt;script&gt; (exact, case-sensitive)</td>
-            <td>&lt;SCRIPT&gt; or &lt;img onerror=&gt;</td>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level2">Level 2</a></td>
-            <td>Blocks &lt;script&gt; (case-insensitive)</td>
-            <td>&lt;img&gt;, &lt;svg&gt;, &lt;body&gt; tags</td>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level3">Level 3</a></td>
-            <td>Blocks &lt;script&gt;, &lt;img&gt;</td>
-            <td>&lt;svg&gt;, &lt;body&gt;, &lt;input&gt; tags</td>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level4">Level 4</a></td>
-            <td>Blocks &lt;script&gt;, &lt;img&gt;, &lt;svg&gt;, &lt;body&gt;</td>
-            <td>&lt;iframe&gt;, &lt;input&gt;, &lt;details&gt; tags</td>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level5">Level 5</a></td>
-            <td>Blocks common tags + javascript:</td>
-            <td>HTML entity encoding, data: URLs</td>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level6">Level 6</a></td>
-            <td>Blocks common event handlers</td>
-            <td>onpointerover, onanimationend, etc.</td>
-        </tr>
-        <tr>
-            <td><a href="/vulns/xss/blacklist/level7">Level 7</a></td>
-            <td>Blocks "alert" function</td>
-            <td>confirm(), prompt(), eval(), constructor</td>
-        </tr>
-    </table>
+        <h2 class="vuln">Vulnerable (Bypassable Filters)</h2>
+        <table>
+            <tr>
+                <th>Level</th>
+                <th>Filter</th>
+                <th>Bypass</th>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level1">Level 1</a></td>
+                <td>Blocks &lt;script&gt; (exact, case-sensitive)</td>
+                <td>&lt;SCRIPT&gt; or &lt;img onerror=&gt;</td>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level2">Level 2</a></td>
+                <td>Blocks &lt;script&gt; (case-insensitive)</td>
+                <td>&lt;img&gt;, &lt;svg&gt;, &lt;body&gt; tags</td>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level3">Level 3</a></td>
+                <td>Blocks &lt;script&gt;, &lt;img&gt;</td>
+                <td>&lt;svg&gt;, &lt;body&gt;, &lt;input&gt; tags</td>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level4">Level 4</a></td>
+                <td>Blocks &lt;script&gt;, &lt;img&gt;, &lt;svg&gt;, &lt;body&gt;</td>
+                <td>&lt;iframe&gt;, &lt;input&gt;, &lt;details&gt; tags</td>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level5">Level 5</a></td>
+                <td>Blocks common tags + javascript:</td>
+                <td>HTML entity encoding, data: URLs</td>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level6">Level 6</a></td>
+                <td>Blocks common event handlers</td>
+                <td>onpointerover, onanimationend, etc.</td>
+            </tr>
+            <tr>
+                <td><a href="/vulns/xss/blacklist/level7">Level 7</a></td>
+                <td>Blocks "alert" function</td>
+                <td>confirm(), prompt(), eval(), constructor</td>
+            </tr>
+        </table>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/xss/blacklist/fp/whitelist">Whitelist Approach</a> - Only allows alphanumeric characters</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/xss/blacklist/fp/whitelist">Whitelist Approach</a> - Only allows alphanumeric characters</li>
+        </ul>
+    </div>
 </body>
 </html>

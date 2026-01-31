@@ -45,8 +45,11 @@ func privateIP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Private IP Disclosure</title></head>
+<head><title>Private IP Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Private IP Address Disclosure</h1>
 <p>Internal network information exposed in page content.</p>
 
@@ -65,6 +68,7 @@ Internal routing: 10.0.0.1 -> 10.0.0.50
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`, r.RemoteAddr)
 }
 
@@ -77,8 +81,11 @@ func privateIPHeader(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Private IP in Headers</title></head>
+<head><title>Private IP in Headers</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Private IP Address in Headers</h1>
 <p>Check the response headers for internal IP addresses.</p>
 
@@ -90,6 +97,7 @@ X-Cache-Server: 172.16.0.25
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -97,8 +105,11 @@ func rsaKey(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>RSA Private Key Disclosure</title></head>
+<head><title>RSA Private Key Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>RSA Private Key Disclosure</h1>
 <p>Private RSA key exposed in page content.</p>
 
@@ -117,6 +128,7 @@ nQmZ3d9xJXgqq7K8NqPdFKuc9a4VPpB3lKHFzPTbWHM8e5hWizP7veocBrN7BxGk
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -124,8 +136,11 @@ func sshKey(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSH Private Key Disclosure</title></head>
+<head><title>SSH Private Key Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>SSH Private Key Disclosure</h1>
 <p>SSH private key exposed in application.</p>
 
@@ -141,6 +156,7 @@ AAAEDDzwLxRlFbLl7AN3E4eNKrkeQ9eyPt8LyeMdy9nNy9Hy0rY7DoPgzp48Kq9P1EzuXh
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -148,8 +164,11 @@ func pemKey(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>PEM Private Key Disclosure</title></head>
+<head><title>PEM Private Key Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>PEM Private Key Disclosure</h1>
 <p>PEM-encoded private key in application response.</p>
 
@@ -163,6 +182,7 @@ nxNBJXx7Qwe9nZnQGH3fKKe7TpRR4+mJbChPYHY3CnNqemAH0xeGPNT/HpPXfEIZ
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -170,8 +190,11 @@ func jwtKey(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>JWT Private Key Disclosure</title></head>
+<head><title>JWT Private Key Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>JWT Private Key Disclosure</h1>
 <p>JWT signing key exposed in application configuration.</p>
 
@@ -195,6 +218,7 @@ JWT_PRIVATE_KEY_PATH=/etc/ssl/jwt/private.pem
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -202,8 +226,11 @@ func ssn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSN Disclosure</title></head>
+<head><title>SSN Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Social Security Number Disclosure</h1>
 <p>SSN exposed in application response.</p>
 
@@ -223,6 +250,7 @@ Address: 123 Main St, Anytown, USA
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -230,8 +258,11 @@ func creditCard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Credit Card Disclosure</title></head>
+<head><title>Credit Card Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Credit Card Number Disclosure</h1>
 <p>Credit card numbers exposed in application.</p>
 
@@ -255,6 +286,7 @@ CVV validation for: 378282246310005
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -262,8 +294,11 @@ func email(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Email Address Disclosure</title></head>
+<head><title>Email Address Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Email Address Disclosure</h1>
 <p>Internal email addresses exposed.</p>
 
@@ -283,6 +318,7 @@ Backup notification sent to: backup-admin@internal.company.com
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -290,8 +326,11 @@ func dbConnection(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Database Connection String Disclosure</title></head>
+<head><title>Database Connection String Disclosure</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Database Connection String Disclosure</h1>
 <p>Database credentials exposed in application.</p>
 
@@ -318,6 +357,7 @@ mongodb://mongo_user:mongo_pass@mongodb.internal:27017/app?authSource=admin
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -325,8 +365,11 @@ func dbConnectionEnv(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Database Connection in Environment</title></head>
+<head><title>Database Connection in Environment</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Database Connection String in Environment</h1>
 <p>Database credentials in environment variables.</p>
 
@@ -340,6 +383,7 @@ AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 </pre>
 
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -347,8 +391,11 @@ func directoryListing(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Directory Listing</title></head>
+<head><title>Directory Listing</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Index of /uploads/</h1>
 <pre>
 <a href="../">../</a>
@@ -362,6 +409,7 @@ func directoryListing(w http.ResponseWriter, r *http.Request) {
 </pre>
 <hr>
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -369,8 +417,11 @@ func apacheListing(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Index of /var/www/html/uploads</title></head>
+<head><title>Index of /var/www/html/uploads</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Index of /var/www/html/uploads</h1>
 <table>
 <tr><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th></tr>
@@ -383,14 +434,18 @@ func apacheListing(w http.ResponseWriter, r *http.Request) {
 <tr><th colspan="3"><hr></th></tr>
 </table>
 <address>Apache/2.4.52 (Ubuntu) Server at localhost Port 80</address>
+</div>
 </body></html>`)
 }
 
 func nginxListing(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<html>
-<head><title>Index of /data/</title></head>
+<head><title>Index of /data/</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Index of /data/</h1><hr><pre>
 <a href="../">../</a>
 <a href="api_keys.json">api_keys.json</a>                                      30-Jan-2026 10:00                1024
@@ -399,6 +454,7 @@ func nginxListing(w http.ResponseWriter, r *http.Request) {
 <a href="logs/">logs/</a>                                              27-Jan-2026 12:00                   -
 <a href="secrets.yml">secrets.yml</a>                                        26-Jan-2026 14:00                2048
 </pre><hr>
+</div>
 </body></html>`)
 }
 
@@ -406,8 +462,11 @@ func fpRedacted(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Information Disclosure - Safe</title></head>
+<head><title>Information Disclosure - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Information Disclosure - Safe (Redacted)</h1>
 <p>Sensitive information is properly redacted.</p>
 
@@ -428,5 +487,6 @@ Database: [REDACTED]
 <h3>Security:</h3>
 <p><small>SAFE: Sensitive data is masked/redacted before display</small></p>
 <p><a href="/vulns/disclosure/">Back to Disclosure Tests</a></p>
+</div>
 </body></html>`)
 }

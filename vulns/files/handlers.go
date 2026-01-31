@@ -92,8 +92,11 @@ func backupArchive(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Backup Archive Detected</title></head>
+<head><title>Backup Archive Detected</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Backup Archive Files</h1>
 <p>The following backup archives were detected:</p>
 
@@ -107,6 +110,7 @@ func backupArchive(w http.ResponseWriter, r *http.Request) {
 </ul>
 
 <p><a href="/vulns/files/">Back to Files Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -315,8 +319,11 @@ func phpinfo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>phpinfo()</title></head>
+<head><title>phpinfo()</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>PHP Version 8.1.0</h1>
 <table>
 <tr><td>System</td><td>Linux server 5.15.0 x86_64</td></tr>
@@ -332,6 +339,7 @@ func phpinfo(w http.ResponseWriter, r *http.Request) {
 <tr><td>AWS_SECRET_ACCESS_KEY</td><td>wJalrXUtnFEMI/K7MDENG</td></tr>
 </table>
 <p><a href="/vulns/files/">Back to Files Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -339,8 +347,11 @@ func debugPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Debug Page</title></head>
+<head><title>Debug Page</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Debug Information</h1>
 <h2>Request Headers:</h2>
 <pre>%v</pre>
@@ -352,6 +363,7 @@ DB_CONNECTION: mysql://user:pass@localhost/db
 INTERNAL_API_KEY: internal-debug-key-12345
 </pre>
 <p><a href="/vulns/files/">Back to Files Tests</a></p>
+</div>
 </body></html>`, r.Header)
 }
 
@@ -359,8 +371,11 @@ func testPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Test Page</title></head>
+<head><title>Test Page</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Test/Development Page</h1>
 <p>This is a test page that should not be accessible in production.</p>
 <h2>Test Credentials:</h2>
@@ -375,6 +390,7 @@ TEST_API_KEY=test-key-12345-abcdef
 DEBUG_TOKEN=debug-token-67890-ghijkl
 </pre>
 <p><a href="/vulns/files/">Back to Files Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -383,12 +399,16 @@ func fpProtected(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>403 Forbidden</title></head>
+<head><title>403 Forbidden</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>403 Forbidden</h1>
 <p>Access to this resource is denied.</p>
 <h3>Security:</h3>
 <p><small>SAFE: Sensitive files are protected with proper access controls</small></p>
 <p><a href="/vulns/files/">Back to Files Tests</a></p>
+</div>
 </body></html>`)
 }

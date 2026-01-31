@@ -27,11 +27,16 @@ func protected(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HTTP Basic Protected</title></head>
+<head>
+<title>HTTP Basic Protected</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Protected Area (HTTP Basic)</h1>
 <p>Successfully authenticated via HTTP Basic auth.</p>
 <p>Welcome, %s!</p>
+</div>
 </body></html>`, username)
 }
 

@@ -18,8 +18,11 @@ func backup(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Source code in backup file
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Source Disclosure - Backup Files</title></head>
+<head><title>Source Disclosure - Backup Files</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Source Disclosure via Backup Files</h1>
 <p>Backup files may expose source code:</p>
 <ul>
@@ -30,5 +33,6 @@ func backup(w http.ResponseWriter, r *http.Request) {
 <ul>
     <li><a href="/static/backup-files/fp/readme.txt.pdf">readme.txt.pdf</a> - Not a backup file</li>
 </ul>
+</div>
 </body></html>`)
 }

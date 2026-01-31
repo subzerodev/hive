@@ -38,14 +38,18 @@ func evalInjection(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Server-Side JavaScript Injection - eval</title></head>
+<head>
+<title>Server-Side JavaScript Injection - eval</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side JavaScript Injection (eval)</h1>
 <p>User input passed to eval() function.</p>
 
 <form method="GET">
     <label>Expression:</label><br>
-    <input name="code" value="%s" style="width:400px"><br><br>
+    <input name="code" value="%s"><br><br>
     <button type="submit">Evaluate</button>
 </form>
 
@@ -65,6 +69,7 @@ func evalInjection(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Server-side JavaScript code injection via eval()</small></p>
 <p><a href="/vulns/injection/ssjs/">Back</a></p>
+</div>
 </body></html>`, input, input, result)
 }
 
@@ -84,14 +89,18 @@ func functionInjection(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Server-Side JavaScript - Function Constructor</title></head>
+<head>
+<title>Server-Side JavaScript - Function Constructor</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side JavaScript Injection (Function)</h1>
 <p>User input passed to Function constructor.</p>
 
 <form method="GET">
     <label>Function body:</label><br>
-    <input name="body" value="%s" style="width:400px"><br><br>
+    <input name="body" value="%s"><br><br>
     <button type="submit">Execute</button>
 </form>
 
@@ -110,6 +119,7 @@ func functionInjection(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Code injection via Function constructor</small></p>
 <p><a href="/vulns/injection/ssjs/">Back</a></p>
+</div>
 </body></html>`, input, input, result)
 }
 
@@ -122,14 +132,18 @@ func setTimeoutInjection(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Server-Side JavaScript - setTimeout</title></head>
+<head>
+<title>Server-Side JavaScript - setTimeout</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side JavaScript Injection (setTimeout)</h1>
 <p>User input passed to setTimeout with string argument.</p>
 
 <form method="GET">
     <label>Callback code:</label><br>
-    <input name="callback" value="%s" style="width:400px"><br><br>
+    <input name="callback" value="%s"><br><br>
     <button type="submit">Schedule</button>
 </form>
 
@@ -142,6 +156,7 @@ func setTimeoutInjection(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Code injection via setTimeout string argument</small></p>
 <p><a href="/vulns/injection/ssjs/">Back</a></p>
+</div>
 </body></html>`, input, input)
 }
 
@@ -155,13 +170,17 @@ func fpSafe(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Safe JavaScript Handling</title></head>
+<head>
+<title>Safe JavaScript Handling</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Safe Server-Side JavaScript</h1>
 <p>User input treated as data, not code.</p>
 
 <form method="GET">
-    <input name="value" value="%s" style="width:200px">
+    <input name="value" value="%s">
     <button type="submit">Submit</button>
 </form>
 
@@ -175,5 +194,6 @@ const result = parseInt(userValue, 10) || 0;</pre>
 <h3>Security:</h3>
 <p><small>SAFE: Input is validated and never executed as code</small></p>
 <p><a href="/vulns/injection/ssjs/">Back</a></p>
+</div>
 </body></html>`, input, input)
 }

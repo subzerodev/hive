@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Version Disclosure - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/info-disclosure/">&larr; Back to Info Disclosure</a></div>
-    <h1>Version Disclosure</h1>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Version Disclosure</h1>
 
-    <h2 class="vuln">Vulnerable Test Cases</h2>
-    <ul>
-        <li><a href="/vulns/info-disclosure/version-disclosure/server-headers">Server Headers</a></li>
-        <li><a href="/vulns/info-disclosure/version-disclosure/comments">HTML Comments</a></li>
-    </ul>
+        <h2 class="vuln">Vulnerable Test Cases</h2>
+        <ul>
+            <li><a href="/vulns/info-disclosure/version-disclosure/server-headers">Server Headers</a></li>
+            <li><a href="/vulns/info-disclosure/version-disclosure/comments">HTML Comments</a></li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/info-disclosure/version-disclosure/fp/hidden">Version Hidden</a></li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/info-disclosure/version-disclosure/fp/hidden">Version Hidden</a></li>
+        </ul>
+    </div>
 </body>
 </html>

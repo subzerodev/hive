@@ -30,12 +30,17 @@ func start(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>OAuth Login</title></head>
+<head>
+<title>OAuth Login</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>OAuth Login</h1>
 <p>Login with our fake OAuth provider:</p>
 <a href="/vulns/auth/oauth/authorize?client_id=hive&redirect_uri=/vulns/auth/oauth/callback">Login with HiveAuth</a>
 <p><small>Credentials: admin / password</small></p>
+</div>
 </body></html>`)
 }
 
@@ -64,8 +69,12 @@ func authorize(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>HiveAuth - Authorize</title></head>
+<head>
+<title>HiveAuth - Authorize</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>HiveAuth - Authorize</h1>
 <p>HIVE App wants to access your account</p>
 <form method="POST">
@@ -73,6 +82,7 @@ func authorize(w http.ResponseWriter, r *http.Request) {
     <input type="password" name="password" placeholder="Password"><br>
     <button type="submit">Authorize</button>
 </form>
+</div>
 </body></html>`)
 }
 
@@ -112,10 +122,15 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Dashboard</title></head>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Dashboard (OAuth)</h1>
 <p>Successfully authenticated via OAuth flow.</p>
+</div>
 </body></html>`)
 }
 

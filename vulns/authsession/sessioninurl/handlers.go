@@ -24,8 +24,11 @@ func exposed(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Session ID in URL - exposed in logs, referer, history
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Session in URL - Exposed</title></head>
+<head><title>Session in URL - Exposed</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Dashboard (Session in URL)</h1>
 <p>Your session: %s</p>
 <p>Navigation:</p>
@@ -34,6 +37,7 @@ func exposed(w http.ResponseWriter, r *http.Request) {
     <li><a href="/vulns/auth-session/session-in-url/exposed?sessionid=%s">Settings</a></li>
 </ul>
 <p><small>VULNERABLE: Session ID exposed in URL</small></p>
+</div>
 </body></html>`, sessionID, sessionID, sessionID)
 }
 
@@ -51,8 +55,11 @@ func fpHeaderBased(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Session - Header Based</title></head>
+<head><title>Session - Header Based</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Dashboard (Secure Session)</h1>
 <p>Session stored securely in cookie header.</p>
 <p>Navigation:</p>
@@ -61,5 +68,6 @@ func fpHeaderBased(w http.ResponseWriter, r *http.Request) {
     <li><a href="/vulns/auth-session/session-in-url/fp/header-based">Settings</a></li>
 </ul>
 <p><small>SAFE: Session ID in secure cookie, not URL</small></p>
+</div>
 </body></html>`)
 }

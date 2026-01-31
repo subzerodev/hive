@@ -44,14 +44,17 @@ func xssFilterDisabled(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Filter Disabled</title></head>
+<head><title>XSS Filter Disabled</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Browser XSS Filter Disabled</h1>
 <p>X-XSS-Protection: 0 header is set, disabling browser XSS filter.</p>
 
 <h2>Test Input:</h2>
 <form method="GET">
-    <input name="input" value="%s" style="width:400px">
+    <input name="input" value="%s">
     <button type="submit">Submit</button>
 </form>
 
@@ -61,6 +64,7 @@ func xssFilterDisabled(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Browser's built-in XSS filter is explicitly disabled</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, input, input)
 }
 
@@ -76,8 +80,11 @@ func xssFilterEnabled(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Filter Enabled (No Block)</title></head>
+<head><title>XSS Filter Enabled (No Block)</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS Filter Enabled Without Block Mode</h1>
 <p>X-XSS-Protection: 1 (without mode=block)</p>
 <p>Browser may sanitize but still render the page.</p>
@@ -88,6 +95,7 @@ func xssFilterEnabled(w http.ResponseWriter, r *http.Request) {
 <h3>Note:</h3>
 <p><small>Partial protection - should use mode=block</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, input)
 }
 
@@ -98,14 +106,18 @@ func fpXssFilterBlock(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Filter - Block Mode</title></head>
+<head><title>XSS Filter - Block Mode</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS Filter with Block Mode</h1>
 <p>X-XSS-Protection: 1; mode=block</p>
 
 <h3>Security:</h3>
 <p><small>SAFE: Browser will block page on XSS detection</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -123,8 +135,11 @@ func xffBypass(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>X-Forwarded-For Bypass</title></head>
+<head><title>X-Forwarded-For Bypass</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>X-Forwarded-For Security Bypass</h1>
 <p>Server trusts X-Forwarded-For header for access control.</p>
 
@@ -140,6 +155,7 @@ func xffBypass(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Trusting client-provided X-Forwarded-For for authorization</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, clientIP, isAdmin)
 }
 
@@ -163,8 +179,11 @@ func clientIPBypass(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Client IP Spoofing</title></head>
+<head><title>Client IP Spoofing</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Spoofable Client IP Address</h1>
 <p>Server checks multiple headers for client IP.</p>
 
@@ -185,6 +204,7 @@ func clientIPBypass(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>IP-based controls can be bypassed via spoofed headers</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, clientIP,
 		r.Header.Get("X-Real-IP"),
 		r.Header.Get("X-Forwarded-For"),
@@ -199,8 +219,11 @@ func fpXffValidated(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>X-Forwarded-For Validated</title></head>
+<head><title>X-Forwarded-For Validated</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Proper Client IP Handling</h1>
 <p>Server only trusts actual connection IP, not forwarded headers.</p>
 
@@ -216,6 +239,7 @@ X-Real-IP: %s (ignored)
 <h3>Security:</h3>
 <p><small>SAFE: Only trusts verified connection source</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, clientIP, r.Header.Get("X-Forwarded-For"), r.Header.Get("X-Real-IP"))
 }
 
@@ -227,8 +251,11 @@ func multipleContentTypes(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Multiple Content-Types</title></head>
+<head><title>Multiple Content-Types</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Multiple Content-Type Headers</h1>
 <p>Response has multiple Content-Type headers set.</p>
 
@@ -241,6 +268,7 @@ Content-Type: text/plain
 <h3>Vulnerability:</h3>
 <p><small>Ambiguous content type - browser behavior undefined</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -250,8 +278,11 @@ func fpSingleContentType(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Single Content-Type</title></head>
+<head><title>Single Content-Type</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Single Content-Type Header</h1>
 <p>Response has exactly one Content-Type header.</p>
 
@@ -261,6 +292,7 @@ func fpSingleContentType(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Unambiguous content type</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -287,8 +319,11 @@ func urlOverride(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Request URL Override</title></head>
+<head><title>Request URL Override</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Request URL Override Vulnerability</h1>
 <p>Server processes URL override headers for routing.</p>
 
@@ -316,6 +351,7 @@ curl -H "X-Rewrite-URL: /restricted" URL
 <h3>Vulnerability:</h3>
 <p><small>URL override headers can bypass access controls</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, r.URL.Path, originalURL, rewriteURL, forwardedPath, effectiveURL, isAdmin, isRestricted)
 }
 
@@ -329,8 +365,11 @@ func urlOverrideLegacy(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Legacy URL Override Headers</title></head>
+<head><title>Legacy URL Override Headers</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Legacy Request URL Override</h1>
 <p>Server processes legacy URL/host override headers.</p>
 
@@ -352,6 +391,7 @@ curl -H "X-HTTP-DestinationURL: http://admin/" URL
 <h3>Vulnerability:</h3>
 <p><small>Legacy headers can manipulate request routing</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, redirect, xHost, xForwardedServer, xHTTPDestinationURL)
 }
 
@@ -360,8 +400,11 @@ func fpUrlOverrideIgnored(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>URL Override Headers Ignored</title></head>
+<head><title>URL Override Headers Ignored</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>URL Override Headers Ignored</h1>
 <p>Server ignores all URL override headers and uses actual request URL.</p>
 
@@ -375,5 +418,6 @@ func fpUrlOverrideIgnored(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: URL override headers are not processed</small></p>
 <p><a href="/vulns/config/headers/">Back</a></p>
+</div>
 </body></html>`, r.URL.Path, r.Header.Get("X-Original-URL"), r.Header.Get("X-Rewrite-URL"))
 }

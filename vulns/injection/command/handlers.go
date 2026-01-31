@@ -28,8 +28,12 @@ func basic(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Command Injection - Basic</title></head>
+<head>
+<title>Command Injection - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Ping Test</h1>
 <form method="GET">
     <input name="host" value="%s" placeholder="Hostname">
@@ -55,6 +59,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `</pre>
 <p><small>Try: localhost; id</small></p>
+</div>
 </body></html>`)
 }
 
@@ -77,8 +82,12 @@ func blind(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Command Injection - Blind</title></head>
+<head>
+<title>Command Injection - Blind</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Ping Test (Blind)</h1>
 <form method="GET">
     <input name="host" value="%s" placeholder="Hostname">
@@ -87,6 +96,7 @@ func blind(w http.ResponseWriter, r *http.Request) {
 <h2>Result:</h2>
 <p>Ping command executed.</p>
 <p><small>Try: localhost; sleep 5</small></p>
+</div>
 </body></html>`, host)
 }
 
@@ -99,8 +109,12 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Command Injection - Safe</title></head>
+<head>
+<title>Command Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Ping Test (Safe)</h1>
 <form method="GET">
     <input name="host" value="%s" placeholder="Hostname">
@@ -129,7 +143,9 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%s", string(output))
 	}
 
-	fmt.Fprintf(w, `</pre></body></html>`)
+	fmt.Fprintf(w, `</pre>
+</div>
+</body></html>`)
 }
 
 func sanitizeHost(host string) string {

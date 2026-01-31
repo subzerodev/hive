@@ -3,51 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Sensitive Files - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
-    <h1>Sensitive Files</h1>
-    <p>Exposed backup files, configuration files, and development files.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Sensitive Files</h1>
+        <p>Exposed backup files, configuration files, and development files.</p>
 
-    <h2 class="vuln">Backup Files</h2>
-    <ul>
-        <li><a href="/vulns/files/backup/sql">SQL Backup</a> - Database dump exposed</li>
-        <li><a href="/vulns/files/backup/config">Config Backup</a> - config.php.bak</li>
-        <li><a href="/vulns/files/backup/archive">Archive Files</a> - .zip, .tar.gz backups</li>
-        <li><a href="/vulns/files/backup/old">Old Files</a> - .old file extensions</li>
-    </ul>
+        <h2 class="vuln">Backup Files</h2>
+        <ul>
+            <li><a href="/vulns/files/backup/sql">SQL Backup</a> - Database dump exposed</li>
+            <li><a href="/vulns/files/backup/config">Config Backup</a> - config.php.bak</li>
+            <li><a href="/vulns/files/backup/archive">Archive Files</a> - .zip, .tar.gz backups</li>
+            <li><a href="/vulns/files/backup/old">Old Files</a> - .old file extensions</li>
+        </ul>
 
-    <h2 class="vuln">Common Sensitive Files</h2>
-    <ul>
-        <li><a href="/vulns/files/common/git-config">.git/config</a> - Git configuration</li>
-        <li><a href="/vulns/files/common/git-head">.git/HEAD</a> - Git HEAD reference</li>
-        <li><a href="/vulns/files/common/env">.env</a> - Environment variables</li>
-        <li><a href="/vulns/files/common/htaccess">.htaccess</a> - Apache config</li>
-        <li><a href="/vulns/files/common/htpasswd">.htpasswd</a> - Password hashes</li>
-        <li><a href="/vulns/files/common/wp-config">wp-config.php</a> - WordPress config</li>
-        <li><a href="/vulns/files/common/composer">composer.json</a> - PHP dependencies</li>
-        <li><a href="/vulns/files/common/package">package.json</a> - Node dependencies</li>
-        <li><a href="/vulns/files/common/docker-compose">docker-compose.yml</a> - Docker config</li>
-    </ul>
+        <h2 class="vuln">Common Sensitive Files</h2>
+        <ul>
+            <li><a href="/vulns/files/common/git-config">.git/config</a> - Git configuration</li>
+            <li><a href="/vulns/files/common/git-head">.git/HEAD</a> - Git HEAD reference</li>
+            <li><a href="/vulns/files/common/env">.env</a> - Environment variables</li>
+            <li><a href="/vulns/files/common/htaccess">.htaccess</a> - Apache config</li>
+            <li><a href="/vulns/files/common/htpasswd">.htpasswd</a> - Password hashes</li>
+            <li><a href="/vulns/files/common/wp-config">wp-config.php</a> - WordPress config</li>
+            <li><a href="/vulns/files/common/composer">composer.json</a> - PHP dependencies</li>
+            <li><a href="/vulns/files/common/package">package.json</a> - Node dependencies</li>
+            <li><a href="/vulns/files/common/docker-compose">docker-compose.yml</a> - Docker config</li>
+        </ul>
 
-    <h2 class="vuln">Development Files</h2>
-    <ul>
-        <li><a href="/vulns/files/dev/phpinfo">phpinfo()</a> - PHP information</li>
-        <li><a href="/vulns/files/dev/debug">Debug Page</a> - Debug information</li>
-        <li><a href="/vulns/files/dev/test">Test Page</a> - Test credentials</li>
-    </ul>
+        <h2 class="vuln">Development Files</h2>
+        <ul>
+            <li><a href="/vulns/files/dev/phpinfo">phpinfo()</a> - PHP information</li>
+            <li><a href="/vulns/files/dev/debug">Debug Page</a> - Debug information</li>
+            <li><a href="/vulns/files/dev/test">Test Page</a> - Test credentials</li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/files/fp/protected">Protected File</a> - Returns 403 Forbidden</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/files/fp/protected">Protected File</a> - Returns 403 Forbidden</li>
+        </ul>
+    </div>
 </body>
 </html>

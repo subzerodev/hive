@@ -1,30 +1,25 @@
-<!-- vulns/injection/command/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Command Injection - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/injection/">&larr; Back to Injection</a></div>
-    <h1>OS Command Injection</h1>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>OS Command Injection</h1>
 
-    <h2 class="vuln">Vulnerable Test Cases</h2>
-    <ul>
-        <li><a href="/vulns/injection/command/basic?host=localhost">Basic</a> - Output shown, try: localhost; id</li>
-        <li><a href="/vulns/injection/command/blind?host=localhost">Blind</a> - No output, try: localhost; sleep 5</li>
-    </ul>
+        <h2 class="vuln">Vulnerable Test Cases</h2>
+        <ul>
+            <li><a href="/vulns/injection/command/basic?host=localhost">Basic</a> - Output shown, try: localhost; id</li>
+            <li><a href="/vulns/injection/command/blind?host=localhost">Blind</a> - No output, try: localhost; sleep 5</li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/injection/command/fp/sanitized?host=localhost">Sanitized</a> - Input filtered to alphanumeric only</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/injection/command/fp/sanitized?host=localhost">Sanitized</a> - Input filtered to alphanumeric only</li>
+        </ul>
+    </div>
 </body>
 </html>

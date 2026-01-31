@@ -3,56 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Miscellaneous Vulnerabilities - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
-    <h1>Miscellaneous Vulnerabilities</h1>
-    <p>Various security issues that don't fit into other categories.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Miscellaneous Vulnerabilities</h1>
+        <p>Various security issues that don't fit into other categories.</p>
 
-    <h2 class="vuln">Password Autocomplete</h2>
-    <ul>
-        <li><a href="/vulns/misc/password-autocomplete">Autocomplete Enabled</a> - Browser can store credentials</li>
-        <li><a href="/vulns/misc/password-autocomplete/fp">Autocomplete Disabled</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">Password Autocomplete</h2>
+        <ul>
+            <li><a href="/vulns/misc/password-autocomplete">Autocomplete Enabled</a> - Browser can store credentials</li>
+            <li><a href="/vulns/misc/password-autocomplete/fp">Autocomplete Disabled</a> - SAFE</li>
+        </ul>
 
-    <h2 class="vuln">Cookie Issues</h2>
-    <ul>
-        <li><a href="/vulns/misc/duplicate-cookies">Duplicate Cookies</a> - Same name, different paths</li>
-        <li><a href="/vulns/misc/duplicate-cookies/fp">Single Cookie</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">Cookie Issues</h2>
+        <ul>
+            <li><a href="/vulns/misc/duplicate-cookies">Duplicate Cookies</a> - Same name, different paths</li>
+            <li><a href="/vulns/misc/duplicate-cookies/fp">Single Cookie</a> - SAFE</li>
+        </ul>
 
-    <h2 class="vuln">Resource Loading</h2>
-    <ul>
-        <li><a href="/vulns/misc/path-relative-css">Path-Relative CSS</a> - Relative stylesheet path</li>
-        <li><a href="/vulns/misc/path-relative-css/fp">Absolute CSS Path</a> - SAFE</li>
-        <li><a href="/vulns/misc/cross-domain-script">Cross-Domain Script</a> - External JS includes</li>
-        <li><a href="/vulns/misc/vulnerable-js">Vulnerable JS Libraries</a> - Outdated libraries</li>
-    </ul>
+        <h2 class="vuln">Resource Loading</h2>
+        <ul>
+            <li><a href="/vulns/misc/path-relative-css">Path-Relative CSS</a> - Relative stylesheet path</li>
+            <li><a href="/vulns/misc/path-relative-css/fp">Absolute CSS Path</a> - SAFE</li>
+            <li><a href="/vulns/misc/cross-domain-script">Cross-Domain Script</a> - External JS includes</li>
+            <li><a href="/vulns/misc/vulnerable-js">Vulnerable JS Libraries</a> - Outdated libraries</li>
+        </ul>
 
-    <h2 class="vuln">Header-Dependent Responses</h2>
-    <ul>
-        <li><a href="/vulns/misc/referer-dependent">Referer-Dependent</a> - Content changes by Referer</li>
-        <li><a href="/vulns/misc/useragent-dependent">User-Agent Dependent</a> - Content changes by UA</li>
-    </ul>
+        <h2 class="vuln">Header-Dependent Responses</h2>
+        <ul>
+            <li><a href="/vulns/misc/referer-dependent">Referer-Dependent</a> - Content changes by Referer</li>
+            <li><a href="/vulns/misc/useragent-dependent">User-Agent Dependent</a> - Content changes by UA</li>
+        </ul>
 
-    <h2 class="vuln">Caching Issues</h2>
-    <ul>
-        <li><a href="/vulns/misc/cacheable-https">Cacheable Sensitive</a> - Sensitive data can be cached</li>
-        <li><a href="/vulns/misc/cacheable-https/fp">Non-Cacheable</a> - SAFE</li>
-    </ul>
+        <h2 class="vuln">Caching Issues</h2>
+        <ul>
+            <li><a href="/vulns/misc/cacheable-https">Cacheable Sensitive</a> - Sensitive data can be cached</li>
+            <li><a href="/vulns/misc/cacheable-https/fp">Non-Cacheable</a> - SAFE</li>
+        </ul>
 
-    <h2 class="vuln">Input Reflection</h2>
-    <ul>
-        <li><a href="/vulns/misc/input-reflected">Input Reflected</a> - User input echoed in response</li>
-        <li><a href="/vulns/misc/input-reflected-header">Input in Header</a> - Input reflected in response header</li>
-    </ul>
+        <h2 class="vuln">Input Reflection</h2>
+        <ul>
+            <li><a href="/vulns/misc/input-reflected">Input Reflected</a> - User input echoed in response</li>
+            <li><a href="/vulns/misc/input-reflected-header">Input in Header</a> - Input reflected in response header</li>
+        </ul>
+    </div>
 </body>
 </html>

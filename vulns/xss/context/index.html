@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>XSS Contexts - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/xss/">&larr; Back to XSS</a></div>
-    <h1>XSS Context-Specific Test Cases</h1>
-    <p>XSS vulnerabilities in different HTML/JavaScript contexts. Each context requires different payloads.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>XSS Context-Specific Test Cases</h1>
+        <p>XSS vulnerabilities in different HTML/JavaScript contexts. Each context requires different payloads.</p>
 
-    <h2 class="vuln">Vulnerable Test Cases</h2>
-    <h3>HTML/XML Contexts</h3>
-    <ul>
-        <li><a href="/vulns/xss/context/svg">SVG Context</a> - XSS inside SVG elements</li>
-        <li><a href="/vulns/xss/context/data-attr">Data Attribute</a> - XSS in data-* attributes</li>
-        <li><a href="/vulns/xss/context/iframe-srcdoc">iframe srcdoc</a> - XSS in iframe srcdoc attribute</li>
-        <li><a href="/vulns/xss/context/html-comment">HTML Comment</a> - XSS breaking out of HTML comments</li>
-    </ul>
+        <h2 class="vuln">Vulnerable Test Cases</h2>
+        <h3>HTML/XML Contexts</h3>
+        <ul>
+            <li><a href="/vulns/xss/context/svg">SVG Context</a> - XSS inside SVG elements</li>
+            <li><a href="/vulns/xss/context/data-attr">Data Attribute</a> - XSS in data-* attributes</li>
+            <li><a href="/vulns/xss/context/iframe-srcdoc">iframe srcdoc</a> - XSS in iframe srcdoc attribute</li>
+            <li><a href="/vulns/xss/context/html-comment">HTML Comment</a> - XSS breaking out of HTML comments</li>
+        </ul>
 
-    <h3>URL Contexts</h3>
-    <ul>
-        <li><a href="/vulns/xss/context/href">href Attribute</a> - javascript: URLs in links</li>
-        <li><a href="/vulns/xss/context/src">src Attribute</a> - XSS in image src attributes</li>
-    </ul>
+        <h3>URL Contexts</h3>
+        <ul>
+            <li><a href="/vulns/xss/context/href">href Attribute</a> - javascript: URLs in links</li>
+            <li><a href="/vulns/xss/context/src">src Attribute</a> - XSS in image src attributes</li>
+        </ul>
 
-    <h3>CSS Contexts</h3>
-    <ul>
-        <li><a href="/vulns/xss/context/css-style">CSS Style</a> - XSS in inline/embedded CSS</li>
-        <li><a href="/vulns/xss/context/css-expression">CSS Expression</a> - expression() in CSS (legacy IE)</li>
-    </ul>
+        <h3>CSS Contexts</h3>
+        <ul>
+            <li><a href="/vulns/xss/context/css-style">CSS Style</a> - XSS in inline/embedded CSS</li>
+            <li><a href="/vulns/xss/context/css-expression">CSS Expression</a> - expression() in CSS (legacy IE)</li>
+        </ul>
 
-    <h3>JavaScript Contexts</h3>
-    <ul>
-        <li><a href="/vulns/xss/context/js-comment">JS Comment</a> - XSS breaking out of JS comments</li>
-        <li><a href="/vulns/xss/context/js-template">JS Template Literal</a> - XSS in template literals</li>
-    </ul>
+        <h3>JavaScript Contexts</h3>
+        <ul>
+            <li><a href="/vulns/xss/context/js-comment">JS Comment</a> - XSS breaking out of JS comments</li>
+            <li><a href="/vulns/xss/context/js-template">JS Template Literal</a> - XSS in template literals</li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/xss/context/fp/sanitized">Properly Sanitized</a> - All contexts properly escaped</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/xss/context/fp/sanitized">Properly Sanitized</a> - All contexts properly escaped</li>
+        </ul>
+    </div>
 </body>
 </html>

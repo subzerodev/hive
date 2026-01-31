@@ -30,8 +30,11 @@ func renderPage(w http.ResponseWriter, title, input, hint, filterDesc, filtered 
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Blacklist - %s</title></head>
+<head><title>XSS Blacklist - %s</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS Blacklist Filter - %s</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Enter text" style="width:300px">
@@ -44,6 +47,7 @@ func renderPage(w http.ResponseWriter, title, input, hint, filterDesc, filtered 
 <h3>Bypass hint:</h3>
 <p><small>%s</small></p>
 <p><a href="/vulns/xss/blacklist/">Back to Blacklist Tests</a></p>
+</div>
 </body></html>`, title, title, html.EscapeString(input), filtered, filterDesc, hint)
 }
 
@@ -187,8 +191,11 @@ func fpWhitelist(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Blacklist - Safe (Whitelist)</title></head>
+<head><title>XSS Blacklist - Safe (Whitelist)</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS Filter - Safe (Whitelist Approach)</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Enter text" style="width:300px">
@@ -199,5 +206,6 @@ func fpWhitelist(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: Whitelist approach - only allows alphanumeric characters, spaces, and basic punctuation (.,!?-)</small></p>
 <p><a href="/vulns/xss/blacklist/">Back to Blacklist Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), html.EscapeString(filtered))
 }

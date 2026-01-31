@@ -3,41 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Form Hijacking / Link Manipulation - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
-    <h1>Form Hijacking / Link Manipulation</h1>
-    <p>Vulnerabilities where attackers can control form actions or link destinations to steal credentials or redirect users.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Form Hijacking / Link Manipulation</h1>
+        <p>Vulnerabilities where attackers can control form actions or link destinations to steal credentials or redirect users.</p>
 
-    <h2 class="vuln">Form Action Hijacking</h2>
-    <ul>
-        <li><a href="/vulns/formhijack/action">Form Action</a> - User-controlled form action
-            <br><code>?action=https://evil.com/phish</code></li>
-        <li><a href="/vulns/formhijack/hidden">Hidden Field</a> - Manipulable hidden return URL
-            <br><code>?return=https://evil.com/</code></li>
-        <li><a href="/vulns/formhijack/formaction-attr">Formaction Attribute</a> - Button formaction override
-            <br><code>?submit=https://evil.com/</code></li>
-    </ul>
+        <h2 class="vuln">Form Action Hijacking</h2>
+        <ul>
+            <li><a href="/vulns/formhijack/action">Form Action</a> - User-controlled form action
+                <br><code>?action=https://evil.com/phish</code></li>
+            <li><a href="/vulns/formhijack/hidden">Hidden Field</a> - Manipulable hidden return URL
+                <br><code>?return=https://evil.com/</code></li>
+            <li><a href="/vulns/formhijack/formaction-attr">Formaction Attribute</a> - Button formaction override
+                <br><code>?submit=https://evil.com/</code></li>
+        </ul>
 
-    <h2 class="vuln">Link Manipulation</h2>
-    <ul>
-        <li><a href="/vulns/formhijack/link">Link Href</a> - User-controlled link destination
-            <br><code>?href=javascript:alert(1)</code></li>
-        <li><a href="/vulns/formhijack/base-tag">Base Tag</a> - Controls all relative URLs
-            <br><code>?base=https://evil.com/</code></li>
-    </ul>
+        <h2 class="vuln">Link Manipulation</h2>
+        <ul>
+            <li><a href="/vulns/formhijack/link">Link Href</a> - User-controlled link destination
+                <br><code>?href=javascript:alert(1)</code></li>
+            <li><a href="/vulns/formhijack/base-tag">Base Tag</a> - Controls all relative URLs
+                <br><code>?base=https://evil.com/</code></li>
+        </ul>
 
-    <h2 class="safe">False Positives (Safe)</h2>
-    <ul>
-        <li><a href="/vulns/formhijack/fp/validated">Validated</a> - Only relative paths allowed</li>
-    </ul>
+        <h2 class="safe">False Positives (Safe)</h2>
+        <ul>
+            <li><a href="/vulns/formhijack/fp/validated">Validated</a> - Only relative paths allowed</li>
+        </ul>
+    </div>
 </body>
 </html>

@@ -38,11 +38,16 @@ func login(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Login Failed</title></head>
+<head>
+<title>Login Failed</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login Failed</h1>
 <p>Invalid credentials. Try admin / password</p>
 <a href="/vulns/auth/form-post/login">Try again</a>
+</div>
 </body></html>`)
 		return
 	}
@@ -50,8 +55,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Form POST Login</title></head>
+<head>
+<title>Form POST Login</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Form POST Login</h1>
 <form method="POST" action="/vulns/auth/form-post/login">
     <input name="username" placeholder="Username"><br>
@@ -59,6 +68,7 @@ func login(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>Credentials: admin / password</small></p>
+</div>
 </body></html>`)
 }
 
@@ -72,11 +82,16 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Dashboard</title></head>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Dashboard (Form POST Auth)</h1>
 <p>Welcome, admin! You are authenticated via form POST.</p>
 <p><a href="/vulns/auth/form-post/logout">Logout</a></p>
+</div>
 </body></html>`)
 }
 

@@ -62,11 +62,15 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSI Injection - Basic</title></head>
+<head>
+<title>SSI Injection - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Includes Injection - Basic</h1>
 <form method="GET">
-    <input name="text" value="%s" placeholder="Enter text" style="width:400px">
+    <input name="text" value="%s" placeholder="Enter text">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -75,6 +79,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: &lt;!--#echo var="DATE_LOCAL" --&gt;</small></p>
 <p><small>Or: &lt;!--#echo var="SERVER_SOFTWARE" --&gt;</small></p>
 <p><a href="/vulns/injection/ssi/">Back to SSI Tests</a></p>
+</div>
 </body></html>`, input, processed)
 }
 
@@ -91,11 +96,15 @@ func exec(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSI Injection - Exec</title></head>
+<head>
+<title>SSI Injection - Exec</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Includes Injection - Command Execution</h1>
 <form method="GET">
-    <input name="cmd" value="%s" placeholder="SSI directive" style="width:400px">
+    <input name="cmd" value="%s" placeholder="SSI directive">
     <button type="submit">Execute</button>
 </form>
 <h2>Output:</h2>
@@ -103,6 +112,7 @@ func exec(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: &lt;!--#exec cmd="cat /etc/passwd" --&gt;</small></p>
 <p><a href="/vulns/injection/ssi/">Back to SSI Tests</a></p>
+</div>
 </body></html>`, input, processed)
 }
 
@@ -120,11 +130,15 @@ func include(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSI Injection - Include</title></head>
+<head>
+<title>SSI Injection - Include</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Includes Injection - File Include</h1>
 <form method="GET">
-    <input name="file" value="%s" placeholder="File to include" style="width:400px">
+    <input name="file" value="%s" placeholder="File to include">
     <button type="submit">Include</button>
 </form>
 <h2>SSI Directive:</h2>
@@ -134,6 +148,7 @@ func include(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: /etc/passwd or ../../../etc/passwd</small></p>
 <p><a href="/vulns/injection/ssi/">Back to SSI Tests</a></p>
+</div>
 </body></html>`, file, ssiDirective, processed)
 }
 
@@ -151,11 +166,15 @@ func fpDisabled(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSI Injection - Safe</title></head>
+<head>
+<title>SSI Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Includes - Safe (Disabled)</h1>
 <form method="GET">
-    <input name="text" value="%s" placeholder="Enter text" style="width:400px">
+    <input name="text" value="%s" placeholder="Enter text">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -163,5 +182,6 @@ func fpDisabled(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: SSI processing is disabled, directives are escaped</small></p>
 <p><a href="/vulns/injection/ssi/">Back to SSI Tests</a></p>
+</div>
 </body></html>`, strings.ReplaceAll(input, "<", "&lt;"), escaped)
 }

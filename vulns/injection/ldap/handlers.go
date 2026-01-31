@@ -53,11 +53,15 @@ func basic(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>LDAP Injection - Basic</title></head>
+<head>
+<title>LDAP Injection - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>LDAP Injection - Basic</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:300px">
+    <input name="username" value="%s" placeholder="Username">
     <button type="submit">Search</button>
 </form>
 <h2>LDAP Filter:</h2>
@@ -75,6 +79,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: * or admin)(|(uid=*) or admin)(&amp;)</small></p>
 <p><a href="/vulns/injection/ldap/">Back to LDAP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -97,12 +102,16 @@ func auth(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>LDAP Injection - Authentication</title></head>
+<head>
+<title>LDAP Injection - Authentication</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>LDAP Injection - Authentication Bypass</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:200px">
-    <input name="password" value="%s" placeholder="Password" style="width:200px">
+    <input name="username" value="%s" placeholder="Username">
+    <input name="password" value="%s" placeholder="Password">
     <button type="submit">Login</button>
 </form>
 <h2>LDAP Filter:</h2>
@@ -120,6 +129,7 @@ func auth(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: username=* password=* or username=admin)(|(password=*)</small></p>
 <p><a href="/vulns/injection/ldap/">Back to LDAP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -138,11 +148,15 @@ func search(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>LDAP Injection - Search</title></head>
+<head>
+<title>LDAP Injection - Search</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>LDAP Injection - User Search</h1>
 <form method="GET">
-    <input name="q" value="%s" placeholder="Search users" style="width:300px">
+    <input name="q" value="%s" placeholder="Search users">
     <button type="submit">Search</button>
 </form>
 <h2>LDAP Filter:</h2>
@@ -160,6 +174,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: *)(objectClass=* or *)(&amp;(objectClass=*)</small></p>
 <p><a href="/vulns/injection/ldap/">Back to LDAP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -176,11 +191,15 @@ func blind(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>LDAP Injection - Blind</title></head>
+<head>
+<title>LDAP Injection - Blind</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>LDAP Injection - Blind</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:300px">
+    <input name="username" value="%s" placeholder="Username">
     <button type="submit">Check</button>
 </form>
 <h2>Result:</h2>
@@ -197,6 +216,7 @@ func blind(w http.ResponseWriter, r *http.Request) {
 <p><small>Blind LDAP: Extract data character by character</small></p>
 <p><small>Try: admin* or a* to enumerate</small></p>
 <p><a href="/vulns/injection/ldap/">Back to LDAP Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -213,13 +233,18 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 	if re.MatchString(username) {
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>LDAP Injection - Safe</title></head>
+<head>
+<title>LDAP Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>LDAP Injection - Safe (Escaped)</h1>
 <h2>Error:</h2>
 <p>Invalid characters in username. Special characters not allowed.</p>
 <p><a href="/vulns/injection/ldap/fp/escaped">Try again</a></p>
 <p><a href="/vulns/injection/ldap/">Back to LDAP Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -229,11 +254,15 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>LDAP Injection - Safe</title></head>
+<head>
+<title>LDAP Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>LDAP Injection - Safe (Escaped)</h1>
 <form method="GET">
-    <input name="username" value="%s" placeholder="Username" style="width:300px">
+    <input name="username" value="%s" placeholder="Username">
     <button type="submit">Search</button>
 </form>
 <h2>LDAP Filter:</h2>
@@ -251,5 +280,6 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: LDAP special characters (*, (, ), |, \, NUL) are rejected</small></p>
 <p><a href="/vulns/injection/ldap/">Back to LDAP Tests</a></p>
+</div>
 </body></html>`)
 }

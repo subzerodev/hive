@@ -39,14 +39,19 @@ func step1(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Multi-Step Login - Step 1</title></head>
+<head>
+<title>Multi-Step Login - Step 1</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Multi-Step Login - Step 1</h1>
 <form method="POST">
     <input name="username" placeholder="Username"><br>
     <button type="submit">Next</button>
 </form>
 <p><small>Username: admin</small></p>
+</div>
 </body></html>`)
 }
 
@@ -78,8 +83,12 @@ func step2(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Multi-Step Login - Step 2</title></head>
+<head>
+<title>Multi-Step Login - Step 2</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Multi-Step Login - Step 2</h1>
 <p>Welcome, %s. Please enter your password:</p>
 <form method="POST">
@@ -87,6 +96,7 @@ func step2(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>Password: password</small></p>
+</div>
 </body></html>`, cookie.Value)
 }
 
@@ -100,10 +110,15 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Dashboard</title></head>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Dashboard (Multi-Step Auth)</h1>
 <p>Successfully authenticated via multi-step flow.</p>
+</div>
 </body></html>`)
 }
 

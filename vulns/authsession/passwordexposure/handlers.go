@@ -37,8 +37,11 @@ func inGet(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Password in GET request (visible in URL, logs, history)
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Password in GET</title></head>
+<head><title>Password in GET</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (GET Request)</h1>
 <form method="GET">
     <input name="username" value="%s" placeholder="Username"><br>
@@ -46,6 +49,7 @@ func inGet(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>VULNERABLE: Password sent via GET parameter (visible in URL)</small></p>
+</div>
 </body></html>`, html.EscapeString(username))
 }
 
@@ -59,13 +63,17 @@ func inResponse(w http.ResponseWriter, r *http.Request) {
 		// VULNERABLE: Password echoed in response
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Password in Response</title></head>
+<head><title>Password in Response</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login Result</h1>
 <p>Username: %s</p>
 <p>Password: %s</p>
 <p><small>VULNERABLE: Password reflected in response</small></p>
 <p><a href="/vulns/auth-session/password-exposure/in-response">Back</a></p>
+</div>
 </body></html>`, html.EscapeString(username), html.EscapeString(password))
 		return
 	}
@@ -73,8 +81,11 @@ func inResponse(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Password in Response</title></head>
+<head><title>Password in Response</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login</h1>
 <form method="POST">
     <input name="username" placeholder="Username"><br>
@@ -82,6 +93,7 @@ func inResponse(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>VULNERABLE: Password will be echoed in response</small></p>
+</div>
 </body></html>`)
 }
 
@@ -101,11 +113,15 @@ func inCookie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Password in Cookie</title></head>
+<head><title>Password in Cookie</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Password Stored in Cookie</h1>
 <p>A cookie "user_password" has been set with the password.</p>
 <p><small>VULNERABLE: Password stored in cookie</small></p>
+</div>
 </body></html>`)
 }
 
@@ -114,8 +130,11 @@ func autocomplete(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Password field with autocomplete enabled
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Autocomplete Enabled</title></head>
+<head><title>Autocomplete Enabled</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (Autocomplete Enabled)</h1>
 <form method="POST">
     <input name="username" placeholder="Username" autocomplete="on"><br>
@@ -123,6 +142,7 @@ func autocomplete(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>VULNERABLE: Password field has autocomplete="on"</small></p>
+</div>
 </body></html>`)
 }
 
@@ -135,13 +155,17 @@ func fpHidden(w http.ResponseWriter, r *http.Request) {
 		// SAFE: Password not reflected
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Login Result</title></head>
+<head><title>Login Result</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login Result</h1>
 <p>Username: %s</p>
 <p>Authentication successful.</p>
 <p><small>SAFE: Password not reflected in response</small></p>
 <p><a href="/vulns/auth-session/password-exposure/fp/hidden">Back</a></p>
+</div>
 </body></html>`, html.EscapeString(username))
 		return
 	}
@@ -149,8 +173,11 @@ func fpHidden(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Login - Safe</title></head>
+<head><title>Login - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (Safe)</h1>
 <form method="POST">
     <input name="username" placeholder="Username"><br>
@@ -158,6 +185,7 @@ func fpHidden(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Login</button>
 </form>
 <p><small>SAFE: Password sent via POST, not reflected in response</small></p>
+</div>
 </body></html>`)
 }
 
@@ -166,8 +194,11 @@ func cleartext(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Cleartext Password Submission</title></head>
+<head><title>Cleartext Password Submission</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (Cleartext Submission)</h1>
 <p>This login form submits credentials over unencrypted HTTP.</p>
 
@@ -183,6 +214,7 @@ func cleartext(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>Cleartext submission of password - credentials can be sniffed</small></p>
 <p><a href="/vulns/auth-session/password-exposure/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -191,8 +223,11 @@ func insecureFormPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Insecure Form POST</title></head>
+<head><title>Insecure Form POST</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (Insecure Transition)</h1>
 <p>This HTTPS page posts credentials to an HTTP endpoint.</p>
 
@@ -208,6 +243,7 @@ func insecureFormPost(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>HTTPS to HTTP form submission - credentials exposed in transit</small></p>
 <p><a href="/vulns/auth-session/password-exposure/">Back</a></p>
+</div>
 </body></html>`)
 }
 
@@ -216,8 +252,11 @@ func fpSecureForm(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Secure Form POST</title></head>
+<head><title>Secure Form POST</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (Secure)</h1>
 <p>This form submits credentials securely over HTTPS.</p>
 
@@ -230,5 +269,6 @@ func fpSecureForm(w http.ResponseWriter, r *http.Request) {
 <h3>Security:</h3>
 <p><small>SAFE: Credentials submitted over encrypted HTTPS connection</small></p>
 <p><a href="/vulns/auth-session/password-exposure/">Back</a></p>
+</div>
 </body></html>`)
 }

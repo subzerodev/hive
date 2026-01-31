@@ -27,14 +27,19 @@ func htmlBody(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Direct output without escaping
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Reflected XSS - HTML Body</title></head>
+<head>
+<title>Reflected XSS - HTML Body</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Welcome, %s!</h1>
 <form method="GET">
     <input name="name" value="%s" placeholder="Your name">
     <button type="submit">Submit</button>
 </form>
 <p><small>Try: &lt;script&gt;alert(1)&lt;/script&gt;</small></p>
+</div>
 </body></html>`, name, html.EscapeString(name))
 }
 
@@ -48,14 +53,19 @@ func attribute(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Unescaped in attribute context
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Reflected XSS - Attribute</title></head>
+<head>
+<title>Reflected XSS - Attribute</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1 style="color: %s">Colored Text</h1>
 <form method="GET">
     <input name="color" value="%s" placeholder="Color">
     <button type="submit">Change Color</button>
 </form>
 <p><small>Try: red" onmouseover="alert(1)</small></p>
+</div>
 </body></html>`, color, html.EscapeString(color))
 }
 
@@ -69,8 +79,12 @@ func javascript(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Unescaped in JavaScript context
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Reflected XSS - JavaScript</title></head>
+<head>
+<title>Reflected XSS - JavaScript</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Message Display</h1>
 <form method="GET">
     <input name="msg" value="%s" placeholder="Message">
@@ -81,6 +95,7 @@ var message = "%s";
 document.write("<p>" + message + "</p>");
 </script>
 <p><small>Try: ";alert(1);//</small></p>
+</div>
 </body></html>`, html.EscapeString(msg), msg)
 }
 
@@ -95,13 +110,18 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 	escaped := html.EscapeString(name)
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Reflected XSS - Safe</title></head>
+<head>
+<title>Reflected XSS - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Welcome, %s!</h1>
 <form method="GET">
     <input name="name" value="%s" placeholder="Your name">
     <button type="submit">Submit</button>
 </form>
 <p><small>Input is properly escaped</small></p>
+</div>
 </body></html>`, escaped, escaped)
 }

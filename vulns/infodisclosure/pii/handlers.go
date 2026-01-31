@@ -24,8 +24,12 @@ func emails(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Email addresses exposed
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>PII - Emails</title></head>
+<head>
+<title>PII - Emails</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Directory</h1>
 <table border="1">
     <tr><th>Name</th><th>Email</th><th>Role</th></tr>
@@ -34,6 +38,7 @@ func emails(w http.ResponseWriter, r *http.Request) {
     <tr><td>Bob Support</td><td>bob.support@company.com</td><td>Support</td></tr>
 </table>
 <p><small>VULNERABLE: Full email addresses exposed</small></p>
+</div>
 </body></html>`)
 }
 
@@ -42,8 +47,12 @@ func creditCards(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Credit card numbers exposed
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>PII - Credit Cards</title></head>
+<head>
+<title>PII - Credit Cards</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Payment History</h1>
 <table border="1">
     <tr><th>Date</th><th>Card Number</th><th>Amount</th></tr>
@@ -52,6 +61,7 @@ func creditCards(w http.ResponseWriter, r *http.Request) {
     <tr><td>2024-01-05</td><td>374245455400126</td><td>$199.99</td></tr>
 </table>
 <p><small>VULNERABLE: Full credit card numbers exposed</small></p>
+</div>
 </body></html>`)
 }
 
@@ -60,8 +70,12 @@ func ssn(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Social Security Numbers exposed
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>PII - SSN</title></head>
+<head>
+<title>PII - SSN</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Employee Records</h1>
 <table border="1">
     <tr><th>Name</th><th>SSN</th><th>Department</th></tr>
@@ -70,6 +84,7 @@ func ssn(w http.ResponseWriter, r *http.Request) {
     <tr><td>Bob Wilson</td><td>555-12-3456</td><td>Finance</td></tr>
 </table>
 <p><small>VULNERABLE: Full Social Security Numbers exposed</small></p>
+</div>
 </body></html>`)
 }
 
@@ -78,8 +93,12 @@ func emailsInHTML(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Email addresses in HTML comments and hidden fields
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Email Disclosure in HTML</title></head>
+<head>
+<title>Email Disclosure in HTML</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Contact Page</h1>
 <!-- Developer: john.developer@internal.company.com -->
 <!-- Support contact: support-team@internal.company.com -->
@@ -95,6 +114,7 @@ func emailsInHTML(w http.ResponseWriter, r *http.Request) {
     - Error notifications: error-handler@company.com
 -->
 <p><small>VULNERABLE: Email addresses in HTML comments and hidden fields</small></p>
+</div>
 </body></html>`)
 }
 
@@ -103,8 +123,12 @@ func emailsInJS(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Email addresses in JavaScript
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Email Disclosure in JavaScript</title></head>
+<head>
+<title>Email Disclosure in JavaScript</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Application Config</h1>
 <script>
 var config = {
@@ -122,6 +146,7 @@ var config = {
 console.log("Support: " + config.supportEmail);
 </script>
 <p><small>VULNERABLE: Email addresses exposed in JavaScript</small></p>
+</div>
 </body></html>`)
 }
 
@@ -130,8 +155,12 @@ func phoneNumbers(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Phone numbers exposed
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>PII - Phone Numbers</title></head>
+<head>
+<title>PII - Phone Numbers</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Employee Contact List</h1>
 <table border="1">
     <tr><th>Name</th><th>Phone</th><th>Mobile</th></tr>
@@ -140,6 +169,7 @@ func phoneNumbers(w http.ResponseWriter, r *http.Request) {
     <tr><td>Bob Wilson</td><td>555-345-6789</td><td>15557654321</td></tr>
 </table>
 <p><small>VULNERABLE: Personal phone numbers exposed</small></p>
+</div>
 </body></html>`)
 }
 
@@ -148,8 +178,12 @@ func fpRedacted(w http.ResponseWriter, r *http.Request) {
 	// SAFE: PII properly redacted
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>PII - Redacted</title></head>
+<head>
+<title>PII - Redacted</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>User Directory (Redacted)</h1>
 <table border="1">
     <tr><th>Name</th><th>Email</th><th>Card</th><th>SSN</th></tr>
@@ -157,5 +191,6 @@ func fpRedacted(w http.ResponseWriter, r *http.Request) {
     <tr><td>Jane D.</td><td>j***@company.com</td><td>****9903</td><td>***-**-4321</td></tr>
 </table>
 <p><small>SAFE: PII properly redacted/masked</small></p>
+</div>
 </body></html>`)
 }

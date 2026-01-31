@@ -41,8 +41,11 @@ func adminLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Admin Login</title></head>
+<head><title>Admin Login</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Administrator Login</h1>
 <form method="POST" action="/vulns/admin/login">
     <input name="username" placeholder="Username"><br><br>
@@ -51,6 +54,7 @@ func adminLogin(w http.ResponseWriter, r *http.Request) {
 </form>
 <p><small>Default credentials: admin / admin</small></p>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -58,8 +62,11 @@ func adminDashboard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Admin Dashboard</title></head>
+<head><title>Admin Dashboard</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Administration Dashboard</h1>
 <h2>Quick Stats:</h2>
 <ul>
@@ -80,6 +87,7 @@ MySQL: 8.0.32
     <li><a href="/vulns/admin/logs">View Logs</a></li>
 </ul>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -87,8 +95,11 @@ func adminConsole(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Admin Console</title></head>
+<head><title>Admin Console</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Administrator Console</h1>
 <h2>Command Execution:</h2>
 <form method="POST">
@@ -101,6 +112,7 @@ func adminConsole(w http.ResponseWriter, r *http.Request) {
     <button type="submit">Run Query</button>
 </form>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -108,10 +120,13 @@ func wpAdmin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>WordPress Admin</title></head>
+<head><title>WordPress Admin</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>WordPress Dashboard</h1>
-<div style="background:#23282d;color:#fff;padding:20px;">
+<div>
     <h2>Welcome to WordPress!</h2>
     <p>WordPress Version: 6.4.2</p>
 </div>
@@ -128,6 +143,7 @@ func wpAdmin(w http.ResponseWriter, r *http.Request) {
     <li><a href="#">Appearance</a></li>
 </ul>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -135,28 +151,30 @@ func wpLogin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Log In - WordPress</title></head>
-<body style="background:#f0f0f1;">
-<div style="max-width:320px;margin:100px auto;background:#fff;padding:20px;border:1px solid #c3c4c7;">
-    <h1 style="text-align:center;">WordPress</h1>
+<head><title>Log In - WordPress</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
+<body>
+<div class="container">
+    <h1>WordPress</h1>
     <form method="POST">
         <p>
             <label>Username or Email Address</label><br>
-            <input name="log" style="width:100%%">
+            <input name="log">
         </p>
         <p>
             <label>Password</label><br>
-            <input type="password" name="pwd" style="width:100%%">
+            <input type="password" name="pwd">
         </p>
         <p>
             <input type="checkbox" name="rememberme"> Remember Me
         </p>
         <p>
-            <button type="submit" style="width:100%%">Log In</button>
+            <button type="submit">Log In</button>
         </p>
     </form>
+<p><a href="/vulns/admin/">Back to Admin Tests</a></p>
 </div>
-<p style="text-align:center;"><a href="/vulns/admin/">Back to Admin Tests</a></p>
 </body></html>`)
 }
 
@@ -164,8 +182,11 @@ func phpMyAdmin(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>phpMyAdmin</title></head>
+<head><title>phpMyAdmin</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>phpMyAdmin</h1>
 <h2>Database Server:</h2>
 <pre>
@@ -183,6 +204,7 @@ User: root@localhost
     <li>wordpress</li>
 </ul>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -261,8 +283,11 @@ func laravelDebugbar(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Laravel Debugbar</title></head>
+<head><title>Laravel Debugbar</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Laravel Debugbar</h1>
 <h2>Request Info:</h2>
 <pre>
@@ -288,6 +313,7 @@ APP_KEY=base64:abc123...
 DB_PASSWORD=LaravelDbPass!
 </pre>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -297,13 +323,17 @@ func fpProtected(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("WWW-Authenticate", "Basic realm=\"Admin\"")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>401 Unauthorized</title></head>
+<head><title>401 Unauthorized</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>401 Unauthorized</h1>
 <p>Authentication required to access this resource.</p>
 <h3>Security:</h3>
 <p><small>SAFE: Admin interface requires authentication</small></p>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -312,8 +342,11 @@ func wpUserEnum(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>WordPress User Enumeration</title></head>
+<head><title>WordPress User Enumeration</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>WordPress User Enumeration</h1>
 <p>Multiple methods to enumerate WordPress usernames.</p>
 
@@ -334,6 +367,7 @@ func wpUserEnum(w http.ResponseWriter, r *http.Request) {
 <h3>Vulnerability:</h3>
 <p><small>WordPress username enumeration enables targeted attacks</small></p>
 <p><a href="/vulns/admin/">Back to Admin Tests</a></p>
+</div>
 </body></html>`)
 }
 

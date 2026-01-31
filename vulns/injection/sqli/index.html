@@ -3,33 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>SQL Injection - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/injection/">&larr; Back to Injection</a></div>
-    <h1>SQL Injection Test Cases</h1>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>SQL Injection Test Cases</h1>
 
-    <p>Each database has its own set of test cases with database-specific error messages and syntax.</p>
+        <p>Each database has its own set of test cases with database-specific error messages and syntax.</p>
 
-    <h2>By Database</h2>
-    <ul>
-        <li><a href="/vulns/injection/sqli/mysql/">MySQL</a> - SLEEP(), MySQL error syntax</li>
-        <li><a href="/vulns/injection/sqli/postgres/">PostgreSQL</a> - pg_sleep(), PG error syntax</li>
-        <li><a href="/vulns/injection/sqli/mssql/">MSSQL</a> - WAITFOR DELAY, SQL Server errors</li>
-        <li><a href="/vulns/injection/sqli/sqlite/">SQLite</a> - SQLite error syntax</li>
-    </ul>
+        <h2>By Database</h2>
+        <ul>
+            <li><a href="/vulns/injection/sqli/mysql/">MySQL</a> - SLEEP(), MySQL error syntax</li>
+            <li><a href="/vulns/injection/sqli/postgres/">PostgreSQL</a> - pg_sleep(), PG error syntax</li>
+            <li><a href="/vulns/injection/sqli/mssql/">MSSQL</a> - WAITFOR DELAY, SQL Server errors</li>
+            <li><a href="/vulns/injection/sqli/sqlite/">SQLite</a> - SQLite error syntax</li>
+        </ul>
 
-    <h2>Test Case Types</h2>
-    <ul>
-        <li><strong>Error-Based</strong> - Error messages leak database information</li>
-        <li><strong>Union-Based</strong> - UNION SELECT extracts data from other tables</li>
-        <li><strong>Blind Boolean</strong> - Application behavior differs based on true/false conditions</li>
-        <li><strong>Blind Time</strong> - Time delays indicate successful injection</li>
-        <li><strong>FP Parameterized</strong> - Safe implementation using prepared statements</li>
-    </ul>
+        <h2>Test Case Types</h2>
+        <ul>
+            <li><strong>Error-Based</strong> - Error messages leak database information</li>
+            <li><strong>Union-Based</strong> - UNION SELECT extracts data from other tables</li>
+            <li><strong>Blind Boolean</strong> - Application behavior differs based on true/false conditions</li>
+            <li><strong>Blind Time</strong> - Time delays indicate successful injection</li>
+            <li><strong>FP Parameterized</strong> - Safe implementation using prepared statements</li>
+        </ul>
+    </div>
 </body>
 </html>

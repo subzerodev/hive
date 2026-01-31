@@ -36,11 +36,15 @@ func goText(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSTI - Go text/template</title></head>
+<head>
+<title>SSTI - Go text/template</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Template Injection - Go text/template</h1>
 <form method="GET">
-    <input name="name" value="%s" placeholder="Your name" style="width:300px">
+    <input name="name" value="%s" placeholder="Your name">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -61,6 +65,7 @@ func goText(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: {{.}} or {{printf "%%s" "injected"}}</small></p>
 <p><a href="/vulns/injection/ssti/">Back to SSTI Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -74,11 +79,15 @@ func goHTML(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSTI - Go html/template</title></head>
+<head>
+<title>SSTI - Go html/template</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Template Injection - Go html/template</h1>
 <form method="GET">
-    <input name="name" value="%s" placeholder="Your name" style="width:300px">
+    <input name="name" value="%s" placeholder="Your name">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -99,6 +108,7 @@ func goHTML(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: {{.}} (HTML is escaped but template directives work)</small></p>
 <p><a href="/vulns/injection/ssti/">Back to SSTI Tests</a></p>
+</div>
 </body></html>`)
 }
 
@@ -125,11 +135,15 @@ func jinja2Style(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSTI - Jinja2 Style</title></head>
+<head>
+<title>SSTI - Jinja2 Style</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Template Injection - Jinja2 Style</h1>
 <form method="GET">
-    <input name="expr" value="%s" placeholder="Expression" style="width:300px">
+    <input name="expr" value="%s" placeholder="Expression">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -137,6 +151,7 @@ func jinja2Style(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: {{7*7}} or {{7*'7'}} or ${7*7}</small></p>
 <p><a href="/vulns/injection/ssti/">Back to SSTI Tests</a></p>
+</div>
 </body></html>`, expr, result)
 }
 
@@ -157,11 +172,15 @@ func erbStyle(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSTI - ERB Style</title></head>
+<head>
+<title>SSTI - ERB Style</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Template Injection - ERB Style</h1>
 <form method="GET">
-    <input name="expr" value="%s" placeholder="Expression" style="width:300px">
+    <input name="expr" value="%s" placeholder="Expression">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -169,6 +188,7 @@ func erbStyle(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: &lt;%%=7*7%%&gt;</small></p>
 <p><a href="/vulns/injection/ssti/">Back to SSTI Tests</a></p>
+</div>
 </body></html>`, expr, result)
 }
 
@@ -188,11 +208,15 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>SSTI - Safe (Escaped)</title></head>
+<head>
+<title>SSTI - Safe (Escaped)</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Server-Side Template Injection - Safe</h1>
 <form method="GET">
-    <input name="name" value="%s" placeholder="Your name" style="width:300px">
+    <input name="name" value="%s" placeholder="Your name">
     <button type="submit">Submit</button>
 </form>
 <h2>Output:</h2>
@@ -200,5 +224,6 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: Input passed as template data, not template code. HTML is auto-escaped.</small></p>
 <p><a href="/vulns/injection/ssti/">Back to SSTI Tests</a></p>
+</div>
 </body></html>`, htmltemplate.HTMLEscapeString(name), buf.String())
 }

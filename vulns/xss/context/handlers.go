@@ -38,8 +38,11 @@ func svgContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in SVG context
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - SVG</title></head>
+<head><title>XSS Context - SVG</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in SVG Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Color" style="width:300px">
@@ -52,6 +55,7 @@ func svgContext(w http.ResponseWriter, r *http.Request) {
 </svg>
 <p><small>Try: red" onload="alert(1)" or red"><script>alert(1)</script></small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -66,8 +70,11 @@ func dataAttrContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in data attribute, later used in JS
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - Data Attribute</title></head>
+<head><title>XSS Context - Data Attribute</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in Data Attribute Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Data value" style="width:300px">
@@ -82,6 +89,7 @@ document.write('<p>Data: ' + data + '</p>');
 </script>
 <p><small>Try: "><img src=x onerror=alert(1)> or test" onclick="alert(1)</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -98,6 +106,7 @@ func cssStyleContext(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
 <title>XSS Context - CSS Style</title>
+<link rel="stylesheet" href="/static/css/hive.css">
 <style>
 .user-style {
     color: %s;
@@ -105,6 +114,7 @@ func cssStyleContext(w http.ResponseWriter, r *http.Request) {
 </style>
 </head>
 <body>
+<div class="container">
 <h1>XSS in CSS Style Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Color" style="width:300px">
@@ -114,6 +124,7 @@ func cssStyleContext(w http.ResponseWriter, r *http.Request) {
 <p class="user-style">This text uses your color</p>
 <p><small>Try: blue;}</style><script>alert(1)</script><style> or blue;background:url(javascript:alert(1))</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, input, html.EscapeString(input))
 }
 
@@ -128,8 +139,11 @@ func cssExpressionContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in CSS that could use expression() in IE
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - CSS Expression</title></head>
+<head><title>XSS Context - CSS Expression</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in CSS Expression Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Width" style="width:300px">
@@ -139,6 +153,7 @@ func cssExpressionContext(w http.ResponseWriter, r *http.Request) {
 <div style="width: %s; height: 100px; background: lightblue;">Box</div>
 <p><small>Try (IE only): expression(alert(1)) or 100px;background-image:url(javascript:alert(1))</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -153,8 +168,11 @@ func iframeSrcdocContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in iframe srcdoc
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - iframe srcdoc</title></head>
+<head><title>XSS Context - iframe srcdoc</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in iframe srcdoc Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Content" style="width:300px">
@@ -164,6 +182,7 @@ func iframeSrcdocContext(w http.ResponseWriter, r *http.Request) {
 <iframe srcdoc="<html><body>%s</body></html>" width="400" height="100"></iframe>
 <p><small>Try: &lt;script&gt;alert(1)&lt;/script&gt; (HTML entities decoded in srcdoc)</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -178,8 +197,11 @@ func hrefContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in href attribute
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - href</title></head>
+<head><title>XSS Context - href</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in href Attribute Context</h1>
 <form method="GET">
     <input name="url" value="%s" placeholder="URL" style="width:300px">
@@ -189,6 +211,7 @@ func hrefContext(w http.ResponseWriter, r *http.Request) {
 <a href="%s">Click this link</a>
 <p><small>Try: javascript:alert(1) or data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -203,8 +226,11 @@ func srcContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in src attribute
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - src</title></head>
+<head><title>XSS Context - src</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in src Attribute Context</h1>
 <form method="GET">
     <input name="src" value="%s" placeholder="Image URL" style="width:300px">
@@ -214,6 +240,7 @@ func srcContext(w http.ResponseWriter, r *http.Request) {
 <img src="%s" alt="User image" onerror="this.alt='Image failed to load'">
 <p><small>Try: x" onerror="alert(1) or javascript:alert(1)</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -228,8 +255,11 @@ func htmlCommentContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in HTML comment
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - HTML Comment</title></head>
+<head><title>XSS Context - HTML Comment</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in HTML Comment Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Note" style="width:300px">
@@ -240,6 +270,7 @@ func htmlCommentContext(w http.ResponseWriter, r *http.Request) {
 <p>Check page source for comment</p>
 <p><small>Try: -->&lt;script&gt;alert(1)&lt;/script&gt;&lt;!--</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -254,8 +285,11 @@ func jsCommentContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in JavaScript comment
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - JS Comment</title></head>
+<head><title>XSS Context - JS Comment</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in JavaScript Comment Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Username" style="width:300px">
@@ -269,6 +303,7 @@ var x = 1;
 <p>Check page source for JS comment</p>
 <p><small>Try: test&#10;alert(1)// (newline injection) or */alert(1)/*</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -283,8 +318,11 @@ func jsTemplateContext(w http.ResponseWriter, r *http.Request) {
 	// VULNERABLE: Input in JavaScript template literal
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - JS Template</title></head>
+<head><title>XSS Context - JS Template</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS in JavaScript Template Literal Context</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Name" style="width:300px">
@@ -298,6 +336,7 @@ document.getElementById('output').innerHTML = ` + "`Hello, ${name}!`" + `;
 </script>
 <p><small>Try: ${alert(1)} or ${constructor.constructor('alert(1)')()}</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, html.EscapeString(input), input)
 }
 
@@ -313,8 +352,11 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>XSS Context - Safe</title></head>
+<head><title>XSS Context - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>XSS Context - Safe (Properly Escaped)</h1>
 <form method="GET">
     <input name="q" value="%s" placeholder="Input" style="width:300px">
@@ -324,5 +366,6 @@ func fpSanitized(w http.ResponseWriter, r *http.Request) {
 <div>%s</div>
 <p><small>SAFE: All output is HTML-escaped</small></p>
 <p><a href="/vulns/xss/context/">Back to Context Tests</a></p>
+</div>
 </body></html>`, escaped, escaped)
 }

@@ -37,8 +37,12 @@ func comment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Stored XSS - Comments</title></head>
+<head>
+<title>Stored XSS - Comments</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Comments</h1>
 <form method="POST">
     <textarea name="comment" placeholder="Add a comment"></textarea><br>
@@ -56,6 +60,7 @@ func comment(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `</div>
 <p><small>Try: &lt;script&gt;alert('stored')&lt;/script&gt;</small></p>
+</div>
 </body></html>`)
 }
 
@@ -73,8 +78,12 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Stored XSS - Safe Comments</title></head>
+<head>
+<title>Stored XSS - Safe Comments</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Safe Comments</h1>
 <form method="POST">
     <textarea name="comment" placeholder="Add a comment"></textarea><br>
@@ -92,5 +101,6 @@ func fpEscaped(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, `</div>
 <p><small>Comments are properly escaped</small></p>
+</div>
 </body></html>`)
 }

@@ -40,8 +40,11 @@ func basic(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Basic</title></head>
+<head><title>Open Redirect - Basic</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Open Redirect - Basic</h1>
 <form method="GET">
     <input name="url" value="%s" placeholder="Redirect URL" style="width:300px">
@@ -51,6 +54,7 @@ func basic(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: //evil.com or https://evil.com</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, target)
 		return
 	}
@@ -71,15 +75,18 @@ func meta(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
     <title>Open Redirect - Meta Refresh</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <meta http-equiv="refresh" content="0;url=%s">
 </head>
 <body>
+<div class="container">
 <h1>Open Redirect - Meta Refresh</h1>
 <p>Redirecting to: %s</p>
 <p>If not redirected, <a href="%s">click here</a></p>
 <h3>Hint:</h3>
 <p><small>Try: ?url=https://evil.com</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, target, target, target)
 }
 
@@ -95,16 +102,19 @@ func javascript(w http.ResponseWriter, r *http.Request) {
 <html>
 <head>
     <title>Open Redirect - JavaScript</title>
+    <link rel="stylesheet" href="/static/css/hive.css">
     <script>
         window.location = "%s";
     </script>
 </head>
 <body>
+<div class="container">
 <h1>Open Redirect - JavaScript</h1>
 <p>Redirecting to: %s</p>
 <h3>Hint:</h3>
 <p><small>Try: ?url=https://evil.com</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, target, target)
 }
 
@@ -118,8 +128,11 @@ func parameter(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Parameter</title></head>
+<head><title>Open Redirect - Parameter</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Login (Redirect After)</h1>
 <form method="GET">
     <input type="text" placeholder="Username"><br><br>
@@ -131,6 +144,7 @@ func parameter(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try: ?next=https://evil.com/phishing</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, path)
 
 	// If login submitted, redirect
@@ -153,8 +167,11 @@ func doubleEncode(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Double Encode</title></head>
+<head><title>Open Redirect - Double Encode</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Open Redirect - Double Encode Bypass</h1>
 <p>This endpoint decodes the URL once, allowing double-encoded bypasses.</p>
 <form method="GET">
@@ -165,6 +182,7 @@ func doubleEncode(w http.ResponseWriter, r *http.Request) {
 <h3>Hint:</h3>
 <p><small>Try double-encoding: %%2568ttps://evil.com (%%25 = %%, then %%68 = h)</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, target)
 		return
 	}
@@ -191,14 +209,18 @@ func fpWhitelist(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Safe</title></head>
+<head><title>Open Redirect - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Open Redirect - Safe (Whitelist)</h1>
 <h2>Error:</h2>
 <p>Redirect target not in allowed list.</p>
 <p>Allowed: /vulns/, /dashboard, /profile, /settings</p>
 <p><a href="/vulns/redirect/fp/whitelist">Try again</a></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -211,8 +233,11 @@ func fpWhitelist(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Safe</title></head>
+<head><title>Open Redirect - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Open Redirect - Safe (Whitelist)</h1>
 <form method="GET">
     <input name="url" value="%s" placeholder="Redirect URL" style="width:300px">
@@ -222,6 +247,7 @@ func fpWhitelist(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: Only whitelisted paths allowed (/vulns/, /dashboard, /profile, /settings)</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, target)
 }
 
@@ -237,13 +263,17 @@ func fpDomain(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Safe</title></head>
+<head><title>Open Redirect - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Open Redirect - Safe (Domain Check)</h1>
 <h2>Error:</h2>
 <p>External domains not allowed. Only localhost:8080 permitted.</p>
 <p><a href="/vulns/redirect/fp/domain">Try again</a></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`)
 		return
 	}
@@ -256,8 +286,11 @@ func fpDomain(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprintf(w, `<!DOCTYPE html>
 <html>
-<head><title>Open Redirect - Safe</title></head>
+<head><title>Open Redirect - Safe</title>
+<link rel="stylesheet" href="/static/css/hive.css">
+</head>
 <body>
+<div class="container">
 <h1>Open Redirect - Safe (Domain Check)</h1>
 <form method="GET">
     <input name="url" value="%s" placeholder="Redirect URL" style="width:300px">
@@ -267,5 +300,6 @@ func fpDomain(w http.ResponseWriter, r *http.Request) {
 <h3>Filter:</h3>
 <p><small>SAFE: Only same-domain or relative paths allowed</small></p>
 <p><a href="/vulns/redirect/">Back to Redirect Tests</a></p>
+</div>
 </body></html>`, target)
 }

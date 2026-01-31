@@ -3,62 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Legacy Vulnerabilities - HIVE</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        a { color: #0066cc; }
-        .back { margin-bottom: 20px; }
-        .vuln { color: #c00; }
-        .safe { color: #080; }
-        h2 { margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
-    </style>
+    <link rel="stylesheet" href="/static/css/hive.css">
 </head>
 <body>
-    <div class="back"><a href="/vulns/">&larr; Back to Vulnerabilities</a></div>
-    <h1>Legacy Technology Vulnerabilities</h1>
-    <p>Test cases for older technologies that are still found in production environments.</p>
+    <div class="container">
+        <div class="back"><a href="..">&larr; Back</a></div>
+        <h1>Legacy Technology Vulnerabilities</h1>
+        <p>Test cases for older technologies that are still found in production environments.</p>
 
-    <h2 class="vuln">Flash Cross-Domain Policy</h2>
-    <ul>
-        <li><a href="/crossdomain.xml">crossdomain.xml (Root)</a> - Permissive policy</li>
-        <li><a href="/vulns/legacy/flash/crossdomain">Permissive Policy</a> - Allows all domains</li>
-        <li><a href="/vulns/legacy/flash/crossdomain-restrictive">Restrictive Policy (FP)</a> - Properly configured</li>
-    </ul>
+        <h2 class="vuln">Flash Cross-Domain Policy</h2>
+        <ul>
+            <li><a href="/crossdomain.xml">crossdomain.xml (Root)</a> - Permissive policy</li>
+            <li><a href="/vulns/legacy/flash/crossdomain">Permissive Policy</a> - Allows all domains</li>
+            <li><a href="/vulns/legacy/flash/crossdomain-restrictive">Restrictive Policy (FP)</a> - Properly configured</li>
+        </ul>
 
-    <h2 class="vuln">Silverlight Cross-Domain Policy</h2>
-    <ul>
-        <li><a href="/clientaccesspolicy.xml">clientaccesspolicy.xml (Root)</a> - Permissive policy</li>
-        <li><a href="/vulns/legacy/silverlight/clientaccesspolicy">Permissive Policy</a> - Allows all domains</li>
-        <li><a href="/vulns/legacy/silverlight/clientaccesspolicy-restrictive">Restrictive Policy (FP)</a> - Properly configured</li>
-    </ul>
+        <h2 class="vuln">Silverlight Cross-Domain Policy</h2>
+        <ul>
+            <li><a href="/clientaccesspolicy.xml">clientaccesspolicy.xml (Root)</a> - Permissive policy</li>
+            <li><a href="/vulns/legacy/silverlight/clientaccesspolicy">Permissive Policy</a> - Allows all domains</li>
+            <li><a href="/vulns/legacy/silverlight/clientaccesspolicy-restrictive">Restrictive Policy (FP)</a> - Properly configured</li>
+        </ul>
 
-    <h2 class="vuln">ASP.NET ViewState</h2>
-    <ul>
-        <li><a href="/vulns/legacy/viewstate/without-mac">Without MAC</a> - No integrity checking</li>
-        <li><a href="/vulns/legacy/viewstate/with-mac">With MAC</a> - Has integrity but not encrypted</li>
-        <li><a href="/vulns/legacy/viewstate/encrypted">Encrypted (FP)</a> - Properly secured</li>
-    </ul>
+        <h2 class="vuln">ASP.NET ViewState</h2>
+        <ul>
+            <li><a href="/vulns/legacy/viewstate/without-mac">Without MAC</a> - No integrity checking</li>
+            <li><a href="/vulns/legacy/viewstate/with-mac">With MAC</a> - Has integrity but not encrypted</li>
+            <li><a href="/vulns/legacy/viewstate/encrypted">Encrypted (FP)</a> - Properly secured</li>
+        </ul>
 
-    <h2 class="vuln">Perl Code Injection</h2>
-    <ul>
-        <li><a href="/vulns/legacy/perl/eval">eval() Injection</a> - User input in eval</li>
-        <li><a href="/vulns/legacy/perl/open">open() Injection</a> - Command injection via two-arg open</li>
-    </ul>
+        <h2 class="vuln">Perl Code Injection</h2>
+        <ul>
+            <li><a href="/vulns/legacy/perl/eval">eval() Injection</a> - User input in eval</li>
+            <li><a href="/vulns/legacy/perl/open">open() Injection</a> - Command injection via two-arg open</li>
+        </ul>
 
-    <h2 class="vuln">Ruby Code Injection</h2>
-    <ul>
-        <li><a href="/vulns/legacy/ruby/eval">eval() Injection</a> - User input in eval</li>
-        <li><a href="/vulns/legacy/ruby/erb">ERB Template Injection</a> - User input in templates</li>
-    </ul>
+        <h2 class="vuln">Ruby Code Injection</h2>
+        <ul>
+            <li><a href="/vulns/legacy/ruby/eval">eval() Injection</a> - User input in eval</li>
+            <li><a href="/vulns/legacy/ruby/erb">ERB Template Injection</a> - User input in templates</li>
+        </ul>
 
-    <h2 class="vuln">Python Code Injection</h2>
-    <ul>
-        <li><a href="/vulns/legacy/python/eval">eval() Injection</a> - User input in eval</li>
-        <li><a href="/vulns/legacy/python/exec">exec() Injection</a> - User input in exec</li>
-    </ul>
+        <h2 class="vuln">Python Code Injection</h2>
+        <ul>
+            <li><a href="/vulns/legacy/python/eval">eval() Injection</a> - User input in eval</li>
+            <li><a href="/vulns/legacy/python/exec">exec() Injection</a> - User input in exec</li>
+        </ul>
 
-    <h2 class="vuln">Unidentified Code Injection</h2>
-    <ul>
-        <li><a href="/vulns/legacy/code/unidentified">Generic Code Injection</a> - Unknown interpreter</li>
-    </ul>
+        <h2 class="vuln">Unidentified Code Injection</h2>
+        <ul>
+            <li><a href="/vulns/legacy/code/unidentified">Generic Code Injection</a> - Unknown interpreter</li>
+        </ul>
+    </div>
 </body>
 </html>
