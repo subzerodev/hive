@@ -3,9 +3,11 @@ package reflected
 import (
 	"fmt"
 	"html"
+	"html/template"
 	"net/http"
 
 	"github.com/subzerodev/hive/handlers"
+	"github.com/subzerodev/hive/templates"
 )
 
 func init() {
@@ -24,23 +26,12 @@ func htmlBody(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html")
-	// VULNERABLE: Direct output without escaping
-	fmt.Fprintf(w, `<!DOCTYPE html>
-<html>
-<head>
-<title>Reflected XSS - HTML Body</title>
-<link rel="stylesheet" href="/static/css/hive.css">
-</head>
-<body>
-<div class="container">
-<h1>Welcome, %s!</h1>
-<form method="GET">
-    <input name="name" value="%s" placeholder="Your name">
-    <button type="submit">Submit</button>
-</form>
-<p><small>Try: &lt;script&gt;alert(1)&lt;/script&gt;</small></p>
-</div>
-</body></html>`, name, html.EscapeString(name))
+	templates.Render(w, "xss/reflected/html-body", templates.Page{
+		Title:     "Reflected XSS - HTML Body",
+		Heading:   "Reflected XSS - HTML Body",
+		FormValue: html.EscapeString(name),
+		OutputRaw: template.HTML(name), // VULNERABLE: unescaped
+	})
 }
 
 func attribute(w http.ResponseWriter, r *http.Request) {
