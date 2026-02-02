@@ -4,6 +4,7 @@ services:
     build: .
     ports:
       - "8080:8080"
+      - "8085:8081"
     environment:
       - PORT=8080
       - AUTH_TYPE=none

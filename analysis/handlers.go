@@ -43,6 +43,7 @@ func handleSessions(w http.ResponseWriter, r *http.Request) {
 	sessions, _ := GetAllSessions()
 
 	data := map[string]interface{}{
+		"View":           "sessions",
 		"Title":          "Sessions",
 		"Sessions":       sessions,
 		"Recording":      IsRecording(),
@@ -136,6 +137,7 @@ func handleCoverage(w http.ResponseWriter, r *http.Request, session *Session) {
 	}
 
 	data := map[string]interface{}{
+		"View":            "coverage",
 		"Title":           session.Name,
 		"Session":         session,
 		"Coverage":        coverage,
@@ -151,6 +153,7 @@ func handleCategory(w http.ResponseWriter, r *http.Request, session *Session, ca
 	endpoints, _ := GetEndpointsForCategory(session.ID, category)
 
 	data := map[string]interface{}{
+		"View":      "category",
 		"Title":     category + " - " + session.Name,
 		"Session":   session,
 		"Category":  category,
@@ -189,6 +192,7 @@ func handleEndpoint(w http.ResponseWriter, r *http.Request, session *Session) {
 	}
 
 	data := map[string]interface{}{
+		"View":          "endpoint",
 		"Title":         path,
 		"Session":       session,
 		"Path":          path,

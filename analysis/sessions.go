@@ -29,6 +29,43 @@ func IsRecording() bool {
 	return recording
 }
 
+// ResumeIncompleteSession checks for a session without ended_at and resumes recording
+func ResumeIncompleteSession() error {
+	recordingMu.Lock()
+	defer recordingMu.Unlock()
+
+	if recording {
+		return nil // Already recording
+	}
+
+	var s Session
+	err := db.QueryRow(`
+		SELECT id, name, started_at, COALESCE(user_agent, '')
+		FROM scan_sessions
+		WHERE ended_at IS NULL
+		ORDER BY started_at DESC
+		LIMIT 1
+	`).Scan(&s.ID, &s.Name, &s.StartedAt, &s.UserAgent)
+
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			return nil // No incomplete session, that's fine
+		}
+		return err
+	}
+
+	// Resume the session
+	currentSession = &Session{
+		ID:        s.ID,
+		Name:      s.Name,
+		StartedAt: s.StartedAt,
+		UserAgent: s.UserAgent,
+	}
+	recording = true
+
+	return nil
+}
+
 func CurrentSessionID() int64 {
 	recordingMu.RLock()
 	defer recordingMu.RUnlock()

@@ -91,7 +91,10 @@
 </head>
 <body>
     <div class="container">
-        {{template "content" .}}
+        {{if eq .View "sessions"}}{{template "sessions-content" .}}{{end}}
+        {{if eq .View "coverage"}}{{template "coverage-content" .}}{{end}}
+        {{if eq .View "category"}}{{template "category-content" .}}{{end}}
+        {{if eq .View "endpoint"}}{{template "endpoint-content" .}}{{end}}
     </div>
 </body>
 </html>

@@ -97,6 +97,11 @@ func main() {
 	}
 	defer analysis.CloseDB()
 
+	// Resume any incomplete recording session from previous run
+	if err := analysis.ResumeIncompleteSession(); err != nil {
+		log.Printf("Warning: failed to resume incomplete session: %v", err)
+	}
+
 	// Initialize templates
 	templates.Init()
 
